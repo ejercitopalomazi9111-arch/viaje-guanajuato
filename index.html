@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Viaje a Guanajuato · Instituto Rembrandt de Querétaro</title>
+<meta name="description" content="Expedición STEAM al patrimonio histórico de Guanajuato y Dolores Hidalgo. Instituto Rembrandt de Querétaro · DA016.">
+<meta name="theme-color" content="#1a1614">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,300;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- ═══════════════ BG FX (orbs + grain) ═══════════════ -->
+<div class="bg-fx" aria-hidden="true">
+  <div class="orb orb--1"></div>
+  <div class="orb orb--2"></div>
+  <div class="orb orb--3"></div>
+  <div class="bg-grain"></div>
+</div>
+
+<!-- ═══════════════ CURSOR ═══════════════ -->
+<div class="cursor" aria-hidden="true">
+  <div class="cursor__dot"></div>
+  <div class="cursor__ring"></div>
+</div>
+
+<!-- ═══════════════ PROGRESS BAR ═══════════════ -->
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true">
+  <div class="scroll-progress__bar"></div>
+</div>
+
+<!-- ═══════════════ NAV ═══════════════ -->
+<nav class="nav" id="nav">
+  <a href="#top" class="nav__brand">
+    <img src="assets/img/logo_rembrandt.png" alt="" class="nav__logo">
+    <span class="nav__name">Instituto Rembrandt <em>Qro</em></span>
+  </a>
+  <ul class="nav__links">
+    <li><a href="#hero">Inicio</a></li>
+    <li><a href="#map">Mapa</a></li>
+    <li><a href="#asignaturas">Asignaturas</a></li>
+    <li><a href="#galeria">Galería</a></li>
+  </ul>
+  <a href="#map" class="nav__cta" data-magnetic>Explorar mapa</a>
+</nav>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section id="hero" class="hero">
+  <div class="hero__media">
+    <img src="assets/img/gto-panorama.jpg" alt="Panorámica de Guanajuato" class="hero__img" id="heroImg">
+    <div class="hero__veil"></div>
+  </div>
+  <div class="hero__content">
+    <span class="hero__eyebrow">
+      <span class="hero__dot"></span>
+      Expedición STEAM · 3er parcial · DA016
+    </span>
+    <h1 class="hero__title">
+      <span class="line"><span data-anim="line-up">Viaje a</span></span>
+      <span class="line line--big"><span data-anim="line-up">Guanajuato</span></span>
+    </h1>
+    <p class="hero__lead" data-split="words">
+      Un mapa interactivo del patrimonio histórico mexicano. Doce paradas entre Dolores Hidalgo y Guanajuato Capital. Once asignaturas. Una sola expedición.
+    </p>
+    <div class="hero__actions">
+      <a href="#map" class="btn btn--primary" data-magnetic>
+        <span>Ver mapa interactivo</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a href="#intro" class="btn btn--ghost" data-magnetic>Sobre el proyecto</a>
+    </div>
+  </div>
+  <div class="hero__bottom">
+    <div class="hero__meta">
+      <div><span>Lat</span>21°00′N</div>
+      <div><span>Lng</span>101°15′W</div>
+      <div><span>UNESCO</span>1988</div>
+      <div><span>Año</span>2026</div>
+    </div>
+    <div class="hero__scroll">
+      <span>Desliza</span>
+      <div class="hero__scroll-line"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ MARQUEE ═══════════════ -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee__track">
+    <span>Viaje a Guanajuato</span><span class="marquee__star">✦</span>
+    <span>Expedición STEAM</span><span class="marquee__star">✦</span>
+    <span>MMXXVI</span><span class="marquee__star">✦</span>
+    <span>Doce paradas</span><span class="marquee__star">✦</span>
+    <span>Once asignaturas</span><span class="marquee__star">✦</span>
+    <span>Dolores Hidalgo · Guanajuato Capital</span><span class="marquee__star">✦</span>
+    <span>Viaje a Guanajuato</span><span class="marquee__star">✦</span>
+    <span>Expedición STEAM</span><span class="marquee__star">✦</span>
+    <span>MMXXVI</span><span class="marquee__star">✦</span>
+    <span>Doce paradas</span><span class="marquee__star">✦</span>
+    <span>Once asignaturas</span><span class="marquee__star">✦</span>
+    <span>Dolores Hidalgo · Guanajuato Capital</span><span class="marquee__star">✦</span>
+  </div>
+</div>
+
+<!-- ═══════════════ INTRO ═══════════════ -->
+<section id="intro" class="intro">
+  <div class="container">
+    <div class="intro__grid">
+      <div class="intro__left">
+        <span class="eyebrow rv">Sobre el proyecto</span>
+        <h2 class="display rv d1">
+          Un viaje académico<br>como <em>experiencia formativa</em>.
+        </h2>
+      </div>
+      <div class="intro__right">
+        <p class="rv d2">
+          Este viaje no es únicamente una actividad recreativa, sino una experiencia formativa estructurada que fortalece los conocimientos del aula mediante observación, análisis y experimentación en contextos reales.
+        </p>
+        <p class="rv d3">
+          Bajo metodología <strong>STEAM</strong> (Ciencia, Tecnología, Ingeniería, Arte y Matemáticas), integra <strong>once asignaturas</strong> en <strong>doce paradas</strong> que evalúan el 50% del tercer parcial.
+        </p>
+        <div class="intro__stats rv d4">
+          <div class="stat">
+            <div class="stat__num" data-count="12">0</div>
+            <div class="stat__label">Paradas del itinerario</div>
+          </div>
+          <div class="stat">
+            <div class="stat__num" data-count="11">0</div>
+            <div class="stat__label">Asignaturas</div>
+          </div>
+          <div class="stat">
+            <div class="stat__num">50<span>%</span></div>
+            <div class="stat__label">del tercer parcial</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ PHOTO STRIP ═══════════════ -->
+<div class="photo-strip" aria-hidden="true">
+  <div class="photo-strip__track">
+    <figure><img src="assets/img/dol-parroquia.jpg" alt=""></figure>
+    <figure><img src="assets/img/gto-teatro.jpg" alt=""></figure>
+    <figure><img src="assets/img/gto-callejon.jpg" alt=""></figure>
+    <figure><img src="assets/img/dol-plaza.jpg" alt=""></figure>
+    <figure><img src="assets/img/gto-alhondiga.jpg" alt=""></figure>
+    <figure><img src="assets/img/gto-valenciana.jpg" alt=""></figure>
+    <figure><img src="assets/img/dol-casa-hidalgo.jpg" alt=""></figure>
+    <figure><img src="assets/img/gto-mercado.jpg" alt=""></figure>
+    <figure><img src="assets/img/gto-universidad.jpg" alt=""></figure>
+    <figure><img src="assets/img/dol-carcel.jpg" alt=""></figure>
+    <figure><img src="assets/img/gto-basilica.png" alt=""></figure>
+    <figure><img src="assets/img/gto-pipila.jpg" alt=""></figure>
+    <!-- duplicate for infinite loop -->
+    <figure><img src="assets/img/dol-parroquia.jpg" alt=""></figure>
+    <figure><img src="assets/img/gto-teatro.jpg" alt=""></figure>
+    <figure><img src="assets/img/gto-callejon.jpg" alt=""></figure>
+    <figure><img src="assets/img/dol-plaza.jpg" alt=""></figure>
+    <figure><img src="assets/img/gto-alhondiga.jpg" alt=""></figure>
+    <figure><img src="assets/img/gto-valenciana.jpg" alt=""></figure>
+  </div>
+</div>
+
+<!-- ═══════════════ MAP SECTION ═══════════════ -->
+<section id="map" class="map-section">
+  <div class="container">
+    <header class="section-head">
+      <span class="eyebrow rv">El mapa interactivo</span>
+      <h2 class="display rv d1">
+        Doce paradas<br>entre <em>dos ciudades</em>.
+      </h2>
+      <p class="section-head__lead rv d2">
+        El itinerario inicia en Dolores Hidalgo —cuna de la Independencia— y continúa en Guanajuato Capital, Patrimonio de la Humanidad por la UNESCO. Pulsa un marcador para descubrirlo.
+      </p>
+    </header>
+
+    <div class="map-layout rv d3">
+      <aside class="map-sidebar">
+        <div class="map-sidebar__head">
+          <span class="mono">Itinerario · 12</span>
+          <span class="mono">Gto · Dolores</span>
+        </div>
+        <ul class="map-list" id="mapList"></ul>
+      </aside>
+      <div class="map-canvas">
+        <div id="map" class="map-canvas__leaflet"></div>
+        <div class="map-canvas__corner mono">© OpenStreetMap · CARTO</div>
+        <button class="map-canvas__reset" id="mapReset" data-magnetic aria-label="Ver todo el itinerario">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9"/><path d="M3 3v6h6"/></svg>
+          <span>Ver todo</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ ASIGNATURAS ═══════════════ -->
+<section id="asignaturas" class="subjects">
+  <div class="container">
+    <header class="section-head">
+      <span class="eyebrow rv">Las asignaturas</span>
+      <h2 class="display rv d1">
+        Once áreas<br>de <em>aprendizaje</em>.
+      </h2>
+      <p class="section-head__lead rv d2">
+        Cada asignatura está vinculada a una o más paradas del itinerario. Las fotos del viaje se cargarán al regreso.
+      </p>
+    </header>
+    <div class="subject-list-wrap" id="subjectSections"></div>
+  </div>
+</section>
+
+<!-- ═══════════════ MARQUEE 2 ═══════════════ -->
+<div class="marquee marquee--reverse" aria-hidden="true">
+  <div class="marquee__track">
+    <span class="italic">Iglesia · Cárcel · Casa de Hidalgo · Plaza · Pípila · Callejón del Beso · Catedral · Alhóndiga · Mercado · Mina · Universidad · Teatro Juárez ·</span>
+    <span class="italic">Iglesia · Cárcel · Casa de Hidalgo · Plaza · Pípila · Callejón del Beso · Catedral · Alhóndiga · Mercado · Mina · Universidad · Teatro Juárez ·</span>
+  </div>
+</div>
+
+<!-- ═══════════════ GALLERY ═══════════════ -->
+<section id="galeria" class="gallery">
+  <div class="container container--wide">
+    <header class="section-head">
+      <span class="eyebrow rv">Galería</span>
+      <h2 class="display rv d1">
+        El destino,<br>en <em>imágenes</em>.
+      </h2>
+      <p class="section-head__lead rv d2">
+        Avance de lo que veremos. Conforme avance la expedición, esta galería crecerá con fotos reales del viaje.
+      </p>
+    </header>
+
+    <div class="gallery-grid">
+      <figure class="gal gal--lg rv"><img src="assets/img/gto-panorama.jpg" alt="Vista desde El Pípila" loading="lazy"><figcaption>Vista desde El Pípila · Guanajuato</figcaption></figure>
+      <figure class="gal rv d1"><img src="assets/img/dol-parroquia.jpg" alt="Parroquia de Dolores" loading="lazy"><figcaption>Parroquia · Dolores Hidalgo</figcaption></figure>
+      <figure class="gal rv d2"><img src="assets/img/gto-teatro.jpg" alt="Teatro Juárez" loading="lazy"><figcaption>Teatro Juárez</figcaption></figure>
+      <figure class="gal gal--tall rv d3"><img src="assets/img/gto-valenciana.jpg" alt="Templo de la Valenciana" loading="lazy"><figcaption>Templo de la Valenciana</figcaption></figure>
+      <figure class="gal rv d4"><img src="assets/img/dol-casa-hidalgo.jpg" alt="Casa de Hidalgo" loading="lazy"><figcaption>Casa de Hidalgo · Dolores</figcaption></figure>
+      <figure class="gal rv d5"><img src="assets/img/gto-callejon.jpg" alt="Callejón del Beso" loading="lazy"><figcaption>Callejón del Beso</figcaption></figure>
+      <figure class="gal gal--wide rv d6"><img src="assets/img/gto-alhondiga.jpg" alt="Alhóndiga de Granaditas" loading="lazy"><figcaption>Alhóndiga de Granaditas</figcaption></figure>
+      <figure class="gal rv d3"><img src="assets/img/dol-plaza.jpg" alt="Plaza de Dolores" loading="lazy"><figcaption>Plaza Principal · Dolores</figcaption></figure>
+      <figure class="gal rv d4"><img src="assets/img/gto-mercado.jpg" alt="Mercado Hidalgo" loading="lazy"><figcaption>Mercado Hidalgo</figcaption></figure>
+      <figure class="gal rv d5"><img src="assets/img/dol-carcel.jpg" alt="Antigua Cárcel de Dolores" loading="lazy"><figcaption>Antigua Cárcel · Dolores</figcaption></figure>
+      <figure class="gal rv d6"><img src="assets/img/gto-universidad.jpg" alt="Universidad de Guanajuato" loading="lazy"><figcaption>Universidad de Guanajuato</figcaption></figure>
+      <figure class="gal gal--wide rv"><img src="assets/img/gto-aerial.jpg" alt="Vista aérea del centro histórico" loading="lazy"><figcaption>Centro histórico · UNESCO</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ CTA ═══════════════ -->
+<section class="cta-block">
+  <div class="container">
+    <div class="cta-block__inner rv">
+      <div>
+        <span class="eyebrow">Evidencias del viaje</span>
+        <h3 class="display">Las fotos y bitácoras<br>se cargarán <em>aquí</em>.</h3>
+      </div>
+      <p>Cada asignatura tiene su propio apartado. Conforme avance la expedición, los marcadores y las secciones se llenarán con fotos, notas y entregables reales.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <a href="#top" class="footer__brand">
+        <img src="assets/img/logo_rembrandt.png" alt="">
+        <div>
+          <div class="footer__name">Instituto Rembrandt de Querétaro</div>
+          <div class="mono">Bachillerato Tecnológico en Programación · DGETI</div>
+        </div>
+      </a>
+      <div class="footer__motto">
+        <p class="display">"Formando jóvenes con <em>respeto</em>, <em>cultura</em> y <em>honor</em>"</p>
+      </div>
+    </div>
+    <div class="footer__bot">
+      <span class="mono">© MMXXVI · DA016</span>
+      <span class="mono">Santiago de Querétaro · México</span>
+      <span class="mono">21°N · 100°W</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══════════════ MODAL ═══════════════ -->
+<div class="modal" id="modal" aria-hidden="true">
+  <div class="modal__backdrop"></div>
+  <div class="modal__panel">
+    <button class="modal__close" id="modalClose" aria-label="Cerrar">&times;</button>
+    <div class="modal__media"><img id="modalImg" src="" alt=""></div>
+    <div class="modal__body">
+      <div class="modal__num mono" id="modalNum">/00</div>
+      <h3 class="display" id="modalTitle"></h3>
+      <p class="modal__teacher" id="modalTeacher"></p>
+      <div class="modal__text" id="modalText"></div>
+      <div class="modal__meta" id="modalMeta"></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="js/main.js" defer></script>
+</body>
+</html>
