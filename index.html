@@ -42,13 +42,16 @@
     <img src="assets/img/logo_rembrandt.png" alt="" class="nav__logo">
     <span class="nav__name">Instituto Rembrandt <em>Qro</em></span>
   </a>
-  <ul class="nav__links">
+  <ul class="nav__links" id="navLinks">
     <li><a href="#hero">Inicio</a></li>
     <li><a href="#map">Mapa</a></li>
     <li><a href="#asignaturas">Asignaturas</a></li>
     <li><a href="#galeria">Galería</a></li>
   </ul>
   <a href="#map" class="nav__cta" data-magnetic>Explorar mapa</a>
+  <button class="nav__burger" id="navBurger" aria-label="Abrir menú" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <!-- ═══════════════ HERO ═══════════════ -->
@@ -67,7 +70,7 @@
       <span class="line line--big"><span data-anim="line-up">Guanajuato</span></span>
     </h1>
     <p class="hero__lead" data-split="words">
-      Un mapa interactivo del patrimonio histórico mexicano. Doce paradas entre Dolores Hidalgo y Guanajuato Capital. Once asignaturas. Una sola expedición.
+      Doce paradas entre Dolores Hidalgo y Guanajuato Capital. Once asignaturas que dialogan con la piedra y la historia. Una expedición STEAM.
     </p>
     <div class="hero__actions">
       <a href="#map" class="btn btn--primary" data-magnetic>
@@ -79,15 +82,25 @@
   </div>
   <div class="hero__bottom">
     <div class="hero__meta">
-      <div><span>Lat</span>21°00′N</div>
-      <div><span>Lng</span>101°15′W</div>
+      <div><span>Latitud</span>21°00′N</div>
+      <div><span>Longitud</span>101°15′W</div>
       <div><span>UNESCO</span>1988</div>
-      <div><span>Año</span>2026</div>
+      <div><span>Expedición</span>MMXXVI</div>
     </div>
     <div class="hero__scroll">
       <span>Desliza</span>
       <div class="hero__scroll-line"></div>
     </div>
+  </div>
+
+  <!-- Passport stamp -->
+  <div class="hero__stamp" aria-hidden="true">
+    <span class="hero__stamp-top">Instituto · Rembrandt</span>
+    <span class="hero__stamp-mid">
+      <span class="hero__stamp-num">12</span>
+      <span class="hero__stamp-lbl">paradas</span>
+    </span>
+    <span class="hero__stamp-bot">Querétaro → GTO</span>
   </div>
 </section>
 
@@ -183,7 +196,27 @@
       </p>
     </header>
 
-    <div class="map-layout rv d3">
+    <!-- Mobile: card-trigger compacto. Desktop: oculto. -->
+    <button class="map-trigger rv d3" id="mapTrigger" aria-label="Abrir mapa interactivo">
+      <img src="assets/img/gto-aerial.jpg" alt="" class="map-trigger__img" loading="lazy">
+      <div class="map-trigger__veil"></div>
+      <div class="map-trigger__content">
+        <div class="map-trigger__chips">
+          <span class="map-trigger__chip">12 paradas</span>
+          <span class="map-trigger__chip">Dolores · GTO</span>
+          <span class="map-trigger__chip">Leaflet · OSM</span>
+        </div>
+        <div class="map-trigger__body">
+          <h3 class="map-trigger__title">El mapa <em>en pantalla completa</em>.</h3>
+          <span class="map-trigger__cta">
+            Abrir mapa interactivo
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </span>
+        </div>
+      </div>
+    </button>
+
+    <div class="map-layout rv d3" id="mapLayout">
       <aside class="map-sidebar">
         <div class="map-sidebar__head">
           <span class="mono">Itinerario · 12</span>
@@ -199,6 +232,10 @@
           <span>Ver todo</span>
         </button>
       </div>
+      <button class="map-trigger__close" id="mapClose" aria-label="Cerrar mapa">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        <span>Cerrar</span>
+      </button>
     </div>
   </div>
 </section>
@@ -262,10 +299,10 @@
   <div class="container">
     <div class="cta-block__inner rv">
       <div>
-        <span class="eyebrow">Evidencias del viaje</span>
-        <h3 class="display">Las fotos y bitácoras<br>se cargarán <em>aquí</em>.</h3>
+        <span class="eyebrow">Bitácora en construcción</span>
+        <h3 class="display">Aún no salimos.<br>El viaje vive <em>aquí</em>.</h3>
       </div>
-      <p>Cada asignatura tiene su propio apartado. Conforme avance la expedición, los marcadores y las secciones se llenarán con fotos, notas y entregables reales.</p>
+      <p>Cada asignatura tiene su propio apartado. Al regresar, los placeholders se reemplazarán por fotos reales, bitácoras y los entregables del tercer parcial.</p>
     </div>
   </div>
 </section>
@@ -287,7 +324,7 @@
     </div>
     <div class="footer__bot">
       <span class="mono">© MMXXVI · DA016</span>
-      <span class="mono">Santiago de Querétaro · México</span>
+      <span class="mono">Diseñado por Santiago · Qro → Gto</span>
       <span class="mono">21°N · 100°W</span>
     </div>
   </div>

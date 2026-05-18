@@ -452,12 +452,23 @@ document.addEventListener('click', e => {
   }
 });
 
-/* ============= NAV SCROLL ============= */
+/* ============= NAV SCROLL + BURGER ============= */
 const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => {
   if (window.scrollY > 60) nav.classList.add('is-scrolled');
   else nav.classList.remove('is-scrolled');
 }, { passive: true });
+
+const navBurger = document.getElementById('navBurger');
+const navLinks = document.getElementById('navLinks');
+function toggleMenu(open) {
+  const isOpen = open === undefined ? !nav.classList.contains('is-menu-open') : open;
+  nav.classList.toggle('is-menu-open', isOpen);
+  navBurger?.setAttribute('aria-expanded', String(isOpen));
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+}
+navBurger?.addEventListener('click', () => toggleMenu());
+navLinks?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggleMenu(false)));
 
 /* ============= SCROLL PROGRESS ============= */
 const progressBar = document.querySelector('.scroll-progress__bar');
@@ -630,6 +641,29 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal()
 /* ============= MAP RESET ============= */
 const mapResetBtn = document.getElementById('mapReset');
 if (mapResetBtn) mapResetBtn.addEventListener('click', resetMap);
+
+/* ============= MAP TRIGGER / OVERLAY (mobile) ============= */
+const mapLayout = document.getElementById('mapLayout');
+const mapTrigger = document.getElementById('mapTrigger');
+const mapClose = document.getElementById('mapClose');
+function openMapOverlay() {
+  mapLayout?.classList.add('is-open');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => {
+    map?.invalidateSize();
+    const bounds = L.latLngBounds(PLACES.map(p => p.coords)).pad(0.15);
+    map?.fitBounds(bounds);
+  }, 80);
+}
+function closeMapOverlay() {
+  mapLayout?.classList.remove('is-open');
+  document.body.style.overflow = '';
+}
+mapTrigger?.addEventListener('click', openMapOverlay);
+mapClose?.addEventListener('click', closeMapOverlay);
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && mapLayout?.classList.contains('is-open')) closeMapOverlay();
+});
 
 /* ============= INIT ============= */
 document.addEventListener('DOMContentLoaded', () => {
