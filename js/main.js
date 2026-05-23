@@ -1,201 +1,205 @@
 /* =========================================================
-   VIAJE A GUANAJUATO · v6
-   Leaflet + 12 places + 11 subjects + pre-filled content
+   JOURNEY TO GUANAJUATO · v9 (English · 2nd semester)
+   Leaflet + 12 places + 7 subjects (separate sections)
    ========================================================= */
 
 /* ============= PLACES — 12 real stops ============= */
 const PLACES = [
-  { id: 1, num: '01', name: 'Parroquia de Dolores', city: 'Dolores Hidalgo', cityShort: 'Dolores', coords: [21.1567, -100.9343], img: 'assets/img/dol-parroquia.jpg', desc: 'Donde Hidalgo dio el Grito de Independencia el 16 de septiembre de 1810. Cuna de la patria mexicana.', subjects: ['humanidades', 'literatura'] },
-  { id: 2, num: '02', name: 'Antigua Cárcel', city: 'Dolores Hidalgo', cityShort: 'Dolores', coords: [21.1573, -100.9342], img: 'assets/img/dol-carcel.jpg', desc: 'Hoy Museo de la Independencia Nacional. Memoria de los inicios del movimiento insurgente.', subjects: ['humanidades'] },
-  { id: 3, num: '03', name: 'Casa de Hidalgo', city: 'Dolores Hidalgo', cityShort: 'Dolores', coords: [21.1583, -100.9352], img: 'assets/img/dol-casa-hidalgo.jpg', desc: 'Hogar del cura Don Miguel Hidalgo y Costilla, Padre de la Patria.', subjects: ['humanidades', 'literatura'] },
-  { id: 4, num: '04', name: 'Plaza Principal', city: 'Dolores Hidalgo', cityShort: 'Dolores', coords: [21.1576, -100.9347], img: 'assets/img/dol-plaza.jpg', desc: 'Jardín principal donde sonaron las campanas del Grito en 1810. Corazón cívico de la ciudad.', subjects: ['humanidades', 'edfisica'] },
-  { id: 5, num: '05', name: 'Monumento al Pípila', city: 'Guanajuato', cityShort: 'Guanajuato', coords: [21.0144, -101.2557], img: 'assets/img/gto-pipila.jpg', desc: 'Mirador panorámico. Estatua del héroe que prendió fuego a la Alhóndiga en 1810.', subjects: ['ingles', 'humanidades'] },
-  { id: 6, num: '06', name: 'Callejón del Beso', city: 'Guanajuato', cityShort: 'Guanajuato', coords: [21.0157, -101.2620], img: 'assets/img/gto-callejon.jpg', desc: 'Leyenda romántica de Doña Ana y Don Carlos. El callejón más estrecho de la ciudad.', subjects: ['literatura', 'edfisica'] },
-  { id: 7, num: '07', name: 'Basílica Colegiata', city: 'Guanajuato', cityShort: 'Guanajuato', coords: [21.0185, -101.2578], img: 'assets/img/gto-basilica.png', desc: 'Catedral de Nuestra Señora de Guanajuato. Patrona de la ciudad, fachada barroca amarilla.', subjects: ['literatura', 'multimedia'] },
-  { id: 8, num: '08', name: 'Alhóndiga de Granaditas', city: 'Guanajuato', cityShort: 'Guanajuato', coords: [21.0214, -101.2585], img: 'assets/img/gto-alhondiga.jpg', desc: 'Antiguo granero, lugar de la primera batalla de la Independencia. Hoy museo regional.', subjects: ['humanidades', 'multimedia'] },
-  { id: 9, num: '09', name: 'Mercado Hidalgo', city: 'Guanajuato', cityShort: 'Guanajuato', coords: [21.0188, -101.2602], img: 'assets/img/gto-mercado.jpg', desc: 'Mercado histórico de hierro forjado inaugurado en 1910. Centro de comercio, gastronomía y artesanía.', subjects: ['negocios', 'quimica'] },
-  { id: 10, num: '10', name: 'Mina La Valenciana', city: 'Guanajuato', cityShort: 'Guanajuato', coords: [21.0341, -101.2516], img: 'assets/img/gto-valenciana.jpg', desc: 'Una de las minas de plata más productivas del mundo en el siglo XVIII. Templo barroco anexo.', subjects: ['robotica', 'ciencias', 'quimica'] },
-  { id: 11, num: '11', name: 'Universidad de Guanajuato', city: 'Guanajuato', cityShort: 'Guanajuato', coords: [21.0186, -101.2575], img: 'assets/img/gto-universidad.jpg', desc: 'Edificio Central de fachada blanca con su escalinata icónica de 113 escalones.', subjects: ['programacion'] },
-  { id: 12, num: '12', name: 'Teatro Juárez', city: 'Guanajuato', cityShort: 'Guanajuato', coords: [21.0186, -101.2562], img: 'assets/img/gto-teatro.jpg', desc: 'Joya arquitectónica del porfiriato. Escenario principal del Festival Internacional Cervantino.', subjects: ['herramientas', 'multimedia'] }
+  {
+    id: 1, num: '01', name: 'Parroquia de Dolores',
+    nameEn: 'Parish of Our Lady of Sorrows',
+    city: 'Dolores Hidalgo', cityShort: 'Dolores',
+    coords: [21.1567, -100.9343], img: 'assets/img/dol-parroquia.jpg',
+    short: 'Where Father Hidalgo rang the bells of the Mexican Independence on September 16, 1810.',
+    history: 'Built between 1712 and 1778, this 18th-century Baroque parish is one of the most important historical monuments in Mexico. From its atrium, the priest Miguel Hidalgo y Costilla rang the bells at dawn on September 16, 1810, and called the people to fight for independence —an event known as the <em>Grito de Dolores</em>. Its Churrigueresque facade in pink quarry stone hides two interior altars covered in gold leaf.',
+    highlights: ['Churrigueresque pink quarry-stone facade', 'Twin gold-leaf altars inside', 'Original bell that summoned the people in 1810', 'National Historic Monument since 1932']
+  },
+  {
+    id: 2, num: '02', name: 'Antigua Cárcel',
+    nameEn: 'Former Royal Prison',
+    city: 'Dolores Hidalgo', cityShort: 'Dolores',
+    coords: [21.1573, -100.9342], img: 'assets/img/dol-carcel.jpg',
+    short: 'Today the National Museum of Independence — memory of the insurgent movement.',
+    history: 'This colonial building served as the royal jail of Dolores until the early 19th century. On the night of September 15, 1810, Hidalgo himself ordered the release of all the prisoners as one of the first acts of the insurgent movement. Today it houses the <strong>National Museum of Independence</strong>, with documents, weapons, paintings, and personal objects from the heroes of 1810.',
+    highlights: ['National Museum of Independence', 'Original 18th-century cells preserved', 'Permanent collection of insurgent objects', 'Stone arcades and central courtyard']
+  },
+  {
+    id: 3, num: '03', name: 'Casa de Hidalgo',
+    nameEn: 'House of Father Hidalgo',
+    city: 'Dolores Hidalgo', cityShort: 'Dolores',
+    coords: [21.1583, -100.9352], img: 'assets/img/dol-casa-hidalgo.jpg',
+    short: 'Home of the priest Miguel Hidalgo y Costilla, Father of the Nation.',
+    history: 'Hidalgo lived in this modest house from 1804 to 1810 while serving as parish priest. Inside, he promoted activities forbidden by the Spanish Crown: pottery, silk-worm breeding, beekeeping, vineyards, and even a small brick factory. The conspiracy meetings before the Grito were held in its inner rooms. It is now a museum that preserves his personal belongings, furniture, and books.',
+    highlights: ['Hidalgo\'s personal library', 'Original 19th-century furniture', 'Workshop and patio where he taught crafts', 'Site declared National Monument']
+  },
+  {
+    id: 4, num: '04', name: 'Plaza Principal',
+    nameEn: 'Main Square of Dolores',
+    city: 'Dolores Hidalgo', cityShort: 'Dolores',
+    coords: [21.1576, -100.9347], img: 'assets/img/dol-plaza.jpg',
+    short: 'The civic heart of the city — where the bells of the Grito were heard in 1810.',
+    history: 'This tree-lined garden is the geographical and symbolic center of Dolores Hidalgo. It hosts a bronze statue of Hidalgo holding the standard of the Virgin of Guadalupe. Around it stand the Parish, the Municipal Palace, and traditional <em>nieve</em> (ice cream) stands famous all over Mexico for their bold flavors —avocado, mole, beer, shrimp— a 19th-century local tradition.',
+    highlights: ['Bronze statue of Hidalgo with the Guadalupan standard', 'Iconic ice-cream stands with unusual flavors', 'Site of the annual September 16 ceremony', 'Surrounded by colonial buildings']
+  },
+  {
+    id: 5, num: '05', name: 'Monumento al Pípila',
+    nameEn: 'Monument to El Pípila',
+    city: 'Guanajuato', cityShort: 'Guanajuato',
+    coords: [21.0144, -101.2557], img: 'assets/img/gto-pipila.jpg',
+    short: 'Panoramic lookout — statue of the hero who set the Alhóndiga on fire in 1810.',
+    history: 'Inaugurated in 1939, this 28-meter pink-quarry statue honors <strong>Juan José de los Reyes Martínez, "El Pípila"</strong>, the young miner who —tying a flat stone to his back as a shield— set fire to the wooden door of the Alhóndiga de Granaditas, allowing the insurgents to take the building. The monument bears the inscription <em>"Aún hay otras Alhóndigas por incendiar"</em> ("There are still other Alhóndigas to burn"). From its base, the entire historic center unfolds below.',
+    highlights: ['28-meter monumental statue', 'Best panoramic view of Guanajuato', 'Accessible by funicular or stairway', 'Famous historical inscription on the pedestal']
+  },
+  {
+    id: 7, num: '06', name: 'Basílica Colegiata',
+    nameEn: 'Collegiate Basilica of Our Lady of Guanajuato',
+    city: 'Guanajuato', cityShort: 'Guanajuato',
+    coords: [21.0185, -101.2578], img: 'assets/img/gto-basilica.png',
+    short: 'Patron church of the city — Baroque yellow facade, jewel of the historic center.',
+    history: 'Built between 1671 and 1696, this Baroque basilica houses the image of <strong>Our Lady of Guanajuato</strong>, a 7th-century carving donated by King Philip II of Spain in 1557 — the oldest Christian image in the Americas. Its yellow exterior with white trim is the visual heart of the city. Inside, an altarpiece of solid gold and an organ from 1908 still in use.',
+    highlights: ['7th-century image of Our Lady', 'Baroque yellow facade — symbol of Guanajuato', 'Solid-gold main altarpiece', '1908 organ still in liturgical use']
+  },
+  {
+    id: 8, num: '07', name: 'Alhóndiga de Granaditas',
+    nameEn: 'Alhóndiga (Royal Granary)',
+    city: 'Guanajuato', cityShort: 'Guanajuato',
+    coords: [21.0214, -101.2585], img: 'assets/img/gto-alhondiga.jpg',
+    short: 'Former granary, site of the first great insurgent victory. Today a regional museum.',
+    history: 'Completed in 1809, this Neoclassical building was used as a public granary. On <strong>September 28, 1810</strong>, the royalist forces took refuge inside as the insurgent army arrived. After hours of siege, El Pípila set fire to the door and the insurgents took the building. After the war, the heads of Hidalgo, Allende, Aldama, and Jiménez were exhibited from its four corners for ten years as a warning. Today it is the <em>Museo Regional de Guanajuato</em>, with murals by José Chávez Morado.',
+    highlights: ['Neoclassical facade in pink quarry stone', 'Murals by José Chávez Morado', 'Iron hooks where the heroes\' heads were exhibited', 'Permanent archaeological and historical collection']
+  },
+  {
+    id: 9, num: '08', name: 'Mercado Hidalgo',
+    nameEn: 'Hidalgo Market',
+    city: 'Guanajuato', cityShort: 'Guanajuato',
+    coords: [21.0188, -101.2602], img: 'assets/img/gto-mercado.jpg',
+    short: 'Historic wrought-iron market opened in 1910 — gastronomy, crafts, and color.',
+    history: 'Inaugurated on September 16, 1910 to celebrate the centennial of the Independence, this market was built with a metal structure imported from <strong>France</strong> —the same style as the Eiffel Tower— and was originally planned as a railway station. Its 16-meter-high central clock and its mezzanine floor of artisan stalls make it one of the most photographed civic buildings in the state.',
+    highlights: ['French wrought-iron structure (1910)', 'Central tower with original 16 m clock', 'Two floors: food downstairs, crafts upstairs', 'Local specialties: enchiladas mineras, charamuscas']
+  },
+  {
+    id: 10, num: '09', name: 'Mina La Valenciana',
+    nameEn: 'Valenciana Silver Mine',
+    city: 'Guanajuato', cityShort: 'Guanajuato',
+    coords: [21.0341, -101.2516], img: 'assets/img/gto-valenciana.jpg',
+    short: 'One of the most productive silver mines in the world in the 18th century. Baroque temple next door.',
+    history: 'Discovered in 1768 by Antonio Obregón y Alcocer, this mine became the largest silver producer in colonial New Spain —at its peak it produced two-thirds of all the silver in the world. The main shaft, the <em>Tiro de San Cayetano</em>, descends more than 500 meters. Next to it stands the <strong>Templo de San Cayetano</strong>, a Churrigueresque jewel financed entirely with the mine\'s silver, with three altarpieces covered in 23-karat gold leaf.',
+    highlights: ['Original 500 m mine shaft', 'Templo de San Cayetano with three gold altarpieces', 'Guided tours into the mining tunnels', 'Old miners\' tools and explosives exhibition']
+  },
+  {
+    id: 11, num: '10', name: 'Universidad de Guanajuato',
+    nameEn: 'University of Guanajuato',
+    city: 'Guanajuato', cityShort: 'Guanajuato',
+    coords: [21.0186, -101.2575], img: 'assets/img/gto-universidad.jpg',
+    short: 'Central building with an iconic white facade and its 113-step stairway.',
+    history: 'Heir to the Jesuit school of the Holy Trinity (1732), the University of Guanajuato has its <strong>Central Building</strong> raised on a steep slope, with a green-and-white quarry facade in Modern Mexican Plateresque style designed by Vicente Urquiaga in 1955. Its <strong>113-step stairway</strong> is one of the city\'s symbols and a stage for the annual Cervantes Festival. It hosts about 40,000 students across its campuses.',
+    highlights: ['Iconic 113-step stairway', 'Modern Mexican Plateresque facade (1955)', 'Active venue of the Cervantino Festival', 'Adjacent Jesuit church of La Compañía']
+  },
+  {
+    id: 12, num: '11', name: 'Teatro Juárez',
+    nameEn: 'Juárez Theatre',
+    city: 'Guanajuato', cityShort: 'Guanajuato',
+    coords: [21.0186, -101.2562], img: 'assets/img/gto-teatro.jpg',
+    short: 'Architectural jewel of the Porfiriato — main stage of the International Cervantino Festival.',
+    history: 'Inaugurated by President Porfirio Díaz on October 27, 1903, this theatre is considered one of the most beautiful in Latin America. Its facade combines Doric columns with bronze sculptures of the nine Muses; its interior is an explosion of <em>Moorish-Art Nouveau</em> style with red velvet, gilded plaster, and walnut wood. It is the main venue of the International Cervantino Festival each October.',
+    highlights: ['Eclectic facade with the nine Muses in bronze', 'Moorish-Art Nouveau interior', 'Capacity of 902 seats', 'Main stage of the Cervantino Festival']
+  }
 ];
 
-/* ============= SUBJECTS — 11 academic areas ============= */
+/* ============= SUBJECTS — 7 academic subjects (2nd semester / all) ============= */
 const SUBJECTS = [
-  /* ───── 01 Química ───── PENDING */
-  { key: 'quimica', num: '01', eyebrow: 'Asignatura · 2° semestre',
-    title: 'Química &amp; <em>Biología</em>',
-    teacher: 'Mtra. Michelle Ramírez Almaraz',
+  /* ───── 01 Chemistry & Biology ───── */
+  {
+    key: 'quimica', num: '01', eyebrow: 'Subject · 2nd semester',
+    title: 'Chemistry &amp; <em>Biology</em>',
+    teacher: 'Prof. Michelle Ramírez Almaraz',
     placeIds: [9, 10],
-    tagline: 'La ciencia detrás de la historia',
-    body: '<p>Análisis de procesos químicos y biológicos presentes en los sitios visitados: <strong>oxidación de estructuras metálicas</strong>, biodiversidad local y composición de minerales en las minas.</p>',
-    tags: ['Video documental', '5-8 min', 'Bitácora científica'],
+    tagline: 'The science behind the history',
+    body: '<p>Analysis of chemical and biological processes present in the visited sites: <strong>oxidation of metal structures</strong>, local biodiversity, and the mineral composition of the silver mines of Guanajuato.</p>',
+    tags: ['Documentary video', '5–8 min', 'Scientific journal'],
     status: 'pending'
   },
 
-  /* ───── 02 Robótica ───── PENDING */
-  { key: 'robotica', num: '02', eyebrow: 'Asignatura · 4° semestre',
-    title: 'Robótica · <em>Ecología</em>',
-    teacher: 'Mtra. Michelle Ramírez Almaraz',
-    placeIds: [10],
-    tagline: 'Tecnología para preservar el patrimonio',
-    body: '<p>Diseñar soluciones tecnológicas a problemáticas observadas:</p><ul><li>App turística interactiva</li><li>Simulación de contaminación</li><li>Prototipo de sensor ambiental</li><li>Código para análisis de datos ecológicos</li></ul>',
-    tags: ['Prototipo funcional', 'Pitch', 'STEAM'],
-    status: 'pending'
-  },
-
-  /* ───── 03 Programación Web III ───── READY */
-  { key: 'programacion', num: '03', eyebrow: 'Asignatura · 6° semestre',
-    title: 'Programación <em>Web III</em>',
-    teacher: 'Mtro. Ricardo Carrillo Cue',
-    placeIds: [11],
-    tagline: 'Gestión, tecnología y procesos',
-    body: '<p>Portafolio de gestión de proyectos en PDF profesional integrando los módulos de gestión (A), tecnología (T) y análisis de procesos (E).</p>',
-    tags: ['Portafolio PDF', 'Gestión', '6° sem'],
-    status: 'ready',
-    content: `
-      <h4>1. Marco Normativo y Seguridad <span class="weight">25%</span></h4>
-      <p>Una excursión académica institucional requiere cumplir con la normativa de seguridad escolar de la SEP y la DGETI. Los puntos clave son:</p>
-      <ul>
-        <li><strong>Autorización de padres:</strong> permiso firmado por escrito, copia de identificación y datos de emergencia.</li>
-        <li><strong>Cobertura de seguro:</strong> Seguro Estudiantil Contra Accidentes Escolares (SECAE) y, si aplica, seguro adicional del transporte.</li>
-        <li><strong>Personal docente acompañante:</strong> mínimo un profesor cada 15 alumnos.</li>
-        <li><strong>Transporte certificado:</strong> verificación de la SCT vigente, póliza del operador.</li>
-        <li><strong>Protocolo de emergencias:</strong> botiquín, lista de hospitales en ruta (Hospital General de Guanajuato, Centro Médico Quirúrgico de Dolores Hidalgo).</li>
-      </ul>
-      <h4>2. Logística &amp; Análisis de Costos <span class="weight">25%</span></h4>
-      <p>Estructura de cálculo por estudiante (cifras aproximadas, sujeta a cotización):</p>
-      <ul>
-        <li>Transporte ida/vuelta Qro–Gto–Dolores Hidalgo–Qro: ~$650 / estudiante</li>
-        <li>Hospedaje (1 noche, hostal compartido): ~$450 / estudiante</li>
-        <li>Alimentos (3 comidas + 1 cena): ~$350 / estudiante</li>
-        <li>Entradas a museos (Alhóndiga, Mina Valenciana, Casa Hidalgo): ~$220 / estudiante</li>
-        <li>Funicular al Pípila + propinas guías: ~$100 / estudiante</li>
-        <li>Imprevistos (10%): ~$180 / estudiante</li>
-      </ul>
-      <blockquote>Total estimado por estudiante: <strong>$1,950 MXN</strong> (cifra de referencia).</blockquote>
-      <h4>3. Sustitución Tecnológica · Recorrido Virtual</h4>
-      <p>Mientras llega la fecha, se pueden recorrer los sitios usando <strong>Google Street View</strong> y los sitios oficiales:</p>
-      <ul>
-        <li><em>visitguanajuato.mx</em> — sitio oficial de turismo de Guanajuato</li>
-        <li><em>museodelaindependencia.gob.mx</em> — Antigua Cárcel de Dolores</li>
-        <li>Street View dentro del Mercado Hidalgo y la Mina La Valenciana</li>
-      </ul>
-    `
-  },
-
-  /* ───── 04 Herramientas Digitales ───── READY */
-  { key: 'herramientas', num: '04', eyebrow: 'Asignatura · 2°/4° semestre',
-    title: 'Herramientas <em>Digitales</em>',
-    teacher: 'Mtra. María Fernanda Rosas Mendoza',
+  /* ───── 02 Digital Tools ───── */
+  {
+    key: 'herramientas', num: '02', eyebrow: 'Subject · 2nd semester',
+    title: 'Digital <em>Tools</em>',
+    teacher: 'Prof. María Fernanda Rosas Mendoza',
     placeIds: [12],
-    tagline: 'Guía turística digital interactiva',
-    body: '<p>Crear una guía interactiva sobre Guanajuato que integre mapas, rutas, fotografías, videos, recomendaciones y códigos QR vinculados a sitios de interés.</p>',
-    tags: ['Guía digital', 'Mapas + QR', 'Multimedia'],
+    tagline: 'Interactive digital tourist guide',
+    body: '<p>Build an interactive guide about Guanajuato integrating maps, routes, photographs, videos, recommendations, and QR codes linked to points of interest.</p>',
+    tags: ['Digital guide', 'Maps + QR', 'Multimedia'],
     status: 'ready',
     content: `
-      <h4>Propuesta de guía</h4>
-      <p>Este mismo sitio web —el que estás navegando— es la guía turística digital interactiva entregable. Cumple con todos los criterios de la rúbrica:</p>
+      <h4>Proposal</h4>
+      <p>This very website —the one you are browsing— is the deliverable interactive digital tourist guide. It meets every criterion of the rubric:</p>
       <ul>
-        <li><strong>Contenido turístico:</strong> 12 sitios históricos descritos con detalle.</li>
-        <li><strong>Mapas y rutas:</strong> mapa Leaflet interactivo con ruta polyline conectando los puntos.</li>
-        <li><strong>Recursos multimedia:</strong> 12 imágenes en alta resolución de Wikimedia Commons.</li>
-        <li><strong>Integración QR:</strong> al desplegar el sitio en GitHub Pages se generará un QR para acceso móvil.</li>
-        <li><strong>Diseño digital:</strong> tipografía editorial Anthropic (Newsreader + Inter), animaciones suaves, paleta cálida mexicana.</li>
-        <li><strong>Comunicación y redacción:</strong> texto en español sin errores, jerarquía clara.</li>
-        <li><strong>Creatividad e innovación:</strong> implementación con Leaflet + OpenStreetMap, partículas, marquees, magnetic buttons, scroll progress, cursor custom.</li>
+        <li><strong>Tourist content:</strong> 12 historic sites described in detail.</li>
+        <li><strong>Maps and routes:</strong> interactive Leaflet map with a polyline route connecting the stops.</li>
+        <li><strong>Multimedia resources:</strong> 12 high-resolution images from Wikimedia Commons.</li>
+        <li><strong>QR integration:</strong> deploying the site on GitHub Pages generates a QR for mobile access.</li>
+        <li><strong>Digital design:</strong> editorial Anthropic-style typography (Newsreader + Inter), smooth animations, warm Mexican palette.</li>
+        <li><strong>Writing &amp; communication:</strong> English text without errors, clear hierarchy.</li>
+        <li><strong>Creativity &amp; innovation:</strong> built with Leaflet + OpenStreetMap, particles, marquees, magnetic buttons, scroll progress, custom cursor.</li>
       </ul>
-      <h4>Stack técnico</h4>
+      <h4>Tech stack</h4>
       <ul>
-        <li>HTML5 semántico · CSS3 con variables y grid · JavaScript ES6+ vanilla</li>
-        <li>Leaflet 1.9.4 + tiles CartoDB Voyager</li>
+        <li>Semantic HTML5 · CSS3 with variables and grid · Vanilla JavaScript ES6+</li>
+        <li>Leaflet 1.9.4 + CartoDB Voyager tiles</li>
         <li>Google Fonts (Newsreader, Inter, JetBrains Mono)</li>
-        <li>Wikimedia Commons (imágenes en CC)</li>
-        <li>Despliegue: GitHub Pages</li>
+        <li>Wikimedia Commons (Creative Commons imagery)</li>
+        <li>Deployment: GitHub Pages</li>
       </ul>
     `
   },
 
-  /* ───── 05 Ciencias / Hidrostática ───── PENDING */
-  { key: 'ciencias', num: '05', eyebrow: 'Asignatura · 4° semestre',
-    title: 'Ciencias · <em>Hidrostática</em>',
-    teacher: 'Mtro. Daniel Vicente Vázquez · 4.1 y 4.2',
-    placeIds: [10],
-    tagline: '¿Cómo influye la hidrostática en nuestra vida?',
-    body: '<p>Aplicación del <strong>Principio de Pascal</strong>: la presión aplicada a un fluido incompresible confinado se transmite con igual intensidad en todas direcciones.</p><p>Evaluación: Fase Diseño 30% · Fase Registro 20% · Fase Presentación 30%. El sistema debe contemplar <strong>tres o más movimientos</strong>.</p>',
-    tags: ['Objeto funcional', 'Bitácora', 'Pascal'],
-    status: 'pending'
-  },
-
-  /* ───── 06 Multimedia ───── PENDING */
-  { key: 'multimedia', num: '06', eyebrow: 'Asignatura · 2° semestre',
-    title: 'Diseño <em>Multimedia</em>',
-    teacher: 'Mtra. Patricia Martínez',
+  /* ───── 03 Multimedia Design ───── */
+  {
+    key: 'multimedia', num: '03', eyebrow: 'Subject · 2nd semester',
+    title: 'Multimedia <em>Design</em>',
+    teacher: 'Prof. Patricia Martínez',
     placeIds: [8, 7],
-    tagline: 'Cartel y fotomontaje del viaje',
-    body: '<p>Crear un <strong>cartel/banner digital</strong> y un <strong>fotomontaje creativo</strong> basados en la experiencia del viaje. Se evalúan: composición, color, tipografía, creatividad, edición y manejo de Canva/Photoshop.</p>',
-    tags: ['Cartel digital', 'Fotomontaje', 'Adobe/Canva'],
+    tagline: 'Poster and photo-montage of the trip',
+    body: '<p>Create a <strong>digital poster/banner</strong> and a <strong>creative photo-montage</strong> based on the experience of the trip. Evaluated criteria: composition, color, typography, creativity, editing, and command of Canva / Photoshop.</p>',
+    tags: ['Digital poster', 'Photo-montage', 'Adobe / Canva'],
     status: 'pending'
   },
 
-  /* ───── 07 Negocios — BMC READY ───── */
-  { key: 'negocios', num: '07', eyebrow: 'Asignatura · 4° semestre',
-    title: 'Admón. de <em>Negocios</em>',
-    teacher: 'Mtra. Patricia Martínez',
-    placeIds: [9],
-    tagline: 'Business Model Canvas: Rutas Culturales Gto',
-    body: '<p>Business Model Canvas para una propuesta de negocio inspirada en el viaje. Modelo propuesto: <strong>"Rutas Culturales GTO"</strong>, recorridos guiados temáticos por jóvenes universitarios.</p>',
-    tags: ['BMC completo', 'Pitch', '9 bloques'],
+  /* ───── 04 Physical Education ───── */
+  {
+    key: 'edfisica', num: '04', eyebrow: 'Subject · All semesters',
+    title: 'Physical <em>Education</em>',
+    teacher: 'Prof. Diana Olvera Antonio',
+    placeIds: [4],
+    tagline: 'Physical education in antiquity — The Ulama',
+    body: '<p>Recreate a physical-education practice from an ancient civilization. The chosen practice: <strong>Ulama</strong>, the Mesoamerican ball game with more than 3,500 years of history.</p>',
+    tags: ['Report 3–5 pages', 'Mesoamerican Ulama'],
     status: 'ready',
     content: `
-      <h4>Business Model Canvas · Rutas Culturales GTO</h4>
-      <div class="bmc-grid">
-        <div class="bmc-block"><span class="bmc-block__label">1 · Propuesta de valor</span><p>Recorridos guiados temáticos (Independencia, Minas, Leyendas, Gastronomía) facilitados por estudiantes universitarios. Experiencia auténtica, cercana y económica vs. turismo masivo.</p></div>
-        <div class="bmc-block"><span class="bmc-block__label">2 · Segmento de clientes</span><p>Familias mexicanas, estudiantes de bachillerato/universidad, mochileros nacionales (18-35 años), turistas independientes con interés cultural.</p></div>
-        <div class="bmc-block"><span class="bmc-block__label">3 · Canales</span><p>Redes sociales (Instagram, TikTok), Airbnb Experiences, alianzas con hostales, código QR en mercado y zócalo.</p></div>
-        <div class="bmc-block"><span class="bmc-block__label">4 · Relación con clientes</span><p>Grupos pequeños (máx 8 personas), atención personalizada, seguimiento post-tour vía WhatsApp, descuentos por referidos.</p></div>
-        <div class="bmc-block"><span class="bmc-block__label">5 · Fuentes de ingreso</span><p>Recorrido base $250/persona · ruta extendida (4h) $400 · paquete fin de semana $1,200 · comisiones por restaurantes/talleres recomendados.</p></div>
-        <div class="bmc-block"><span class="bmc-block__label">6 · Recursos clave</span><p>Guías capacitados, transporte propio (camionetas), página web, equipo de audio inalámbrico, alianzas con sitios cerrados al público.</p></div>
-        <div class="bmc-block"><span class="bmc-block__label">7 · Actividades clave</span><p>Diseñar y operar tours · capacitar guías · marketing digital · gestionar reservas · mantener red de aliados locales.</p></div>
-        <div class="bmc-block"><span class="bmc-block__label">8 · Socios clave</span><p>Universidad de Guanajuato, hostales Casa Bertha y Casa Mexicana, restaurantes del Truco 7, artesanos del Mercado Hidalgo.</p></div>
-        <div class="bmc-block"><span class="bmc-block__label">9 · Estructura de costos</span><p>Salarios guías 40% · gasolina/mantenimiento 15% · marketing digital 12% · seguros y permisos 8% · equipo 8% · operación 17%.</p></div>
-      </div>
-      <blockquote>Punto de equilibrio estimado: <strong>120 personas/mes</strong>. Inversión inicial: <strong>$85,000 MXN</strong>.</blockquote>
-    `
-  },
-
-  /* ───── 08 Educación Física — ULAMA READY ───── */
-  { key: 'edfisica', num: '08', eyebrow: 'Asignatura · Todos los semestres',
-    title: 'Educación <em>Física</em>',
-    teacher: 'Mtra. Diana Olvera Antonio',
-    placeIds: [6, 4],
-    tagline: 'Educación física en la antigüedad · El Ulama',
-    body: '<p>Recrear una práctica de educación física de una civilización antigua. Práctica investigada: <strong>el Ulama</strong>, juego de pelota mesoamericano de más de 3,500 años de antigüedad.</p>',
-    tags: ['Reporte 3-5p', 'Ulama mesoamericano'],
-    status: 'ready',
-    content: `
-      <h4>Ubicación &amp; contexto histórico</h4>
-      <p>El <em>Ulama</em> es el juego ritual y deportivo más antiguo del continente americano. Practicado por los olmecas, mayas, zapotecas, mixtecos y mexicas desde aproximadamente el 1,500 a.C., aún sobrevive hoy en algunas comunidades del estado de Sinaloa, México.</p>
-      <h4>Personajes relevantes</h4>
-      <p>En la mitología maya, los <em>Héroes Gemelos</em> Hunahpú e Ixbalanqué descienden al inframundo a jugar contra los señores de Xibalbá. El juego es así <strong>cosmogonía y deporte</strong> a la vez. Los gobernantes prehispánicos exhibían sus habilidades en partidos públicos.</p>
-      <h4>Reglas, materiales y espacio</h4>
+      <h4>Location &amp; Historical Context</h4>
+      <p>The <em>Ulama</em> is the oldest ritual and sporting game on the American continent. Practiced by the Olmecs, Maya, Zapotecs, Mixtecs, and Aztecs from around 1,500 BCE, it still survives today in some communities of the state of Sinaloa, Mexico.</p>
+      <h4>Relevant Figures</h4>
+      <p>In Maya mythology, the <em>Hero Twins</em> Hunahpú and Ixbalanqué descend to the underworld to play against the lords of Xibalbá. The game is therefore <strong>cosmogony and sport</strong> at the same time. Pre-Hispanic rulers would publicly display their skills.</p>
+      <h4>Rules, Materials and Court</h4>
       <ul>
-        <li><strong>Cancha:</strong> en forma de I, llamada <em>tlachtli</em>; muros laterales inclinados.</li>
-        <li><strong>Pelota:</strong> caucho macizo de hule (Castilla elastica), peso 3–4 kg, diámetro ~20 cm.</li>
-        <li><strong>Equipos:</strong> 2 a 5 jugadores por lado.</li>
-        <li><strong>Modalidades:</strong> <em>Ulama de cadera</em> (la más extendida), <em>Ulama de antebrazo</em>, <em>Ulama de mazo</em>.</li>
-        <li><strong>Objetivo:</strong> mantener la pelota en juego golpeándola solo con la cadera/antebrazo —no las manos ni los pies— hasta lograr que el rival cometa falta.</li>
-        <li><strong>Anotación:</strong> en versión maya, hacer pasar la pelota por un aro de piedra vertical otorgaba la victoria inmediata.</li>
+        <li><strong>Court:</strong> I-shaped, called <em>tlachtli</em>; sloped lateral walls.</li>
+        <li><strong>Ball:</strong> solid rubber (Castilla elastica), 3–4 kg in weight, ~20 cm in diameter.</li>
+        <li><strong>Teams:</strong> 2 to 5 players per side.</li>
+        <li><strong>Modalities:</strong> <em>Hip Ulama</em> (the most widespread), <em>Forearm Ulama</em>, <em>Mallet Ulama</em>.</li>
+        <li><strong>Goal:</strong> keep the ball in play striking it only with hip or forearm —not hands or feet— until the rival commits a fault.</li>
+        <li><strong>Scoring:</strong> in the Maya version, passing the ball through a vertical stone ring gave instant victory.</li>
       </ul>
-      <h4>Importancia, identidad y reflexión</h4>
-      <p>El Ulama articulaba <strong>religión, política y ejercicio físico</strong>: era rito propiciatorio para la lluvia, mecanismo de resolución de disputas entre señoríos, y entrenamiento marcial. Hoy se considera patrimonio inmaterial. Comparado con el deporte actual, demuestra que la educación física no es solo cuerpo: es identidad cultural en movimiento.</p>
-      <blockquote>"Donde la pelota viva, vive la memoria del pueblo." — Proverbio náhuatl reconstruido.</blockquote>
+      <h4>Importance, Identity &amp; Reflection</h4>
+      <p>The Ulama articulated <strong>religion, politics and physical exercise</strong>: it was a rain-bringing rite, a mechanism for resolving disputes between lordships, and martial training. Today it is considered intangible heritage. Compared to current sports, it shows that physical education is not only the body: it is cultural identity in motion.</p>
+      <blockquote>"Where the ball lives, the memory of the people lives." — Reconstructed Nahuatl proverb.</blockquote>
     `
   },
 
-  /* ───── 09 Inglés — READY ───── */
-  { key: 'ingles', num: '09', eyebrow: 'Asignatura · Todos los semestres',
+  /* ───── 05 English ───── */
+  {
+    key: 'ingles', num: '05', eyebrow: 'Subject · All semesters',
     title: '<em>Exploring</em> Guanajuato',
-    teacher: 'Mtro. Valentín Hernández Salazar',
+    teacher: 'Prof. Valentín Hernández Salazar',
     placeIds: [5],
     tagline: 'STEAM project in English',
     body: '<p>STEAM-based product in <strong>English</strong>: poster, short video or model. Rubric of 24 points over 6 criteria.</p>',
@@ -206,62 +210,64 @@ const SUBJECTS = [
       <p><strong>Science · </strong> The mummies of Guanajuato, naturally preserved by the dry mineral-rich soil, teach us about <em>desiccation, halophilic bacteria</em>, and the chemistry of preservation. The silver mines around Valenciana show us the oxidation of metals and the geology of the Sierra de Guanajuato.</p>
       <p><strong>Technology · </strong> The underground tunnel network —once a drainage system for floods, now a road system— is a fascinating example of <em>hydraulic engineering</em>. The Hidalgo Market, with its iron structure imported from France, shows the technology transfer of the early 20th century.</p>
       <p><strong>Engineering · </strong> The Valenciana mine descends more than 500 meters underground. Its shaft, pumps, and ventilation system represent one of the most advanced mining engineering feats of the colonial era.</p>
-      <p><strong>Arts · </strong> Baroque churrigueresque architecture (Templo de la Compañía, Valenciana), the gold leaf interiors, and the Cervantes Festival held in Teatro Juárez every October all show how Guanajuato lives <em>between past and present art</em>.</p>
+      <p><strong>Arts · </strong> Baroque Churrigueresque architecture (Templo de la Compañía, Valenciana), the gold-leaf interiors, and the Cervantes Festival held in Teatro Juárez every October all show how Guanajuato lives <em>between past and present art</em>.</p>
       <p><strong>Mathematics · </strong> The labyrinthine layout of the historic center, the perfect cone of the Pípila viewpoint, and the geometric tiles inside the Basílica Colegiata are exercises in geometry and proportion.</p>
       <h4>Key vocabulary</h4>
-      <p><em>silver mining</em> · <em>cobblestone alley</em> · <em>UNESCO World Heritage</em> · <em>colonial architecture</em> · <em>baroque facade</em> · <em>underground tunnels</em> · <em>independence movement</em> · <em>mining shaft</em></p>
+      <p><em>silver mining</em> · <em>cobblestone alley</em> · <em>UNESCO World Heritage</em> · <em>colonial architecture</em> · <em>Baroque facade</em> · <em>underground tunnels</em> · <em>independence movement</em> · <em>mining shaft</em></p>
       <blockquote>"In Guanajuato, every stone tells a story that started 500 years ago and continues today."</blockquote>
     `
   },
 
-  /* ───── 10 Humanidades — READY ───── */
-  { key: 'humanidades', num: '10', eyebrow: 'Asignatura · Todos los semestres',
-    title: '<em>Humanidades</em>',
-    teacher: 'Mtro. Omar Ávila Cruz',
+  /* ───── 06 Humanities ───── */
+  {
+    key: 'humanidades', num: '06', eyebrow: 'Subject · All semesters',
+    title: '<em>Humanities</em>',
+    teacher: 'Prof. Omar Ávila Cruz',
     placeIds: [1, 3, 8],
-    tagline: 'Investigación previa: Personajes y sitios',
-    body: '<p>Investigación previa sobre los personajes y lugares de la Independencia que se visitarán: Don Miguel Hidalgo, Ignacio Allende, y los sitios donde inició el movimiento insurgente.</p>',
-    tags: ['Investigación', 'Independencia', 'Entrega digital'],
+    tagline: 'Preliminary research: figures and sites',
+    body: '<p>Preliminary research on the figures and places of the Independence that will be visited: Don Miguel Hidalgo, Ignacio Allende, and the sites where the insurgent movement began.</p>',
+    tags: ['Research', 'Independence', 'Digital submission'],
     status: 'ready',
     content: `
       <h4>Miguel Hidalgo y Costilla <span class="bio-dates">1753 — 1811</span></h4>
-      <p>Sacerdote y caudillo, nacido en la Hacienda de Corralejo, Pénjamo, Guanajuato. Fue párroco de Dolores desde 1803, donde impulsó actividades agrícolas, industriales y culturales prohibidas por la Corona (alfarería, viñedos, sericultura). En la madrugada del <strong>16 de septiembre de 1810</strong>, tocó las campanas de la parroquia y dio el <em>Grito de Dolores</em>, llamando al pueblo a la lucha por la independencia. Lideró un ejército insurgente que tomó San Miguel el Grande, Celaya y la Alhóndiga de Granaditas. Fue capturado en Acatita de Baján y fusilado en Chihuahua en 1811.</p>
+      <p>Priest and military leader, born on the Corralejo Estate, Pénjamo, Guanajuato. He was parish priest of Dolores from 1803, where he encouraged agricultural, industrial, and cultural activities forbidden by the Spanish Crown (pottery, vineyards, sericulture). At dawn on <strong>September 16, 1810</strong>, he rang the bells of the parish and gave the <em>Grito de Dolores</em>, calling the people to fight for independence. He led an insurgent army that took San Miguel el Grande, Celaya, and the Alhóndiga de Granaditas. He was captured at Acatita de Baján and executed in Chihuahua in 1811.</p>
       <h4>Ignacio Allende <span class="bio-dates">1769 — 1811</span></h4>
-      <p>Militar criollo nacido en San Miguel el Grande (hoy San Miguel de Allende). Capitán del regimiento de la Reina, se unió a la conspiración de Querétaro y aportó la disciplina militar que el movimiento necesitaba. Fue <strong>estratega clave</strong> de las primeras campañas. Junto con Hidalgo fue capturado y fusilado en Chihuahua. Su nombre engrandece hoy a la ciudad que lo vio nacer.</p>
-      <h4>El Grito de Dolores · 16 de septiembre de 1810</h4>
-      <p>En la madrugada del domingo, Hidalgo convocó al pueblo de Dolores con el repique de campanas. Desde el atrio de la <em>Parroquia de Nuestra Señora de los Dolores</em> arengó a la multitud con vivas a la independencia, a la Virgen de Guadalupe y mueras al mal gobierno. Es el acto fundacional de la nación mexicana.</p>
-      <h4>Toma de la Alhóndiga de Granaditas · 28 de septiembre de 1810</h4>
-      <p>El antiguo granero de la ciudad de Guanajuato, edificio de muros gruesos, se convirtió en fortaleza realista. Tras horas de asedio, el minero <strong>Juan José de los Reyes Martínez, "El Pípila"</strong>, ató una losa de piedra a su espalda y, protegiéndose de los disparos, prendió fuego a la puerta. La caída de la Alhóndiga fue la primera gran victoria insurgente.</p>
-      <h4>Importancia histórica</h4>
-      <p>Los sitios que visitaremos no son solo monumentos: son <strong>el origen geográfico de la nación</strong>. Caminar por la plaza de Dolores, ver la celda donde Hidalgo estuvo preso, o pisar las escaleras donde cayó el Pípila, es entender de manera tangible cómo nació México.</p>
+      <p>Creole military officer born in San Miguel el Grande (today San Miguel de Allende). Captain of the Queen\'s Regiment, he joined the Querétaro conspiracy and brought the military discipline the movement needed. He was a <strong>key strategist</strong> of the first campaigns. He was captured together with Hidalgo and executed in Chihuahua. His name today honors the city that saw him born.</p>
+      <h4>The Grito de Dolores · September 16, 1810</h4>
+      <p>In the early hours of that Sunday, Hidalgo summoned the people of Dolores with the ringing of bells. From the atrium of the <em>Parish of Our Lady of Sorrows</em>, he addressed the crowd with cheers for independence, for the Virgin of Guadalupe, and death to bad government. It is the founding act of the Mexican nation.</p>
+      <h4>The Storming of the Alhóndiga de Granaditas · September 28, 1810</h4>
+      <p>The old granary of the city of Guanajuato, a building of thick walls, became a royalist fortress. After hours of siege, the miner <strong>Juan José de los Reyes Martínez, "El Pípila"</strong>, tied a stone slab to his back and —protecting himself from the gunfire— set fire to the door. The fall of the Alhóndiga was the first great insurgent victory.</p>
+      <h4>Historical Importance</h4>
+      <p>The sites we will visit are not just monuments: they are <strong>the geographical origin of the nation</strong>. Walking through the square of Dolores, seeing the cell where Hidalgo was held, or stepping on the stairs where El Pípila fell, is to understand in a tangible way how Mexico was born.</p>
     `
   },
 
-  /* ───── 11 Literatura — LEGEND READY ───── */
-  { key: 'literatura', num: '11', eyebrow: 'Asignatura · Todos los semestres',
-    title: 'Literatura · <em>STEAM</em>',
-    teacher: 'Mtro. Omar Ávila Cruz · ABP "La Ruta del Bisonte"',
-    placeIds: [6, 7],
-    tagline: 'Leyenda del Callejón del Beso',
-    body: '<p>Producción escrita: leyenda, mito, crónica y guion. Como entrega previa se incluye la <strong>leyenda más famosa de Guanajuato</strong>: la del Callejón del Beso.</p>',
-    tags: ['Leyenda escrita', 'Mito · Crónica', 'ABP'],
+  /* ───── 07 Literature ───── */
+  {
+    key: 'literatura', num: '07', eyebrow: 'Subject · All semesters',
+    title: 'Literature · <em>STEAM</em>',
+    teacher: 'Prof. Omar Ávila Cruz · PBL "The Bison Route"',
+    placeIds: [7],
+    tagline: 'Legend of the Alley of the Kiss',
+    body: '<p>Written production: legend, myth, chronicle, and script. As a preliminary deliverable, the <strong>most famous legend of Guanajuato</strong> is included: that of the Alley of the Kiss.</p>',
+    tags: ['Written legend', 'Myth · Chronicle', 'PBL'],
     status: 'ready',
     content: `
-      <h4 class="legend-head">Leyenda del Callejón del Beso</h4>
-      <p class="legend-prose">Cuentan los viejos de Guanajuato que en una callejuela tan estrecha que dos manos pueden encontrarse de balcón a balcón, vivió hace siglos la hermosa <em>Doña Ana</em>. Su padre, hombre orgulloso y de fortuna, había decidido casarla con un noble español a quien la joven no amaba.</p>
-      <p class="legend-prose">El destino quiso que Ana se enamorara de <em>Don Carlos</em>, un joven minero que la vio rezando en la Basílica Colegiata. Sabiendo del rechazo del padre, Carlos compró —con todos sus ahorros— la casa frente a la de Ana. Los balcones quedaban a apenas <strong>sesenta y ocho centímetros</strong> el uno del otro: una distancia que solo permitía un beso furtivo, casi un secreto.</p>
-      <p class="legend-prose">Las noches estaban hechas para ellos. Carmen ⸺que así también la nombraban⸺ tomaba las manos de su amado entre las rejas y el callejón se llenaba de promesas. Hasta que una noche, el padre subió las escaleras sin aviso. Al ver el rostro de Carlos tan cerca del de su hija, la furia le ganó. Tomó una daga y atravesó el pecho de Ana antes de que ella pudiera gritar.</p>
-      <p class="legend-prose">Carlos, con el último beso de Ana aún en sus labios, se hundió en la mina y nunca más volvió a salir. Cuentan que se dejó morir, esperando reencontrarla en otro mundo.</p>
-      <p class="legend-prose">Desde entonces, las parejas que se besan en el <em>tercer escalón</em> del callejón aseguran quince años de felicidad. Las que no lo hacen… siete años de mala suerte. Y los más viejos juran que, en noches de luna llena, todavía se escuchan dos voces susurrando al viento entre los balcones.</p>
-      <h4>Mito asociado — El Pípila</h4>
-      <p>Otra figura legendaria es <em>Juan José de los Reyes Martínez</em>, "El Pípila". Aunque su existencia histórica está documentada, el mito ha crecido con los años: se dice que su losa de piedra atada a la espalda era tan pesada que solo un cuerpo bendito por la Virgen pudo cargarla. Hoy su monumento vigila la ciudad desde el cerro, antorcha en alto, recordándonos que de los más humildes nacen los más grandes héroes.</p>
-      <h4>Estructura para la crónica del viaje</h4>
-      <p>La crónica que se entregará tras la expedición seguirá esta estructura:</p>
+      <h4 class="legend-head">Legend of the Alley of the Kiss</h4>
+      <p class="legend-prose">The elders of Guanajuato tell that, in an alley so narrow that two hands could meet from balcony to balcony, the beautiful <em>Doña Ana</em> lived centuries ago. Her father, a proud and wealthy man, had decided to marry her to a Spanish nobleman the young woman did not love.</p>
+      <p class="legend-prose">Fate willed that Ana would fall in love with <em>Don Carlos</em>, a young miner who saw her praying at the Collegiate Basilica. Knowing of the father\'s rejection, Carlos bought —with all his savings— the house facing Ana\'s. The balconies stood just <strong>sixty-eight centimeters</strong> apart from each other: a distance that allowed only a furtive kiss, almost a secret.</p>
+      <p class="legend-prose">The nights were made for them. Carmen —as she was also called— would take her beloved\'s hands through the railings, and the alley filled with promises. Until one night, the father climbed the stairs without warning. When he saw Carlos\'s face so close to his daughter\'s, fury overcame him. He took a dagger and pierced Ana\'s chest before she could even cry out.</p>
+      <p class="legend-prose">Carlos, with Ana\'s last kiss still on his lips, sank into the mine and never came out again. They say he let himself die, hoping to meet her again in another world.</p>
+      <p class="legend-prose">Since then, the couples who kiss on the <em>third step</em> of the alley are promised fifteen years of happiness. Those who do not… seven years of bad luck. And the eldest swear that, on full-moon nights, two voices can still be heard whispering in the wind between the balconies.</p>
+      <h4>Associated Myth — El Pípila</h4>
+      <p>Another legendary figure is <em>Juan José de los Reyes Martínez</em>, "El Pípila". Although his historical existence is documented, the myth has grown over the years: it is said that the stone slab tied to his back was so heavy that only a body blessed by the Virgin could carry it. Today his monument watches over the city from the hill, torch raised, reminding us that from the humblest the greatest heroes are born.</p>
+      <h4>Structure for the Travel Chronicle</h4>
+      <p>The chronicle to be submitted after the expedition will follow this structure:</p>
       <ul>
-        <li><strong>Apertura sensorial</strong> — el primer impacto al llegar a Dolores Hidalgo</li>
-        <li><strong>Eje narrativo</strong> — el recorrido cronológico por los 12 sitios</li>
-        <li><strong>Voz personal</strong> — reflexiones y vínculos con lo aprendido en clase</li>
-        <li><strong>Cierre</strong> — una imagen que sintetice la experiencia</li>
+        <li><strong>Sensory opening</strong> — the first impact upon arriving at Dolores Hidalgo</li>
+        <li><strong>Narrative axis</strong> — the chronological tour of the 12 sites</li>
+        <li><strong>Personal voice</strong> — reflections and links to what was learned in class</li>
+        <li><strong>Closing</strong> — a single image that captures the experience</li>
       </ul>
     `
   }
@@ -287,6 +293,43 @@ function stripHtml(html) { const d = document.createElement('div'); d.innerHTML 
   `).join('');
 })();
 
+/* ============= INJECT PLACE SECTIONS (NEW) ============= */
+(function injectPlaces() {
+  const wrap = document.getElementById('placeSections');
+  if (!wrap) return;
+  wrap.innerHTML = PLACES.map(p => `
+    <article class="place-card rv" id="place-${p.id}" data-place-card="${p.id}">
+      <div class="place-card__media">
+        <img src="${p.img}" alt="${p.name}" loading="lazy">
+        <span class="place-card__num">${p.num}</span>
+        <span class="place-card__city mono">${p.city}</span>
+      </div>
+      <div class="place-card__body">
+        <h3 class="place-card__title">${p.name}</h3>
+        <p class="place-card__sub"><em>${p.nameEn}</em></p>
+        <p class="place-card__short">${p.short}</p>
+        <details class="place-card__more">
+          <summary>
+            <span class="summary-text">Read history</span>
+            <span class="summary-icon" aria-hidden="true">+</span>
+          </summary>
+          <div class="place-card__deep">
+            <p>${p.history}</p>
+            <h5>Highlights</h5>
+            <ul>
+              ${p.highlights.map(h => `<li>${h}</li>`).join('')}
+            </ul>
+          </div>
+        </details>
+        <button class="place-card__locate" type="button" data-locate-place="${p.id}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-7-7.58-7-13a7 7 0 0 1 14 0c0 5.42-7 13-7 13z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          <span>Locate on map</span>
+        </button>
+      </div>
+    </article>
+  `).join('');
+})();
+
 /* ============= INJECT SUBJECT SECTIONS ============= */
 (function injectSubjects() {
   const wrap = document.getElementById('subjectSections');
@@ -302,13 +345,13 @@ function stripHtml(html) { const d = document.createElement('div'); d.innerHTML 
           <img src="${primary.img}" alt="${primary.name}" loading="lazy">
         </div>
         <div class="subject__media-tag">${s.num} · ${primary.name}</div>
-        <div class="subject__media-placeholder">${ready ? 'Contenido pre-cargado · esperando fotos del viaje' : 'Espacio reservado para foto del viaje'}</div>
+        <div class="subject__media-placeholder">${ready ? 'Pre-loaded content · awaiting trip photos' : 'Reserved for trip photo'}</div>
       </div>
       <div class="subject__body">
         <div class="subject__head">
           <span class="subject__num">${s.num}</span>
           <span class="subject__eyebrow">${s.eyebrow}</span>
-          <span class="status-badge status-badge--${s.status}">${ready ? '● Listo' : '○ Pendiente'}</span>
+          <span class="status-badge status-badge--${s.status}">${ready ? '● Ready' : '○ Pending'}</span>
         </div>
         <h3 class="subject__title">${s.title}</h3>
         <p class="subject__teacher">${s.teacher} · <em>${s.tagline}</em></p>
@@ -320,7 +363,7 @@ function stripHtml(html) { const d = document.createElement('div'); d.innerHTML 
         ${ready ? `
           <details class="subject__content">
             <summary>
-              <span class="summary-text">Ver contenido pre-cargado</span>
+              <span class="summary-text">View pre-loaded content</span>
               <span class="summary-icon" aria-hidden="true">+</span>
             </summary>
             <div class="subject__content-inner">
@@ -330,7 +373,7 @@ function stripHtml(html) { const d = document.createElement('div'); d.innerHTML 
         ` : ''}
         <div class="subject__actions">
           <button class="subject__cta" data-subject="${s.key}" data-magnetic>
-            <span>Ver rúbrica completa</span>
+            <span>View full rubric</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </button>
         </div>
@@ -381,8 +424,8 @@ function initMap() {
     color: '#684037', weight: 1.5, opacity: 0.55, dashArray: '2 8', smoothFactor: 1, className: 'route-line route-line--link'
   }).addTo(map);
 
-  // Pre-set rutas sólidas al estado "sin dibujar" (la dashed link no se anima
-  // para preservar su patrón punteado).
+  // Pre-set the solid routes to the "undrawn" state for the draw-in animation
+  // (the dashed link line is not animated so its dotted pattern is preserved).
   setTimeout(() => {
     [routeLines.dolores, routeLines.gto].forEach(line => {
       if (!line) return;
@@ -395,7 +438,6 @@ function initMap() {
         path.style.strokeDashoffset = len;
       } catch (e) { /* noop */ }
     });
-    // La línea punteada simplemente aparece con fade
     if (routeLines.link?._path) {
       routeLines.link._path.style.opacity = '0';
       routeLines.link._path.style.transition = 'opacity 1.2s ease 1.6s';
@@ -417,8 +459,8 @@ function initMap() {
       <div class="popup-inner">
         <div class="popup-loc">${p.num} · ${p.cityShort}</div>
         <div class="popup-title">${p.name}</div>
-        <div class="popup-desc">${p.desc}</div>
-        ${p.subjects.length ? `<span class="popup-link" data-place="${p.id}">Ver asignaturas →</span>` : ''}
+        <div class="popup-desc">${p.short}</div>
+        <span class="popup-link" data-place="${p.id}">Read history →</span>
       </div>`;
     marker.bindPopup(popup, { offset: [0, -8], closeButton: false, maxWidth: 320, autoPanPadding: [60, 60] });
 
@@ -461,11 +503,11 @@ document.addEventListener('click', e => {
   const popupLink = e.target.closest('.popup-link');
   if (popupLink) {
     const placeId = +popupLink.getAttribute('data-place');
-    const place = placeById(placeId);
-    if (place && place.subjects.length) {
-      const firstSubj = place.subjects[0];
-      const target = document.getElementById('subj-' + firstSubj);
-      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const target = document.getElementById('place-' + placeId);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const details = target.querySelector('details');
+      if (details) details.open = true;
     }
     return;
   }
@@ -477,6 +519,20 @@ document.addEventListener('click', e => {
       setActive(id);
       map.flyTo(p.coords, 16, { duration: 1.1 });
       setTimeout(() => markers[id]?.openPopup(), 500);
+    }
+    return;
+  }
+  const locateBtn = e.target.closest('[data-locate-place]');
+  if (locateBtn) {
+    const id = +locateBtn.getAttribute('data-locate-place');
+    const p = placeById(id);
+    if (p && map) {
+      document.getElementById('map')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setTimeout(() => {
+        setActive(id);
+        map.flyTo(p.coords, 16, { duration: 1.1 });
+        setTimeout(() => markers[id]?.openPopup(), 500);
+      }, 600);
     }
     return;
   }
@@ -585,7 +641,6 @@ function setupMagnetic() {
     });
     el.addEventListener('mouseleave', () => { el.style.transform = ''; });
   });
-  // Softer magnetic for list items
   document.querySelectorAll('[data-magnetic-soft]').forEach(el => {
     el.addEventListener('mousemove', e => {
       const r = el.getBoundingClientRect();
@@ -626,7 +681,7 @@ function setupCursor() {
   document.addEventListener('mousemove', e => { tx = e.clientX; ty = e.clientY; });
   document.addEventListener('mousedown', () => cur.classList.add('is-press'));
   document.addEventListener('mouseup', () => cur.classList.remove('is-press'));
-  const hovers = 'a, button, [data-magnetic], .map-list-item, .gal, .subject__cta, .leaflet-marker-pin, details summary';
+  const hovers = 'a, button, [data-magnetic], .map-list-item, .gal, .subject__cta, .place-card__locate, .leaflet-marker-pin, details summary';
   document.addEventListener('mouseover', e => { if (e.target.closest(hovers)) cur.classList.add('is-hover'); });
   document.addEventListener('mouseout',  e => { if (e.target.closest(hovers)) cur.classList.remove('is-hover'); });
   function loop() {
@@ -677,17 +732,13 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal()
 const mapResetBtn = document.getElementById('mapReset');
 if (mapResetBtn) mapResetBtn.addEventListener('click', resetMap);
 
-/* Recalcular tamaño del mapa al rotar/redimensionar */
 let resizeTimer;
 window.addEventListener('resize', () => {
   clearTimeout(resizeTimer);
   resizeTimer = setTimeout(() => { map?.invalidateSize(); }, 200);
 });
 
-/* ============= ROUTE DRAW ANIMATION =============
-   Cuando el mapa entra en viewport, las polylines se dibujan
-   progresivamente usando stroke-dashoffset → 0.
-*/
+/* ============= ROUTE DRAW ANIMATION ============= */
 function animateRouteDraw() {
   const lines = [routeLines.dolores, routeLines.gto].filter(Boolean);
   lines.forEach((line, i) => {
@@ -699,7 +750,6 @@ function animateRouteDraw() {
       path.style.strokeDashoffset = '0';
     } catch (err) { /* noop */ }
   });
-  // Línea punteada inter-ciudades: fade-in tras dibujar la primera
   if (routeLines.link?._path) {
     routeLines.link._path.style.opacity = '';
   }
@@ -750,22 +800,22 @@ function updateActiveCard(id) {
   activeCardNum.textContent = p.num;
   activeCardCity.textContent = p.cityShort;
   activeCardTitle.textContent = p.name;
-  activeCardDesc.textContent = p.desc;
+  activeCardDesc.textContent = p.short;
 
   const idx = PLACES.findIndex(x => x.id === id);
   const next = PLACES[idx + 1];
   if (next) {
     const km = haversineKm(p.coords, next.coords);
     const lbl = km < 1 ? `${Math.round(km * 1000)} m` : `${km.toFixed(1)} km`;
-    activeCardDist.textContent = `→ siguiente · ${lbl} · ${next.name}`;
+    activeCardDist.textContent = `→ next · ${lbl} · ${next.name}`;
     activeCardDist.style.visibility = 'visible';
   } else {
-    activeCardDist.textContent = '✦ última parada';
+    activeCardDist.textContent = '✦ last stop';
     activeCardDist.style.visibility = 'visible';
   }
 
-  activeCardCta.dataset.subject = p.subjects?.[0] || '';
-  activeCardCta.style.display = p.subjects?.length ? '' : 'none';
+  activeCardCta.dataset.placeId = String(p.id);
+  activeCardCta.style.display = '';
 
   activeCard.classList.add('is-open');
   activeCard.setAttribute('aria-hidden', 'false');
@@ -779,10 +829,14 @@ function clearActiveCard() {
 
 activeCardClose?.addEventListener('click', clearActiveCard);
 activeCardCta?.addEventListener('click', () => {
-  const k = activeCardCta.dataset.subject;
-  if (!k) return;
-  const target = document.getElementById('subj-' + k);
-  if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const placeId = +(activeCardCta.dataset.placeId || 0);
+  if (!placeId) return;
+  const target = document.getElementById('place-' + placeId);
+  if (target) {
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const details = target.querySelector('details');
+    if (details) details.open = true;
+  }
 });
 
 /* ============= FILTER CHIPS ============= */
@@ -808,7 +862,6 @@ function setFilter(filter) {
     if (li) li.style.display = show ? '' : 'none';
   });
 
-  // Toggle route lines
   if (routeLines.dolores) {
     const showD = filter === 'all' || filter === 'Dolores Hidalgo';
     showD ? (map.hasLayer(routeLines.dolores) || routeLines.dolores.addTo(map)) : map.removeLayer(routeLines.dolores);
@@ -825,7 +878,6 @@ function setFilter(filter) {
 
   document.getElementById('mapSidebarCount').textContent = visible;
 
-  // Re-encuadrar
   const visiblePlaces = PLACES.filter(p => filter === 'all' || p.city === filter);
   if (visiblePlaces.length) {
     const b = L.latLngBounds(visiblePlaces.map(p => p.coords)).pad(0.18);
@@ -837,10 +889,7 @@ document.querySelectorAll('.filter-chip').forEach(btn => {
   btn.addEventListener('click', () => setFilter(btn.dataset.filter));
 });
 
-/* ============= HOVER PREVIEW (SIDEBAR) =============
-   Hover sobre item del sidebar → bounce marker + actualiza tarjeta.
-   No mueve el mapa (para no marear). El click sí hace flyTo.
-*/
+/* ============= HOVER PREVIEW (SIDEBAR) ============= */
 function setupSidebarHoverPreview() {
   document.querySelectorAll('.map-list-item').forEach(el => {
     el.addEventListener('mouseenter', () => {
@@ -861,28 +910,22 @@ function setupSidebarHoverPreview() {
   });
 }
 
-/* ============= SUBJECT SCROLL SYNC =============
-   Al hacer scroll por las secciones de asignaturas, marca
-   el lugar correspondiente como activo en mapa (sin scroll del mapa).
-*/
-function setupSubjectScrollSync() {
+/* ============= PLACE SCROLL SYNC ============= */
+function setupPlaceScrollSync() {
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => {
       if (!e.isIntersecting) return;
-      const subjectKey = e.target.dataset.subject;
-      if (!subjectKey) return;
-      const s = subjectByKey(subjectKey);
-      const placeId = s?.placeIds?.[0];
-      if (placeId) {
-        visitedIds.add(placeId);
+      const id = +(e.target.dataset.placeCard || 0);
+      if (id) {
+        visitedIds.add(id);
         updateNavProgress();
       }
     });
   }, { threshold: 0.4 });
-  document.querySelectorAll('.subject').forEach(s => io.observe(s));
+  document.querySelectorAll('.place-card').forEach(s => io.observe(s));
 }
 
-/* ============= NAV PROGRESS (ANILLO) ============= */
+/* ============= NAV PROGRESS RING ============= */
 function updateNavProgress() {
   const ring = document.getElementById('navProgressFg');
   const num = document.getElementById('navProgressNum');
@@ -909,6 +952,6 @@ document.addEventListener('DOMContentLoaded', () => {
   setupCursor();
   setupRouteDrawOnView();
   setupSidebarHoverPreview();
-  setupSubjectScrollSync();
+  setupPlaceScrollSync();
   updateNavProgress();
 });
