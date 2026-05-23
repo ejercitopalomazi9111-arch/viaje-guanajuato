@@ -31,9 +31,9 @@ const PLACES = [
     history: 'Built between 1712 and 1778, this 18th-century Baroque parish is one of the most important historical monuments in Mexico. From its atrium, the priest Miguel Hidalgo y Costilla rang the bells at dawn on September 16, 1810, and called the people to fight for independence —an event known as the <em>Grito de Dolores</em>. Its Churrigueresque facade in pink quarry stone hides two interior altars covered in gold leaf.',
     highlights: ['Churrigueresque pink quarry-stone facade', 'Twin gold-leaf altars inside', 'Original bell that summoned the people in 1810', 'National Historic Monument since 1932'],
     ticket: {
-      url: 'https://www.visitguanajuato.mx/',
-      operator: 'Visit Guanajuato',
-      note: 'Free entry · open daily'
+      url: 'https://doloreshidalgo.gob.mx/oficial/',
+      operator: 'Municipality of Dolores Hidalgo',
+      note: 'Free entry · Plaza del Grande Hidalgo s/n'
     }
   },
   {
@@ -45,9 +45,9 @@ const PLACES = [
     history: 'This colonial building served as the royal jail of Dolores until the early 19th century. On the night of September 15, 1810, Hidalgo himself ordered the release of all the prisoners as one of the first acts of the insurgent movement. Today it houses the <strong>National Museum of Independence</strong>, with documents, weapons, paintings, and personal objects from the heroes of 1810.',
     highlights: ['National Museum of Independence', 'Original 18th-century cells preserved', 'Permanent collection of insurgent objects', 'Stone arcades and central courtyard'],
     ticket: {
-      url: 'https://www.inah.gob.mx/',
-      operator: 'INAH · National Institute of Anthropology and History',
-      note: 'Tickets at the door · Sun free for nationals'
+      url: 'https://sic.cultura.gob.mx/ficha.php?table=museo&table_id=197',
+      operator: 'Secretaría de Cultura · Museo de la Independencia Nacional',
+      note: 'Mon–Sat 9–16h · $20 general · Sun free'
     }
   },
   {
@@ -59,9 +59,9 @@ const PLACES = [
     history: 'Hidalgo lived in this modest house from 1804 to 1810 while serving as parish priest. Inside, he promoted activities forbidden by the Spanish Crown: pottery, silk-worm breeding, beekeeping, vineyards, and even a small brick factory. The conspiracy meetings before the Grito were held in its inner rooms. It is now a museum that preserves his personal belongings, furniture, and books.',
     highlights: ['Hidalgo\'s personal library', 'Original 19th-century furniture', 'Workshop and patio where he taught crafts', 'Site declared National Monument'],
     ticket: {
-      url: 'https://www.inah.gob.mx/',
-      operator: 'INAH · Museo Casa de Hidalgo',
-      note: 'Tickets at the door · Sun free for nationals'
+      url: 'https://lugares.inah.gob.mx/es/museos-inah/museo/466-museo-ex-curato-de-dolores.html?lugar_id=466',
+      operator: 'INAH · Museo Ex Curato de Dolores (Casa de Hidalgo)',
+      note: 'Wed–Sun 10–16h · $75 general · Sun free for nationals'
     }
   },
   {
@@ -73,9 +73,9 @@ const PLACES = [
     history: 'This tree-lined garden is the geographical and symbolic center of Dolores Hidalgo. It hosts a bronze statue of Hidalgo holding the standard of the Virgin of Guadalupe. Around it stand the Parish, the Municipal Palace, and traditional <em>nieve</em> (ice cream) stands famous all over Mexico for their bold flavors —avocado, mole, beer, shrimp— a 19th-century local tradition.',
     highlights: ['Bronze statue of Hidalgo with the Guadalupan standard', 'Iconic ice-cream stands with unusual flavors', 'Site of the annual September 16 ceremony', 'Surrounded by colonial buildings'],
     ticket: {
-      url: 'https://www.visitguanajuato.mx/',
-      operator: 'Visit Guanajuato',
-      note: 'Public square · free access 24/7'
+      url: 'https://doloreshidalgo.gob.mx/oficial/',
+      operator: 'Municipality of Dolores Hidalgo',
+      note: 'Public square (Jardín del Grande Hidalgo) · free access 24/7'
     }
   },
   {
@@ -87,9 +87,9 @@ const PLACES = [
     history: 'Inaugurated in 1939, this 28-meter pink-quarry statue honors <strong>Juan José de los Reyes Martínez, "El Pípila"</strong>, the young miner who —tying a flat stone to his back as a shield— set fire to the wooden door of the Alhóndiga de Granaditas, allowing the insurgents to take the building. The monument bears the inscription <em>"Aún hay otras Alhóndigas por incendiar"</em> ("There are still other Alhóndigas to burn"). From its base, the entire historic center unfolds below.',
     highlights: ['28-meter monumental statue', 'Best panoramic view of Guanajuato', 'Accessible by funicular or stairway', 'Famous historical inscription on the pedestal'],
     ticket: {
-      url: 'https://www.visitguanajuato.mx/',
-      operator: 'Visit Guanajuato',
-      note: 'Free monument · funicular ticket sold on site'
+      url: 'https://guanajuato.travel/el-funicular-panoramico-de-guanajuato/',
+      operator: 'Guanajuato Travel · Funicular Panorámico',
+      note: 'Free monument · funicular $35 one-way / $70 round trip'
     }
   },
   {
@@ -101,9 +101,9 @@ const PLACES = [
     history: 'Built between 1671 and 1696, this Baroque basilica houses the image of <strong>Our Lady of Guanajuato</strong>, a 7th-century carving donated by King Philip II of Spain in 1557 — the oldest Christian image in the Americas. Its yellow exterior with white trim is the visual heart of the city. Inside, an altarpiece of solid gold and an organ from 1908 still in use.',
     highlights: ['7th-century image of Our Lady', 'Baroque yellow facade — symbol of Guanajuato', 'Solid-gold main altarpiece', '1908 organ still in liturgical use'],
     ticket: {
-      url: 'https://www.visitguanajuato.mx/',
-      operator: 'Visit Guanajuato',
-      note: 'Free entry · mass schedules onsite'
+      url: 'https://www.guanajuatocapital.gob.mx/ova_por/basilica-de-guanajuato/',
+      operator: 'Municipality of Guanajuato Capital',
+      note: 'Free entry · Mon–Fri 9:30–16h · Sat 9:30–12:30h'
     }
   },
   {
@@ -115,9 +115,9 @@ const PLACES = [
     history: 'Completed in 1809, this Neoclassical building was used as a public granary. On <strong>September 28, 1810</strong>, the royalist forces took refuge inside as the insurgent army arrived. After hours of siege, El Pípila set fire to the door and the insurgents took the building. After the war, the heads of Hidalgo, Allende, Aldama, and Jiménez were exhibited from its four corners for ten years as a warning. Today it is the <em>Museo Regional de Guanajuato</em>, with murals by José Chávez Morado.',
     highlights: ['Neoclassical facade in pink quarry stone', 'Murals by José Chávez Morado', 'Iron hooks where the heroes\' heads were exhibited', 'Permanent archaeological and historical collection'],
     ticket: {
-      url: 'https://www.inah.gob.mx/',
+      url: 'https://www.inah.gob.mx/museos/museo-regional-de-guanajuato-alhondiga-de-granaditas',
       operator: 'INAH · Museo Regional de Guanajuato',
-      note: 'Tickets at the door · Sun free for nationals'
+      note: 'Tue–Sat 10–18h · Sun 10–15h · $90 general · Sun free for nationals'
     }
   },
   {
@@ -129,9 +129,9 @@ const PLACES = [
     history: 'Inaugurated on September 16, 1910 to celebrate the centennial of the Independence, this market was built with a metal structure imported from <strong>France</strong> —the same style as the Eiffel Tower— and was originally planned as a railway station. Its 16-meter-high central clock and its mezzanine floor of artisan stalls make it one of the most photographed civic buildings in the state.',
     highlights: ['French wrought-iron structure (1910)', 'Central tower with original 16 m clock', 'Two floors: food downstairs, crafts upstairs', 'Local specialties: enchiladas mineras, charamuscas'],
     ticket: {
-      url: 'https://www.visitguanajuato.mx/',
-      operator: 'Visit Guanajuato',
-      note: 'Public market · free entry, open daily'
+      url: 'https://guanajuato.travel/spots/listing/mercado-hidalgo/',
+      operator: 'Guanajuato Travel · Mercado Hidalgo',
+      note: 'Public market · free entry · daily 9–18h'
     }
   },
   {
