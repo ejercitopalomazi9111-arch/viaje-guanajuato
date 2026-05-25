@@ -2945,3 +2945,31 @@ body {
   border: 0;
   display: block;
 }
+
+/* ═══════════════════════════════════════════
+   POSTER FIGURE · deliverable artwork
+   ═══════════════════════════════════════════ */
+.poster-figure {
+  margin: 1.4rem auto 1.8rem;
+  max-width: 480px;
+  text-align: center;
+}
+.poster-figure--wide { max-width: 720px; }
+.poster-figure img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid rgba(42, 24, 18, .15);
+  border-radius: 6px;
+  box-shadow: 0 16px 32px -18px rgba(42, 24, 18, .45);
+  transition: transform .5s var(--ease);
+}
+.poster-figure img:hover { transform: translateY(-3px); }
+.poster-figure figcaption {
+  margin-top: .7rem;
+  font-family: var(--mono);
+  font-size: .72rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ink-mid);
+}

@@ -253,7 +253,22 @@ const SUBJECTS = [
     tagline: 'Poster and photo-montage of the trip',
     body: '<p>Create a <strong>digital poster/banner</strong> and a <strong>creative photo-montage</strong> based on the experience of the trip. Evaluated criteria: composition, color, typography, creativity, editing, and command of Canva / Photoshop.</p>',
     tags: ['Digital poster', 'Photo-montage', 'Adobe / Canva'],
-    status: 'pending'
+    status: 'ready',
+    content: `
+      <h4>Photo-montage poster</h4>
+      <p>Vertical composition built around the great stone arch of Guanajuato, with framed insets of El Pípila, the Basilica of Valenciana, a walk through the historic center, the Plaza de Dolores and a portrait scene labelled <em>Mystical Stories</em>. The tagline <strong>"EXPLORE · CAPTURE · REMEMBER"</strong> ties the design to the trip's narrative.</p>
+      <figure class="poster-figure">
+        <img src="assets/img/cartel-multimedia.jpg" alt="Photo-montage poster — Unforgettable Journey Through Guanajuato" loading="lazy">
+        <figcaption>Photo-montage · Unforgettable Journey Through Guanajuato</figcaption>
+      </figure>
+      <h4>Design choices</h4>
+      <ul>
+        <li><strong>Composition:</strong> a hero arch as background unifies the frame; smaller insets create visual rhythm.</li>
+        <li><strong>Color:</strong> warm sandstone, ochres and a deep red accent — consistent with the Guanajuato palette of the site.</li>
+        <li><strong>Typography:</strong> uppercase serif headings for monumentality, contrasted with a thin all-caps tagline.</li>
+        <li><strong>Editing technique:</strong> isolated cut-outs with shaped frames, drop shadow, and a paper-texture base layer.</li>
+      </ul>
+    `
   },
 
   /* ───── 04 Physical Education ───── */
@@ -297,6 +312,11 @@ const SUBJECTS = [
     tags: ['Poster / Video', 'In English', '24 pts'],
     status: 'ready',
     content: `
+      <h4>STEAM poster</h4>
+      <figure class="poster-figure poster-figure--wide">
+        <img src="assets/img/cartel-ingles.jpg" alt="STEAM poster — Unforgettable Journey Through Mexico" loading="lazy">
+        <figcaption>Poster · Unforgettable Journey Through Mexico</figcaption>
+      </figure>
       <h4>Exploring Guanajuato · A STEAM Journey</h4>
       <p><strong>Science · </strong> The mummies of Guanajuato, naturally preserved by the dry mineral-rich soil, teach us about <em>desiccation, halophilic bacteria</em>, and the chemistry of preservation. The silver mines around Valenciana show us the oxidation of metals and the geology of the Sierra de Guanajuato.</p>
       <p><strong>Technology · </strong> The underground tunnel network —once a drainage system for floods, now a road system— is a fascinating example of <em>hydraulic engineering</em>. The Hidalgo Market, with its iron structure imported from France, shows the technology transfer of the early 20th century.</p>
