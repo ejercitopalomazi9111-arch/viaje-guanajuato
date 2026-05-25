@@ -3159,6 +3159,213 @@ body {
 }
 
 /* =========================================================
+   v10.6 · DARK MODE para que la aurora se vea
+   ========================================================= */
+:root {
+  --bg-dark:      #14090A;  /* marrón muy oscuro, casi negro warm */
+  --bg-dark-2:    #1F1410;  /* variante más cálida para secciones */
+  --paper-warm-soft: rgba(249, 243, 204, .92);
+}
+
+/* Body oscuro + texto claro */
+body {
+  background: var(--bg-dark) !important;
+  color: var(--paper) !important;
+}
+
+/* Secciones de "fondo" se vuelven transparentes para que el aurora se vea */
+.intro,
+.subjects,
+.map-section,
+.places,
+.galeria,
+.gallery,
+section.cta,
+.cta-block,
+#intro,
+#asignaturas,
+#places,
+#galeria {
+  background: transparent !important;
+}
+
+/* Selección visible en dark */
+::selection { background: var(--terracotta); color: var(--paper); }
+
+/* Headings sueltos en dark — el ::before/eyebrows ya son terracotta, sigue ok */
+.display,
+.display em,
+.section-head h2,
+h1, h2, h3, h4 {
+  color: var(--paper);
+}
+.display em,
+.section-head em {
+  color: var(--terracotta-l);  /* contraste rojo sobre dark */
+}
+
+/* Párrafos de texto en zonas sin card */
+.intro__right p,
+.section-head__lead,
+.intro__right p strong {
+  color: var(--paper) !important;
+}
+.intro__right p strong { color: #FFEABB !important; }
+
+/* Stats grandes en intro: invertir contraste para que destaquen */
+.stat__num { color: var(--terracotta-l) !important; }
+.stat__label { color: var(--paper-soft) !important; opacity: .85; }
+.intro__stats .stat:nth-child(1) .stat__num { color: var(--terracotta-l) !important; }
+.intro__stats .stat:nth-child(2) .stat__num { color: var(--amber) !important; }
+.intro__stats .stat:nth-child(3) .stat__num { color: var(--bugambilia) !important; }
+
+/* NAV translucent oscuro (antes era paper claro) */
+.nav {
+  background: rgba(20, 9, 10, .75) !important;
+  border-bottom-color: rgba(249, 243, 204, .08);
+}
+.nav.is-scrolled { border-bottom-color: rgba(249, 243, 204, .15); }
+.nav__links a { color: var(--paper-soft); opacity: .8; }
+.nav__links a:hover { color: var(--terracotta-l); opacity: 1; }
+.nav__brand { color: var(--paper); }
+.nav__brand em { color: var(--terracotta-l); }
+.nav__cta {
+  background: var(--terracotta);
+  color: var(--paper);
+}
+.nav__cta:hover { background: var(--terracotta-l); }
+.nav.is-menu-open .nav__links {
+  background: var(--bg-dark);
+}
+.nav__progress-bg { stroke: rgba(249, 243, 204, .15); }
+.nav__progress-num { color: var(--paper); }
+.nav__progress-num em { color: var(--paper-soft); opacity: .7; }
+
+/* MARQUEE textos a paper */
+.marquee { color: var(--paper); border-top-color: rgba(249,243,204,.12); border-bottom-color: rgba(249,243,204,.12); }
+.marquee__track > span:not(.marquee__star) { color: var(--paper); opacity: .9; }
+
+/* MAP toolbar / filter chips sobre dark */
+.filter-chip {
+  background: rgba(249, 243, 204, .08);
+  border-color: rgba(249, 243, 204, .15);
+  color: var(--paper-soft);
+}
+.filter-chip:hover { background: rgba(249, 243, 204, .14); color: var(--paper); }
+.filter-chip.is-active {
+  background: var(--terracotta);
+  border-color: var(--terracotta);
+  color: var(--paper);
+}
+.filter-chip__n { color: inherit; opacity: .75; }
+
+/* Map sidebar (lista de lugares) sobre dark */
+.map-list {
+  background: rgba(249, 243, 204, .04);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(249, 243, 204, .1);
+}
+.map-list-item {
+  border-bottom-color: rgba(249, 243, 204, .08);
+}
+.map-list-item:hover, .map-list-item.is-active {
+  background: rgba(249, 243, 204, .07);
+}
+.map-list-item__title { color: var(--paper); }
+.map-list-item__loc { color: var(--paper-soft); opacity: .7; }
+
+/* Tags y eyebrows */
+.tag {
+  background: rgba(249, 243, 204, .08);
+  border-color: rgba(249, 243, 204, .15);
+  color: var(--paper-soft);
+}
+.tag--accent { color: var(--paper); border-color: var(--terracotta); background: var(--terracotta); }
+
+/* Subject row text — algunos textos están sueltos sobre dark */
+.subject__title { color: var(--paper) !important; }
+.subject__title em { color: var(--terracotta-l) !important; }
+.subject__eyebrow { color: var(--paper-soft); opacity: .7; }
+.subject__teacher { color: var(--paper-soft); opacity: .85; }
+.subject__body p,
+.subject__body li {
+  color: var(--paper-soft) !important;
+  opacity: .9;
+}
+.subject__body strong { color: var(--paper); opacity: 1; }
+.subject::before { color: var(--terracotta-l) !important; }
+.subject.is-in::before { opacity: .12 !important; }
+
+/* Place cards siguen claras (paper bg) → los textos internos SE QUEDAN ink */
+.place-card { background: var(--paper); color: var(--ink); }
+.place-card__title { color: var(--ink); }
+.place-card__sub,
+.place-card__short { color: var(--ink-soft); }
+
+/* CTA block: semi-transparente para que la aurora se filtre */
+.cta-block {
+  background: rgba(20, 9, 10, .55) !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-top: 1px solid rgba(249,243,204,.08);
+  border-bottom: 1px solid rgba(249,243,204,.08);
+}
+.cta-block .display { color: var(--paper) !important; }
+.cta-block .display em { color: var(--terracotta-l) !important; }
+.cta-block p { color: var(--paper) !important; opacity: .9; }
+
+/* Footer también semi-transparente para coherencia */
+.footer {
+  background: rgba(20, 9, 10, .55) !important;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-top-color: rgba(249, 243, 204, .12);
+  color: var(--paper);
+}
+.footer__name, .footer__motto { color: var(--paper); }
+.footer .display { color: var(--paper) !important; }
+.footer .mono { color: var(--paper-soft) !important; opacity: .7; }
+
+/* CTA block, modal, popups: mantener legibilidad */
+.modal__card { background: var(--paper); color: var(--ink); }
+
+/* Subject media frame coherente con dark */
+.subject__media {
+  border-color: rgba(249, 243, 204, .1);
+}
+
+/* =========================================================
+   v10.6 · AURORA · ajustes para dark mode (más brillante)
+   ========================================================= */
+.aurora__blob {
+  mix-blend-mode: screen !important;  /* brilla sobre dark */
+  opacity: .85 !important;
+}
+.aurora { filter: contrast(1.1) saturate(1.3); }
+
+/* Móvil ya tenía blur reducido — opacity un poco más baja para no saturar */
+@media (max-width: 768px) {
+  .aurora__blob { opacity: .65 !important; }
+}
+
+/* Grain texture sobre dark queda visible — bajar opacity */
+.bg-grain { opacity: .25 !important; mix-blend-mode: overlay; }
+
+/* Bg dust (los puntos de v8) reposicionar a paper-ish glow */
+.bg-fx::after {
+  opacity: .25 !important;
+}
+
+/* =========================================================
+   v10.6 · LINE/border tweaks para dark mode
+   ========================================================= */
+:root {
+  --line-dark:        rgba(249, 243, 204, .12);
+  --line-dark-soft:   rgba(249, 243, 204, .07);
+}
+
+
+/* =========================================================
    v10.4 · SUN GLYPH · 8-point sun, uniform across the site
    ========================================================= */
 :root {
