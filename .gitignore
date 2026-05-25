@@ -5,3 +5,6 @@ node_modules/
 *.log
 .env
 .env.local
+
+# Raw trip photos (only the curated selection in assets/img/ is committed)
+assets/img/viaje/

@@ -189,7 +189,26 @@ const SUBJECTS = [
     tagline: 'The science behind the history',
     body: '<p>Analysis of chemical and biological processes present in the visited sites: <strong>oxidation of metal structures</strong>, local biodiversity, and the mineral composition of the silver mines of Guanajuato.</p>',
     tags: ['Documentary video', '5–8 min', 'Scientific journal'],
-    status: 'pending'
+    status: 'ready',
+    content: `
+      <h4>Documentary video</h4>
+      <p>Filmed and edited during the expedition. It explores the chemistry of the silver mines around Valenciana —oxidation of metals, sulfide ores— and the biology of the Hidalgo Market produce, with field observations from the historic center of Guanajuato.</p>
+      <div class="video-embed">
+        <iframe
+          src="https://www.youtube.com/embed/8FbQBO30PzQ"
+          title="Chemistry &amp; Biology — Trip Documentary"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen></iframe>
+      </div>
+      <h4>What you'll see</h4>
+      <ul>
+        <li><strong>Mineralogy:</strong> samples and surfaces from the Valenciana silver mine, with notes on <em>oxidation states</em> and the geology of the Sierra de Guanajuato.</li>
+        <li><strong>Biological diversity:</strong> flora and fruits observed in Mercado Hidalgo, linking the regional agriculture to the local biome.</li>
+        <li><strong>Field method:</strong> direct observation, photographic record and brief on-site interviews.</li>
+      </ul>
+    `
   },
 
   /* ───── 02 Digital Tools ───── */
@@ -441,7 +460,7 @@ function stripHtml(html) { const d = document.createElement('div'); d.innerHTML 
           <img src="${primary.img}" alt="${primary.name}" loading="lazy">
         </div>
         <div class="subject__media-tag">${s.num} · ${primary.name}</div>
-        <div class="subject__media-placeholder">${ready ? 'Content · awaiting trip photos' : 'Reserved for trip photo'}</div>
+        <div class="subject__media-placeholder">${ready ? 'Content available · photos from the trip' : 'Pending deliverable'}</div>
       </div>
       <div class="subject__body">
         <div class="subject__head">
