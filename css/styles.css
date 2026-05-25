@@ -148,92 +148,253 @@ section { position: relative; padding: clamp(4rem, 9vw, 8rem) 0; }
   width: 72vw; height: 72vw;
   top: -22%; left: -18%;
   background: radial-gradient(circle, #D73220 0%, rgba(215,50,32,.45) 35%, transparent 70%);
-  animation: auroraA 26s ease-in-out infinite;
+  animation: auroraA 11s ease-in-out infinite;
 }
 .aurora__blob--2 {
   width: 80vw; height: 80vw;
   top: -10%; right: -25%;
   background: radial-gradient(circle, #B37D38 0%, rgba(179,125,56,.5) 35%, transparent 70%);
-  animation: auroraB 34s ease-in-out infinite;
+  animation: auroraB 14s ease-in-out infinite;
 }
 .aurora__blob--3 {
   width: 60vw; height: 60vw;
   top: 28%; left: 22%;
   background: radial-gradient(circle, #C72C8C 0%, rgba(199,44,140,.4) 35%, transparent 70%);
-  animation: auroraC 30s ease-in-out infinite;
+  animation: auroraC 9s ease-in-out infinite;
   opacity: .55;
 }
 .aurora__blob--4 {
   width: 65vw; height: 65vw;
   top: 48%; right: -15%;
   background: radial-gradient(circle, #E5523F 0%, rgba(229,82,63,.4) 35%, transparent 70%);
-  animation: auroraD 38s ease-in-out infinite;
+  animation: auroraD 13s ease-in-out infinite;
 }
 .aurora__blob--5 {
   width: 70vw; height: 70vw;
   top: 70%; left: -20%;
   background: radial-gradient(circle, #8C5F22 0%, rgba(140,95,34,.45) 35%, transparent 70%);
-  animation: auroraE 42s ease-in-out infinite;
+  animation: auroraE 15s ease-in-out infinite;
 }
 .aurora__blob--6 {
   width: 58vw; height: 58vw;
   top: 110%; right: 8%;
   background: radial-gradient(circle, #C72C8C 0%, rgba(199,44,140,.35) 35%, transparent 70%);
-  animation: auroraF 36s ease-in-out infinite;
+  animation: auroraF 12s ease-in-out infinite;
   opacity: .52;
 }
 .aurora__blob--7 {
   width: 75vw; height: 75vw;
   top: 150%; left: 10%;
   background: radial-gradient(circle, #D73220 0%, rgba(215,50,32,.42) 35%, transparent 70%);
-  animation: auroraG 32s ease-in-out infinite;
+  animation: auroraG 10s ease-in-out infinite;
 }
 .aurora__blob--8 {
   width: 64vw; height: 64vw;
   top: 200%; right: -12%;
   background: radial-gradient(circle, #B37D38 0%, rgba(179,125,56,.45) 35%, transparent 70%);
-  animation: auroraH 40s ease-in-out infinite;
+  animation: auroraH 16s ease-in-out infinite;
 }
 
-/* 8 trayectorias distintas — no sincronizadas, sensación caótica */
+/* 8 trayectorias amplias — movimientos grandes, ciclo rápido (caos visible) */
 @keyframes auroraA {
   0%,100% { transform: translate3d(0,0,0) scale(1) rotate(0); }
-  25%     { transform: translate3d(14vw, 8vh, 0) scale(1.15) rotate(40deg); }
-  50%     { transform: translate3d(6vw, 16vh, 0) scale(.92) rotate(-20deg); }
-  75%     { transform: translate3d(-8vw, 4vh, 0) scale(1.08) rotate(25deg); }
+  25%     { transform: translate3d(28vw, 18vh, 0) scale(1.35) rotate(80deg); }
+  50%     { transform: translate3d(12vw, 32vh, 0) scale(.78) rotate(-50deg); }
+  75%     { transform: translate3d(-22vw, 8vh, 0) scale(1.2) rotate(55deg); }
 }
 @keyframes auroraB {
   0%,100% { transform: translate3d(0,0,0) scale(1.05); }
-  33%     { transform: translate3d(-18vw, 12vh, 0) scale(.88); }
-  66%     { transform: translate3d(-4vw, -8vh, 0) scale(1.2); }
+  33%     { transform: translate3d(-32vw, 22vh, 0) scale(.72); }
+  66%     { transform: translate3d(-8vw, -18vh, 0) scale(1.4); }
 }
 @keyframes auroraC {
   0%,100% { transform: translate3d(0,0,0) scale(1) rotate(0); }
-  50%     { transform: translate3d(22vw, -18vh, 0) scale(1.3) rotate(60deg); }
+  50%     { transform: translate3d(38vw, -32vh, 0) scale(1.55) rotate(120deg); }
 }
 @keyframes auroraD {
   0%,100% { transform: translate3d(0,0,0) scale(1); }
-  20%     { transform: translate3d(-12vw, -6vh, 0) scale(1.18); }
-  60%     { transform: translate3d(-20vw, 10vh, 0) scale(.85); }
-  80%     { transform: translate3d(-6vw, 6vh, 0) scale(1.1); }
+  20%     { transform: translate3d(-22vw, -16vh, 0) scale(1.32); }
+  60%     { transform: translate3d(-34vw, 22vh, 0) scale(.7); }
+  80%     { transform: translate3d(-12vw, 14vh, 0) scale(1.22); }
 }
 @keyframes auroraE {
   0%,100% { transform: translate3d(0,0,0) scale(1) rotate(0); }
-  40%     { transform: translate3d(18vw, -12vh, 0) scale(1.22) rotate(-35deg); }
-  70%     { transform: translate3d(10vw, 8vh, 0) scale(.94) rotate(20deg); }
+  40%     { transform: translate3d(34vw, -24vh, 0) scale(1.45) rotate(-80deg); }
+  70%     { transform: translate3d(22vw, 18vh, 0) scale(.78) rotate(45deg); }
 }
 @keyframes auroraF {
   0%,100% { transform: translate3d(0,0,0) scale(1.08); }
-  50%     { transform: translate3d(-20vw, -16vh, 0) scale(.88); }
+  50%     { transform: translate3d(-36vw, -28vh, 0) scale(.72); }
 }
 @keyframes auroraG {
   0%,100% { transform: translate3d(0,0,0) scale(1); }
-  30%     { transform: translate3d(-10vw, -10vh, 0) scale(1.2); }
-  70%     { transform: translate3d(14vw, 6vh, 0) scale(.9); }
+  30%     { transform: translate3d(-22vw, -22vh, 0) scale(1.4); }
+  70%     { transform: translate3d(26vw, 14vh, 0) scale(.75); }
 }
 @keyframes auroraH {
   0%,100% { transform: translate3d(0,0,0) scale(1.04) rotate(0); }
-  50%     { transform: translate3d(-16vw, -14vh, 0) scale(.86) rotate(45deg); }
+  50%     { transform: translate3d(-28vw, -26vh, 0) scale(.7) rotate(90deg); }
+}
+
+/* Container completo "respira" rotando hue */
+.aurora {
+  animation: auroraHueShift 12s linear infinite;
+}
+@keyframes auroraHueShift {
+  0%, 100% { filter: contrast(1.15) saturate(1.45) brightness(1.05) hue-rotate(0deg); }
+  50%      { filter: contrast(1.2)  saturate(1.7)  brightness(1.15) hue-rotate(40deg); }
+}
+
+/* =========================================================
+   v10.8 · BG SUNBURST · conic-gradient rotando lento detrás
+   ========================================================= */
+.bg-sunburst {
+  position: absolute;
+  top: 30%; left: 50%;
+  width: 180vw; height: 180vw;
+  margin-left: -90vw;
+  margin-top: -90vw;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    rgba(215, 50, 32, .22) 18deg,
+    transparent 36deg,
+    transparent 54deg,
+    rgba(179, 125, 56, .18) 72deg,
+    transparent 90deg,
+    transparent 108deg,
+    rgba(199, 44, 140, .15) 126deg,
+    transparent 144deg,
+    transparent 180deg,
+    rgba(229, 82, 63, .2) 198deg,
+    transparent 216deg,
+    transparent 252deg,
+    rgba(140, 95, 34, .18) 270deg,
+    transparent 288deg,
+    transparent 324deg,
+    rgba(215, 50, 32, .22) 342deg,
+    transparent 360deg
+  );
+  mix-blend-mode: screen;
+  opacity: .85;
+  will-change: transform;
+  animation: sunburstSpin 28s linear infinite;
+  filter: blur(40px);
+}
+@keyframes sunburstSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* =========================================================
+   v10.8 · BG STREAKS · rayos diagonales atravesando
+   ========================================================= */
+.bg-streak {
+  position: absolute;
+  left: -50%;
+  width: 200vw;
+  height: 8vh;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  filter: blur(40px);
+  will-change: transform, opacity;
+  transform: rotate(-22deg);
+}
+.bg-streak--1 {
+  top: 15%;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(215, 50, 32, .55) 35%,
+    rgba(229, 82, 63, .85) 50%,
+    rgba(215, 50, 32, .55) 65%,
+    transparent 100%);
+  animation: streakSweep1 9s linear infinite;
+  opacity: 0;
+}
+.bg-streak--2 {
+  top: 55%;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(199, 44, 140, .5) 35%,
+    rgba(199, 44, 140, .8) 50%,
+    rgba(199, 44, 140, .5) 65%,
+    transparent 100%);
+  animation: streakSweep2 13s linear infinite;
+  animation-delay: -3s;
+  opacity: 0;
+  transform: rotate(18deg);
+}
+.bg-streak--3 {
+  top: 110%;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(179, 125, 56, .55) 35%,
+    rgba(179, 125, 56, .85) 50%,
+    rgba(179, 125, 56, .55) 65%,
+    transparent 100%);
+  animation: streakSweep3 11s linear infinite;
+  animation-delay: -6s;
+  opacity: 0;
+}
+@keyframes streakSweep1 {
+  0%   { transform: rotate(-22deg) translate3d(-100%, 0, 0); opacity: 0; }
+  20%  { opacity: 1; }
+  80%  { opacity: 1; }
+  100% { transform: rotate(-22deg) translate3d(100%, 0, 0); opacity: 0; }
+}
+@keyframes streakSweep2 {
+  0%   { transform: rotate(18deg) translate3d(-100%, 0, 0); opacity: 0; }
+  20%  { opacity: 1; }
+  80%  { opacity: 1; }
+  100% { transform: rotate(18deg) translate3d(100%, 0, 0); opacity: 0; }
+}
+@keyframes streakSweep3 {
+  0%   { transform: rotate(-15deg) translate3d(-100%, 0, 0); opacity: 0; }
+  20%  { opacity: 1; }
+  80%  { opacity: 1; }
+  100% { transform: rotate(-15deg) translate3d(100%, 0, 0); opacity: 0; }
+}
+
+/* =========================================================
+   v10.8 · BG SPARKLES · 15 soles parpadeando aleatoriamente
+   ========================================================= */
+.bg-sparkles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.bg-sparkles i {
+  position: absolute;
+  width: 18px; height: 18px;
+  background: var(--sun-glyph) center / contain no-repeat;
+  opacity: 0;
+  filter: drop-shadow(0 0 6px rgba(229, 82, 63, .8))
+          drop-shadow(0 0 12px rgba(199, 44, 140, .5));
+  animation: sparkleTwinkle 3.5s ease-in-out infinite;
+  will-change: opacity, transform;
+  transform: rotate(0);
+}
+@keyframes sparkleTwinkle {
+  0%, 100% { opacity: 0; transform: scale(.6) rotate(0); }
+  35%      { opacity: 1; transform: scale(1.2) rotate(90deg); }
+  50%      { opacity: .9; transform: scale(1) rotate(140deg); }
+  65%      { opacity: 1; transform: scale(1.1) rotate(200deg); }
+}
+
+/* Móvil: reducir sparkles + ocultar streaks + sunburst más pequeño */
+@media (max-width: 768px) {
+  .bg-sparkles i:nth-child(n+9) { display: none; }
+  .bg-streak--3 { display: none; }
+  .bg-sunburst { width: 140vw; height: 140vw; margin-left: -70vw; margin-top: -70vw; filter: blur(30px); }
+}
+
+/* Reduced motion: detener todo lo nuevo */
+@media (prefers-reduced-motion: reduce) {
+  .bg-sunburst,
+  .bg-streak,
+  .bg-sparkles i,
+  .aurora { animation: none !important; }
+  .bg-streak { opacity: .4; }
+  .bg-sparkles i { opacity: .6; }
 }
 
 /* Móvil: reduce coste — menos blur, menos blobs, opacity bajada */
