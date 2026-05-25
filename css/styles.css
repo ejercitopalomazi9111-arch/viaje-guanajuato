@@ -3364,6 +3364,130 @@ h1, h2, h3, h4 {
   --line-dark-soft:   rgba(249, 243, 204, .07);
 }
 
+/* =========================================================
+   v10.7 · FIX BACKGROUND COVERAGE
+   Limpia TODOS los elementos con bg paper que tapaban la aurora.
+   El hero queda con foto (intencional). Las cards mantienen paper.
+   Todo lo demás transparente para que la aurora se vea pasar.
+   ========================================================= */
+
+/* Banda marquee → transparente con borders visibles */
+.marquee {
+  background: transparent !important;
+  border-top-color: rgba(249,243,204,.15) !important;
+  border-bottom-color: rgba(249,243,204,.15) !important;
+}
+
+/* Photo strip → transparente */
+.photo-strip {
+  background: transparent !important;
+  border-top-color: rgba(249,243,204,.1) !important;
+  border-bottom-color: rgba(249,243,204,.1) !important;
+}
+.photo-strip::before,
+.photo-strip::after { display: none !important; }
+
+/* Map section frame → transparente */
+.map-section {
+  background: transparent !important;
+  border-top-color: rgba(249,243,204,.1) !important;
+  border-bottom-color: rgba(249,243,204,.1) !important;
+}
+
+/* Map layout interior: mantengo como card pero semi-trans */
+.map-layout {
+  background: rgba(249, 243, 204, .04) !important;
+  border-color: rgba(249, 243, 204, .12) !important;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, .4) !important;
+}
+
+/* Map sidebar internal */
+.map-sidebar { background: transparent !important; border-right-color: rgba(249,243,204,.1) !important; }
+.map-list { background: transparent !important; }
+.map-list__head { background: rgba(249,243,204,.04) !important; border-bottom-color: rgba(249,243,204,.1) !important; }
+.map-list__head h3 { color: var(--paper) !important; }
+
+/* Stats cards → dark glass */
+.intro__stats .stat {
+  background: rgba(249, 243, 204, .04) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(249, 243, 204, .1) !important;
+}
+.intro__stats .stat:nth-child(1),
+.intro__stats .stat:nth-child(2),
+.intro__stats .stat:nth-child(3) {
+  background: rgba(249, 243, 204, .04) !important;
+}
+
+/* Subject rows → quitar los gradients paper, mantener bordes sutiles */
+.subject:nth-child(odd),
+.subject:nth-child(even) {
+  background: transparent !important;
+}
+.subject {
+  border-bottom-color: rgba(249,243,204,.08) !important;
+}
+
+/* Gallery section (la propiamente dicha) → transparente */
+.gallery {
+  background: transparent !important;
+  border-top-color: rgba(249,243,204,.1) !important;
+  border-bottom-color: rgba(249,243,204,.1) !important;
+}
+
+/* Places section (acotado) */
+.places {
+  background: transparent !important;
+  border-top-color: rgba(249,243,204,.1) !important;
+  border-bottom-color: rgba(249,243,204,.1) !important;
+}
+
+/* Galería figcaption */
+.gal figcaption,
+.gallery figcaption {
+  color: var(--paper-soft) !important;
+}
+
+/* Filter chip dots — fondos paper internos */
+.filter-chip__dot--all,
+.filter-chip__dot--dolores,
+.filter-chip__dot--gto { /* ok dejarlos */ }
+
+/* Hero veil: la foto queda con su veil dark (intencional, no es bug) */
+/* No tocar el hero — la aurora se ve a partir del scroll. */
+
+/* Banda decorativa horizontal arriba/abajo de marquee (era paper-warm) */
+.marquee::before,
+.marquee::after,
+.photo-strip::before,
+.photo-strip::after { display: none !important; }
+
+/* Section-head text en dark */
+.section-head__lead {
+  color: var(--paper-soft) !important;
+  opacity: .9;
+}
+.section-head .eyebrow { color: var(--terracotta-l) !important; }
+.section-head .eyebrow::before { background: var(--terracotta-l) !important; }
+
+/* Eyebrow general */
+.eyebrow { color: var(--terracotta-l); }
+.eyebrow::before { background: var(--terracotta-l); }
+
+/* Cualquier section que no sea hero o cta-block → transparente total
+   (background shorthand para borrar también gradients) */
+section:not(.hero):not(.cta-block) {
+  background: transparent !important;
+}
+
+/* Aurora más vibrante todavía: sube opacity */
+.aurora__blob { opacity: .95 !important; }
+@media (max-width: 768px) {
+  .aurora__blob { opacity: .75 !important; }
+}
+.aurora { filter: contrast(1.15) saturate(1.45) brightness(1.05); }
+
 
 /* =========================================================
    v10.4 · SUN GLYPH · 8-point sun, uniform across the site
