@@ -573,7 +573,7 @@ function initMap() {
   const bounds = L.latLngBounds(PLACES.map(p => p.coords)).pad(0.15);
   map.fitBounds(bounds);
 
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/voyager/{z}/{x}/{y}{r}.png', {
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
     subdomains: 'abcd', maxZoom: 19
   }).addTo(map);
 
@@ -1288,6 +1288,134 @@ function initHero3D() {
   tick();
 }
 
+/* ============= GEOMETRIC DECORATIONS ============= */
+function addGeoDeco() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  // RGBA channels for each named color
+  const P = {
+    gold:  [200, 153,  46],
+    coral: [217,  77,  40],
+    teal:  [ 40, 168, 146],
+    white: [255, 255, 255],
+  };
+
+  // Animation names defined in CSS
+  const anims = ['geoFloat1', 'geoFloat2', 'geoFloat3'];
+
+  /* Each entry: sel=CSS selector, shapes=array of shape descriptors
+     t  = type: ring | dot | tri | dia | hex | sq
+     w/h= size in px
+     x/y= position (% strings, relative to section)
+     c  = color key from P
+     o  = opacity (0-1)
+     bw = border-width for rings (px)
+     rot= initial CSS rotation (deg)
+     dur= animation duration (s)
+     dly= animation delay (s)
+     p  = optional perspective string for 3D tilt
+  */
+  const config = [
+    {
+      sel: '.hero', shapes: [
+        { t:'ring', w:260, h:260, x:'78%', y:'4%',  c:'gold',  o:.08, bw:2,   rot:15,  dur:14, dly:0   },
+        { t:'tri',  w:60,  h:60,  x:'7%',  y:'68%', c:'coral', o:.10, rot:25,  dur:11,  dly:1   },
+        { t:'dia',  w:50,  h:50,  x:'90%', y:'80%', c:'teal',  o:.09, rot:45,  dur:16,  dly:2   },
+        { t:'dot',  w:12,  h:12,  x:'26%', y:'12%', c:'white', o:.18, rot:0,   dur:9,   dly:0.5 },
+        { t:'ring', w:90,  h:90,  x:'55%', y:'88%', c:'coral', o:.07, bw:1.5, rot:0,   dur:13,  dly:3   },
+        { t:'sq',   w:36,  h:36,  x:'42%', y:'6%',  c:'teal',  o:.07, rot:30,  dur:20,  dly:1   },
+        { t:'dot',  w:7,   h:7,   x:'88%', y:'50%', c:'gold',  o:.25, rot:0,   dur:7,   dly:2   },
+      ]
+    },
+    {
+      sel: '.intro', shapes: [
+        { t:'hex',  w:140, h:140, x:'91%', y:'12%', c:'teal',  o:.07, rot:20,  dur:18, dly:0   },
+        { t:'ring', w:75,  h:75,  x:'3%',  y:'72%', c:'gold',  o:.09, bw:1.5, rot:0,  dur:12,  dly:1   },
+        { t:'dot',  w:9,   h:9,   x:'74%', y:'85%', c:'coral', o:.22, rot:0,   dur:8,  dly:2   },
+        { t:'sq',   w:55,  h:55,  x:'14%', y:'22%', c:'white', o:.05, rot:35,  dur:21, dly:0   },
+        { t:'tri',  w:42,  h:42,  x:'58%', y:'92%', c:'gold',  o:.09, rot:180, dur:13, dly:0.5 },
+      ]
+    },
+    {
+      sel: '.map-section', shapes: [
+        { t:'ring', w:190, h:190, x:'93%', y:'48%', c:'gold',  o:.07, bw:2,   rot:10,  dur:16, dly:2   },
+        { t:'tri',  w:44,  h:44,  x:'2%',  y:'28%', c:'teal',  o:.09, rot:15,  dur:10,  dly:0   },
+        { t:'dia',  w:65,  h:65,  x:'84%', y:'86%', c:'coral', o:.08, rot:45,  dur:14,  dly:1   },
+        { t:'dot',  w:10,  h:10,  x:'50%', y:'5%',  c:'white', o:.16, rot:0,   dur:9,   dly:1.5 },
+        { t:'hex',  w:80,  h:80,  x:'3%',  y:'80%', c:'coral', o:.07, rot:30,  dur:19,  dly:3   },
+      ]
+    },
+    {
+      sel: '.places', shapes: [
+        { t:'hex',  w:110, h:110, x:'2%',  y:'8%',  c:'gold',  o:.08, rot:30,  dur:17, dly:0   },
+        { t:'ring', w:170, h:170, x:'89%', y:'68%', c:'teal',  o:.06, bw:2,   rot:0,   dur:19, dly:3   },
+        { t:'tri',  w:52,  h:52,  x:'48%', y:'94%', c:'white', o:.07, rot:180, dur:13,  dly:1   },
+        { t:'dot',  w:14,  h:14,  x:'20%', y:'48%', c:'coral', o:.16, rot:0,   dur:8,   dly:2   },
+        { t:'sq',   w:44,  h:44,  x:'75%', y:'10%', c:'gold',  o:.07, rot:20,  dur:15,  dly:0.5 },
+        { t:'ring', w:55,  h:55,  x:'62%', y:'50%', c:'coral', o:.06, bw:1,   rot:0,   dur:11,  dly:4   },
+      ]
+    },
+    {
+      sel: '.subjects', shapes: [
+        { t:'dia',  w:88,  h:88,  x:'4%',  y:'18%', c:'teal',  o:.08, rot:45,  dur:15, dly:0   },
+        { t:'ring', w:210, h:210, x:'87%', y:'12%', c:'coral', o:.06, bw:2,   rot:20,  dur:21, dly:2   },
+        { t:'sq',   w:44,  h:44,  x:'91%', y:'53%', c:'gold',  o:.08, rot:30,  dur:12,  dly:1   },
+        { t:'dot',  w:9,   h:9,   x:'38%', y:'88%', c:'white', o:.16, rot:0,   dur:7,   dly:0.5 },
+        { t:'hex',  w:90,  h:90,  x:'7%',  y:'68%', c:'coral', o:.07, rot:15,  dur:18,  dly:3   },
+        { t:'tri',  w:48,  h:48,  x:'55%', y:'4%',  c:'gold',  o:.08, rot:10,  dur:10,  dly:1.5 },
+      ]
+    },
+    {
+      sel: '.gallery', shapes: [
+        { t:'ring', w:130, h:130, x:'4%',  y:'8%',  c:'teal',  o:.07, bw:1.5, rot:0,  dur:14,  dly:1   },
+        { t:'tri',  w:48,  h:48,  x:'92%', y:'22%', c:'gold',  o:.10, rot:210, dur:11,  dly:0   },
+        { t:'dia',  w:60,  h:60,  x:'48%', y:'90%', c:'coral', o:.08, rot:45,  dur:16,  dly:2   },
+        { t:'dot',  w:11,  h:11,  x:'80%', y:'60%', c:'white', o:.15, rot:0,   dur:8,   dly:0.5 },
+        { t:'sq',   w:38,  h:38,  x:'15%', y:'75%', c:'gold',  o:.07, rot:25,  dur:18,  dly:3   },
+      ]
+    },
+    {
+      sel: '.cta-block', shapes: [
+        { t:'ring', w:270, h:270, x:'91%', y:'48%', c:'gold',  o:.06, bw:2,   rot:15,  dur:22, dly:0   },
+        { t:'hex',  w:75,  h:75,  x:'4%',  y:'28%', c:'teal',  o:.08, rot:10,  dur:15,  dly:1   },
+        { t:'tri',  w:38,  h:38,  x:'68%', y:'78%', c:'coral', o:.10, rot:30,  dur:10,  dly:2   },
+        { t:'dot',  w:8,   h:8,   x:'30%', y:'15%', c:'white', o:.18, rot:0,   dur:6,   dly:0.5 },
+      ]
+    },
+  ];
+
+  config.forEach(({ sel, shapes }) => {
+    const section = document.querySelector(sel);
+    if (!section) return;
+    // Ensure relative positioning for absolute children
+    if (getComputedStyle(section).position === 'static') section.style.position = 'relative';
+
+    shapes.forEach((s, i) => {
+      const [r, g, b] = P[s.c];
+      const el = document.createElement('div');
+      el.setAttribute('aria-hidden', 'true');
+
+      const isRing = s.t === 'ring';
+      const anim   = anims[i % anims.length];
+
+      el.className = `geo geo--${s.t}`;
+      el.style.cssText = [
+        `width:${s.w}px`,
+        `height:${s.h}px`,
+        `left:${s.x}`,
+        `top:${s.y}`,
+        isRing
+          ? `border:${s.bw || 1.5}px solid rgba(${r},${g},${b},${s.o})`
+          : `background:rgba(${r},${g},${b},${s.o})`,
+        `--rot:${s.rot}deg`,
+        `animation:${anim} ${s.dur}s ease-in-out ${s.dly}s infinite alternate`,
+      ].join(';');
+
+      section.appendChild(el);
+    });
+  });
+}
+
 /* ============= HERO TITLE LETTER ANIMATION ============= */
 function animateHeroTitle() {
   const mainEl = document.querySelector('.hero__title-main em');
@@ -1335,6 +1463,7 @@ function setupAmbientGlow() {
 /* ============= INIT ============= */
 document.addEventListener('DOMContentLoaded', () => {
   initHero3D();
+  addGeoDeco();
   animateHeroTitle();
   setupAmbientGlow();
   initMap();

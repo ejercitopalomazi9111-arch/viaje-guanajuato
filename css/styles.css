@@ -193,6 +193,41 @@ section { position: relative; padding: clamp(5rem, 9vw, 10rem) 0; }
   to   { transform: translate(-6%, -5%) scale(1.15); }
 }
 
+/* ── GEOMETRIC DECORATIONS ──────────────────────────────── */
+.geo {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  will-change: transform;
+  transform: rotate(var(--rot, 0deg));
+}
+/* Ring (circle outline) */
+.geo--ring { border-radius: 50%; background: transparent !important; }
+/* Filled dot */
+.geo--dot  { border-radius: 50%; }
+/* Triangle — pointing up by default */
+.geo--tri  { clip-path: polygon(50% 0%, 0% 100%, 100% 100%); border-radius: 0 !important; }
+/* Diamond */
+.geo--dia  { clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); border-radius: 0 !important; }
+/* Hexagon */
+.geo--hex  { clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); border-radius: 0 !important; }
+/* Square (uses --rot for the tilt) */
+.geo--sq   { border-radius: 3px; }
+
+/* Floating keyframes — each one floats + rotates slightly */
+@keyframes geoFloat1 {
+  from { transform: translateY(0px)   rotate(var(--rot, 0deg)) perspective(600px) rotateX(10deg); }
+  to   { transform: translateY(-20px) rotate(calc(var(--rot, 0deg) + 9deg)) perspective(600px) rotateX(-6deg); }
+}
+@keyframes geoFloat2 {
+  from { transform: translateY(0px)  rotate(var(--rot, 0deg)) scale(1); }
+  to   { transform: translateY(16px) rotate(calc(var(--rot, 0deg) - 7deg)) scale(1.06); }
+}
+@keyframes geoFloat3 {
+  from { transform: translateY(-8px) rotate(var(--rot, 0deg)) perspective(500px) rotateY(12deg); }
+  to   { transform: translateY(10px) rotate(calc(var(--rot, 0deg) + 14deg)) perspective(500px) rotateY(-8deg); }
+}
+
 /* ── CURSOR ─────────────────────────────────────────────── */
 .cursor {
   position: fixed; top: 0; left: 0;
@@ -768,8 +803,8 @@ section { position: relative; padding: clamp(5rem, 9vw, 10rem) 0; }
 .map-active-card__close:hover { color: var(--tx); background: var(--bg-3); }
 
 /* Leaflet overrides */
-.leaflet-container { background: #e8e0d4 !important; font-family: var(--sans) !important; }
-.leaflet-tile { filter: saturate(1.05) brightness(1); }
+.leaflet-container { background: #f4f1ec !important; font-family: var(--sans) !important; }
+.leaflet-tile { filter: saturate(1.08) brightness(1.04); }
 .leaflet-control-zoom {
   border: 1px solid var(--b2) !important;
   border-radius: 8px !important;
