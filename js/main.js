@@ -573,8 +573,10 @@ function initMap() {
   const bounds = L.latLngBounds(PLACES.map(p => p.coords)).pad(0.15);
   map.fitBounds(bounds);
 
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-    subdomains: 'abcd', maxZoom: 19
+  // Google Maps-style tiles (OpenStreetMap standard, free, no API key)
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
   }).addTo(map);
 
   map.getContainer().addEventListener('mouseenter', () => map.scrollWheelZoom.enable());
@@ -584,13 +586,13 @@ function initMap() {
   const guanajuatoCoords = PLACES.filter(p => p.city === 'Guanajuato').map(p => p.coords);
 
   if (doloresCoords.length > 1) {
-    routeLines.dolores = L.polyline(doloresCoords, { color: '#C49A3C', weight: 2.5, opacity: 0.85, smoothFactor: 1.2, className: 'route-line route-line--dolores' }).addTo(map);
+    routeLines.dolores = L.polyline(doloresCoords, { color: '#C8992E', weight: 4, opacity: 0.90, smoothFactor: 1.2, className: 'route-line route-line--dolores' }).addTo(map);
   }
   if (guanajuatoCoords.length > 1) {
-    routeLines.gto = L.polyline(guanajuatoCoords, { color: '#E05835', weight: 2.5, opacity: 0.85, smoothFactor: 1.2, className: 'route-line route-line--gto' }).addTo(map);
+    routeLines.gto = L.polyline(guanajuatoCoords, { color: '#D94D28', weight: 4, opacity: 0.90, smoothFactor: 1.2, className: 'route-line route-line--gto' }).addTo(map);
   }
   routeLines.link = L.polyline([doloresCoords[doloresCoords.length - 1], guanajuatoCoords[0]], {
-    color: '#4A4642', weight: 1.5, opacity: 0.5, dashArray: '2 8', smoothFactor: 1, className: 'route-line route-line--link'
+    color: '#888', weight: 2, opacity: 0.5, dashArray: '4 8', smoothFactor: 1, className: 'route-line route-line--link'
   }).addTo(map);
 
   // Pre-set the solid routes to the "undrawn" state for the draw-in animation
