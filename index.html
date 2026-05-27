@@ -5,45 +5,40 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Journey to Guanajuato · Instituto Rembrandt de Querétaro</title>
 <meta name="description" content="STEAM expedition to the historical heritage of Guanajuato and Dolores Hidalgo. Instituto Rembrandt de Querétaro · DA016.">
-<meta name="theme-color" content="#684037">
+<meta name="theme-color" content="#07090E">
 
 <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
 <link rel="apple-touch-icon" href="assets/img/favicon.svg">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="assets/img/gto-panorama.jpg" fetchpriority="high">
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
-
 <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
-<!-- ═══════════════ BG FX ═══════════════ -->
-<div class="bg-fx" aria-hidden="true">
-  <div class="bg-glow"></div>
-  <div class="bg-glow-2"></div>
-  <div class="bg-grain"></div>
-</div>
+<!-- GRAIN OVERLAY -->
+<div class="grain" aria-hidden="true"></div>
 
-<!-- ═══════════════ CURSOR ═══════════════ -->
+<!-- CURSOR -->
 <div class="cursor" aria-hidden="true">
   <div class="cursor__dot"></div>
   <div class="cursor__ring"></div>
 </div>
 
-<!-- ═══════════════ PROGRESS BAR ═══════════════ -->
+<!-- SCROLL PROGRESS -->
 <div class="scroll-progress" id="scrollProgress" aria-hidden="true">
   <div class="scroll-progress__bar"></div>
 </div>
 
-<!-- ═══════════════ NAV ═══════════════ -->
+<!-- NAV -->
 <nav class="nav" id="nav">
   <a href="#top" class="nav__brand">
     <img src="assets/img/logo_rembrandt.png" alt="" class="nav__logo">
-    <span class="nav__name">Instituto Rembrandt <em>Qro</em></span>
+    <span>Instituto Rembrandt <em>Qro</em></span>
   </a>
   <ul class="nav__links" id="navLinks">
     <li><a href="#hero">Home</a></li>
@@ -52,59 +47,71 @@
     <li><a href="#asignaturas">Subjects</a></li>
     <li><a href="#galeria">Gallery</a></li>
   </ul>
-  <div class="nav__progress" id="navProgress" aria-label="Itinerary progress" title="Places discovered">
-    <svg class="nav__progress-ring" viewBox="0 0 36 36" aria-hidden="true">
-      <circle class="nav__progress-bg" cx="18" cy="18" r="15.9"></circle>
-      <circle class="nav__progress-fg" cx="18" cy="18" r="15.9" id="navProgressFg"></circle>
-    </svg>
-    <span class="nav__progress-num"><span id="navProgressNum">0</span><em>/11</em></span>
+  <div class="nav__right">
+    <div class="nav__progress" id="navProgress" aria-label="Itinerary progress">
+      <svg class="nav__progress-ring" viewBox="0 0 36 36" aria-hidden="true">
+        <circle class="nav__progress-bg" cx="18" cy="18" r="15.9"></circle>
+        <circle class="nav__progress-fg" cx="18" cy="18" r="15.9" id="navProgressFg"></circle>
+      </svg>
+      <span class="nav__progress-num"><span id="navProgressNum">0</span><em>/11</em></span>
+    </div>
+    <a href="#map" class="nav__cta" data-magnetic>Explore map</a>
   </div>
-  <a href="#map" class="nav__cta" data-magnetic>Explore the map</a>
   <button class="nav__burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
     <span></span><span></span><span></span>
   </button>
 </nav>
 
-<!-- ═══════════════ HERO ═══════════════ -->
+<!-- HERO -->
 <section id="hero" class="hero">
-  <div class="hero__media">
-    <img src="assets/img/gto-panorama.jpg" alt="Panoramic view of Guanajuato" class="hero__img" id="heroImg" fetchpriority="high">
-    <div class="hero__veil"></div>
-  </div>
+  <canvas id="hero3d" class="hero__canvas" aria-hidden="true"></canvas>
+
   <div class="hero__content">
-    <span class="hero__eyebrow">
-      <span class="hero__dot"></span>
-      STEAM Expedition · 3rd Term · DA016
-    </span>
+    <p class="hero__eyebrow">
+      <span class="hero__eyebrow-dot"></span>
+      <span>STEAM Expedition · 3rd Term · DA016</span>
+    </p>
     <h1 class="hero__title">
-      <span class="line"><span data-anim="line-up">Journey to</span></span>
-      <span class="line line--big"><span data-anim="line-up">Guanajuato</span></span>
+      <span class="hero__title-top">Journey to</span>
+      <span class="hero__title-main"><em>Guanajuato</em></span>
     </h1>
-    <p class="hero__lead" data-split="words">
-      Eleven stops between Dolores Hidalgo and Guanajuato Capital. Seven academic subjects in dialogue with stone and history. One STEAM expedition.
+    <p class="hero__lead">
+      Eleven stops between Dolores Hidalgo and Guanajuato Capital. Seven academic subjects in dialogue with stone and history.
     </p>
     <div class="hero__actions">
       <a href="#map" class="btn btn--primary" data-magnetic>
-        <span>Open the interactive map</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        <span>Open the map</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </a>
       <a href="#intro" class="btn btn--ghost" data-magnetic>About the project</a>
     </div>
   </div>
+
+  <div class="hero__visual">
+    <div class="hero__frame" id="heroFrame">
+      <img src="assets/img/gto-panorama.jpg" alt="Panoramic view of Guanajuato" class="hero__img" id="heroImg" fetchpriority="high">
+      <div class="hero__frame-veil"></div>
+    </div>
+    <div class="hero__frame-tag">
+      <span class="hero__frame-tag-num">11</span>
+      <span class="hero__frame-tag-lbl">stops</span>
+    </div>
+    <div class="hero__frame-city">Guanajuato · México</div>
+  </div>
+
   <div class="hero__bottom">
     <div class="hero__meta">
-      <div><span>Latitude</span>21°00′N</div>
-      <div><span>Longitude</span>101°15′W</div>
-      <div><span>UNESCO</span>1988</div>
-      <div><span>Expedition</span>MMXXVI</div>
+      <div class="hero__meta-item"><span>Latitude</span>21°00′N</div>
+      <div class="hero__meta-item"><span>Longitude</span>101°15′W</div>
+      <div class="hero__meta-item"><span>UNESCO</span>1988</div>
+      <div class="hero__meta-item"><span>Expedition</span>MMXXVI</div>
     </div>
     <div class="hero__scroll">
-      <span>Scroll</span>
       <div class="hero__scroll-line"></div>
+      <span>scroll</span>
     </div>
   </div>
 
-  <!-- Passport stamp -->
   <div class="hero__stamp" aria-hidden="true">
     <span class="hero__stamp-top">Instituto · Rembrandt</span>
     <span class="hero__stamp-mid">
@@ -115,53 +122,53 @@
   </div>
 </section>
 
-<!-- ═══════════════ MARQUEE ═══════════════ -->
-<div class="marquee" aria-hidden="true">
-  <div class="marquee__track">
-    <span>Journey to Guanajuato</span><span class="marquee__star">✦</span>
-    <span>STEAM Expedition</span><span class="marquee__star">✦</span>
-    <span>MMXXVI</span><span class="marquee__star">✦</span>
-    <span>Eleven Stops</span><span class="marquee__star">✦</span>
-    <span>Seven Subjects</span><span class="marquee__star">✦</span>
-    <span>Dolores Hidalgo · Guanajuato Capital</span><span class="marquee__star">✦</span>
-    <span>Journey to Guanajuato</span><span class="marquee__star">✦</span>
-    <span>STEAM Expedition</span><span class="marquee__star">✦</span>
-    <span>MMXXVI</span><span class="marquee__star">✦</span>
-    <span>Eleven Stops</span><span class="marquee__star">✦</span>
-    <span>Seven Subjects</span><span class="marquee__star">✦</span>
-    <span>Dolores Hidalgo · Guanajuato Capital</span><span class="marquee__star">✦</span>
+<!-- TICKER -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker__track">
+    <span>Journey to Guanajuato</span><span class="ticker__sep">◆</span>
+    <span>STEAM Expedition</span><span class="ticker__sep">◆</span>
+    <span>MMXXVI</span><span class="ticker__sep">◆</span>
+    <span>Eleven Stops</span><span class="ticker__sep">◆</span>
+    <span>Seven Subjects</span><span class="ticker__sep">◆</span>
+    <span>Dolores Hidalgo · Guanajuato Capital</span><span class="ticker__sep">◆</span>
+    <span>Journey to Guanajuato</span><span class="ticker__sep">◆</span>
+    <span>STEAM Expedition</span><span class="ticker__sep">◆</span>
+    <span>MMXXVI</span><span class="ticker__sep">◆</span>
+    <span>Eleven Stops</span><span class="ticker__sep">◆</span>
+    <span>Seven Subjects</span><span class="ticker__sep">◆</span>
+    <span>Dolores Hidalgo · Guanajuato Capital</span><span class="ticker__sep">◆</span>
   </div>
 </div>
 
-<!-- ═══════════════ INTRO ═══════════════ -->
+<!-- INTRO -->
 <section id="intro" class="intro">
   <div class="container">
     <div class="intro__grid">
-      <div class="intro__left">
-        <span class="eyebrow rv">About the Project</span>
-        <h2 class="display rv d1">
-          An academic journey<br>as a <em>formative experience</em>.
+      <div class="intro__left rv">
+        <span class="label">About the Project</span>
+        <h2 class="intro__heading">
+          An academic journey<br>as a <em>formative</em><br>experience.
         </h2>
       </div>
       <div class="intro__right">
-        <p class="rv d2">
+        <p class="intro__body rv d1">
           This journey is not merely a recreational activity, but a structured formative experience that reinforces classroom knowledge through observation, analysis, and experimentation in real contexts.
         </p>
-        <p class="rv d3">
-          Under <strong>STEAM</strong> methodology (Science, Technology, Engineering, Arts, and Mathematics), it integrates <strong>seven academic subjects</strong> across <strong>eleven stops</strong> that account for 50% of the third term.
+        <p class="intro__body rv d2">
+          Under <strong>STEAM</strong> methodology, it integrates seven academic subjects across eleven stops that account for <strong>50% of the third term</strong>.
         </p>
-        <div class="intro__stats rv d4">
+        <div class="stats-row rv d3">
           <div class="stat">
-            <div class="stat__num" data-count="11">0</div>
-            <div class="stat__label">Itinerary stops</div>
+            <div class="stat__n" data-count="11">0</div>
+            <div class="stat__l">Itinerary stops</div>
           </div>
           <div class="stat">
-            <div class="stat__num" data-count="7">0</div>
-            <div class="stat__label">Academic subjects</div>
+            <div class="stat__n" data-count="7">0</div>
+            <div class="stat__l">Academic subjects</div>
           </div>
           <div class="stat">
-            <div class="stat__num">50<span>%</span></div>
-            <div class="stat__label">of the third term</div>
+            <div class="stat__n">50<span class="stat__suffix">%</span></div>
+            <div class="stat__l">of the third term</div>
           </div>
         </div>
       </div>
@@ -169,9 +176,9 @@
   </div>
 </section>
 
-<!-- ═══════════════ PHOTO STRIP ═══════════════ -->
-<div class="photo-strip" aria-hidden="true">
-  <div class="photo-strip__track">
+<!-- PHOTO STRIP -->
+<div class="photostrip" aria-hidden="true">
+  <div class="photostrip__track">
     <figure><img src="assets/img/dol-parroquia.jpg" alt="" loading="lazy"></figure>
     <figure><img src="assets/img/gto-teatro.jpg" alt="" loading="lazy"></figure>
     <figure><img src="assets/img/dol-plaza.jpg" alt="" loading="lazy"></figure>
@@ -181,9 +188,7 @@
     <figure><img src="assets/img/gto-mercado.jpg" alt="" loading="lazy"></figure>
     <figure><img src="assets/img/gto-universidad.jpg" alt="" loading="lazy"></figure>
     <figure><img src="assets/img/dol-carcel.jpg" alt="" loading="lazy"></figure>
-    <figure><img src="assets/img/gto-basilica.png" alt="" loading="lazy"></figure>
     <figure><img src="assets/img/gto-pipila.jpg" alt="" loading="lazy"></figure>
-    <!-- duplicate for infinite loop -->
     <figure><img src="assets/img/dol-parroquia.jpg" alt="" loading="lazy"></figure>
     <figure><img src="assets/img/gto-teatro.jpg" alt="" loading="lazy"></figure>
     <figure><img src="assets/img/dol-plaza.jpg" alt="" loading="lazy"></figure>
@@ -192,36 +197,35 @@
   </div>
 </div>
 
-<!-- ═══════════════ MAP SECTION ═══════════════ -->
+<!-- MAP SECTION -->
 <section id="map" class="map-section">
   <div class="container">
     <header class="section-head">
-      <span class="eyebrow rv">The Interactive Map</span>
-      <h2 class="display rv d1">
+      <span class="label rv">The Interactive Map</span>
+      <h2 class="section-title rv d1">
         Eleven stops<br>between <em>two cities</em>.
       </h2>
-      <p class="section-head__lead rv d2">
-        The itinerary begins in Dolores Hidalgo —cradle of Mexican Independence— and continues in Guanajuato Capital, a UNESCO World Heritage Site. Tap any marker to discover it.
+      <p class="section-lead rv d2">
+        The itinerary begins in Dolores Hidalgo —cradle of Mexican Independence— and continues in Guanajuato Capital, a UNESCO World Heritage Site.
       </p>
     </header>
 
-    <!-- Toolbar: city filters -->
     <div class="map-toolbar rv d2">
-      <div class="map-filter" role="tablist" aria-label="Filter stops by city">
-        <button class="filter-chip is-active" data-filter="all" role="tab" aria-selected="true">
-          <span class="filter-chip__dot filter-chip__dot--all"></span>
-          <span>Entire Itinerary</span>
-          <span class="filter-chip__n">11</span>
+      <div class="map-filter" role="tablist" aria-label="Filter by city">
+        <button class="chip is-active" data-filter="all" role="tab" aria-selected="true">
+          <span class="chip__dot chip__dot--all"></span>
+          <span>All Stops</span>
+          <span class="chip__n">11</span>
         </button>
-        <button class="filter-chip" data-filter="Dolores Hidalgo" role="tab" aria-selected="false">
-          <span class="filter-chip__dot filter-chip__dot--dolores"></span>
+        <button class="chip" data-filter="Dolores Hidalgo" role="tab" aria-selected="false">
+          <span class="chip__dot chip__dot--dolores"></span>
           <span>Dolores Hidalgo</span>
-          <span class="filter-chip__n">4</span>
+          <span class="chip__n">4</span>
         </button>
-        <button class="filter-chip" data-filter="Guanajuato" role="tab" aria-selected="false">
-          <span class="filter-chip__dot filter-chip__dot--gto"></span>
+        <button class="chip" data-filter="Guanajuato" role="tab" aria-selected="false">
+          <span class="chip__dot chip__dot--gto"></span>
           <span>Guanajuato Capital</span>
-          <span class="filter-chip__n">7</span>
+          <span class="chip__n">7</span>
         </button>
       </div>
     </div>
@@ -229,7 +233,7 @@
     <div class="map-layout rv d3" id="mapLayout">
       <aside class="map-sidebar">
         <div class="map-sidebar__head">
-          <span class="mono"><span id="mapSidebarCount">11</span> · stops</span>
+          <span class="mono"><span id="mapSidebarCount">11</span> stops</span>
           <span class="mono">Gto · Dolores</span>
         </div>
         <ul class="map-list" id="mapList"></ul>
@@ -238,23 +242,21 @@
         <div id="leafletMap" class="map-canvas__leaflet"></div>
         <div class="map-canvas__corner mono">© OpenStreetMap · CARTO</div>
 
-        <!-- Route legend -->
         <div class="map-legend" aria-hidden="true">
           <div class="map-legend__item">
-            <span class="map-legend__swatch map-legend__swatch--gto"></span>
+            <span class="map-legend__dot map-legend__dot--gto"></span>
             <span>Guanajuato Route</span>
           </div>
           <div class="map-legend__item">
-            <span class="map-legend__swatch map-legend__swatch--dolores"></span>
+            <span class="map-legend__dot map-legend__dot--dolores"></span>
             <span>Dolores Route</span>
           </div>
           <div class="map-legend__item">
-            <span class="map-legend__swatch map-legend__swatch--link"></span>
-            <span>Highway Section</span>
+            <span class="map-legend__dot map-legend__dot--link"></span>
+            <span>Highway</span>
           </div>
         </div>
 
-        <!-- Active place card -->
         <aside class="map-active-card" id="mapActiveCard" aria-hidden="true">
           <div class="map-active-card__media">
             <img id="activeCardImg" src="" alt="">
@@ -263,20 +265,20 @@
           <div class="map-active-card__body">
             <span class="map-active-card__city mono" id="activeCardCity">—</span>
             <h4 class="map-active-card__title" id="activeCardTitle">Select a site</h4>
-            <p class="map-active-card__desc" id="activeCardDesc">Click any marker or list entry to see the details.</p>
+            <p class="map-active-card__desc" id="activeCardDesc">Click any marker or list entry.</p>
             <div class="map-active-card__foot">
               <span class="map-active-card__dist mono" id="activeCardDist"></span>
               <button class="map-active-card__cta" id="activeCardCta" type="button">
                 <span>Read history</span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
               </button>
             </div>
           </div>
           <button class="map-active-card__close" id="activeCardClose" aria-label="Close">&times;</button>
         </aside>
 
-        <button class="map-canvas__reset" id="mapReset" data-magnetic aria-label="View entire itinerary">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9"/><path d="M3 3v6h6"/></svg>
+        <button class="map-canvas__reset" id="mapReset" data-magnetic aria-label="View all">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9"/><path d="M3 3v6h6"/></svg>
           <span>View all</span>
         </button>
       </div>
@@ -284,91 +286,91 @@
   </div>
 </section>
 
-<!-- ═══════════════ PLACES (NEW) ═══════════════ -->
+<!-- PLACES -->
 <section id="places" class="places">
   <div class="container">
     <header class="section-head">
-      <span class="eyebrow rv">The Eleven Stops</span>
-      <h2 class="display rv d1">
+      <span class="label rv">The Eleven Stops</span>
+      <h2 class="section-title rv d1">
         Every stone<br>tells a <em>story</em>.
       </h2>
-      <p class="section-head__lead rv d2">
-        A detailed portrait of each of the eleven sites of the itinerary — their history, what makes them unique and what to look for when we walk in.
+      <p class="section-lead rv d2">
+        A detailed portrait of each of the eleven sites — their history, what makes them unique, and what to look for.
       </p>
     </header>
     <div class="place-grid" id="placeSections"></div>
   </div>
 </section>
 
-<!-- ═══════════════ MARQUEE 2 ═══════════════ -->
-<div class="marquee marquee--reverse" aria-hidden="true">
-  <div class="marquee__track">
+<!-- TICKER 2 -->
+<div class="ticker ticker--reverse" aria-hidden="true">
+  <div class="ticker__track">
     <span class="italic">Parish · Prison · Hidalgo's House · Square · El Pípila · Basilica · Alhóndiga · Market · Mine · University · Juárez Theatre ·</span>
     <span class="italic">Parish · Prison · Hidalgo's House · Square · El Pípila · Basilica · Alhóndiga · Market · Mine · University · Juárez Theatre ·</span>
   </div>
 </div>
 
-<!-- ═══════════════ SUBJECTS ═══════════════ -->
+<!-- SUBJECTS -->
 <section id="asignaturas" class="subjects">
   <div class="container">
     <header class="section-head">
-      <span class="eyebrow rv">The Academic Subjects</span>
-      <h2 class="display rv d1">
+      <span class="label rv">The Academic Subjects</span>
+      <h2 class="section-title rv d1">
         Seven areas<br>of <em>learning</em>.
       </h2>
-      <p class="section-head__lead rv d2">
-        Each subject is linked to one or more stops on the itinerary. The site now includes real photographs and the documentary footage from the trip.
+      <p class="section-lead rv d2">
+        Each subject is linked to one or more stops. Real photographs and documentary footage from the trip are now in place.
       </p>
     </header>
-    <div class="subject-list-wrap" id="subjectSections"></div>
+    <div class="subject-list" id="subjectSections"></div>
   </div>
 </section>
 
-<!-- ═══════════════ GALLERY ═══════════════ -->
+<!-- GALLERY -->
 <section id="galeria" class="gallery">
   <div class="container container--wide">
     <header class="section-head">
-      <span class="eyebrow rv">Gallery</span>
-      <h2 class="display rv d1">
+      <span class="label rv">Gallery</span>
+      <h2 class="section-title rv d1">
         The destination,<br>in <em>images</em>.
       </h2>
-      <p class="section-head__lead rv d2">
-        The expedition is back. These are real photographs from Dolores Hidalgo and Guanajuato Capital.
+      <p class="section-lead rv d2">
+        Real photographs from Dolores Hidalgo and Guanajuato Capital.
       </p>
     </header>
 
     <div class="gallery-grid">
-      <figure class="gal gal--lg rv"><img src="assets/img/dol-plaza.jpg" alt="Statue of Father Hidalgo in the Main Square" loading="lazy"><figcaption>Father Hidalgo · Main Square of Dolores</figcaption></figure>
-      <figure class="gal rv d1"><img src="assets/img/dol-parroquia.jpg" alt="Interior of the Parish of Dolores" loading="lazy"><figcaption>Parish interior · Dolores Hidalgo</figcaption></figure>
+      <figure class="gal gal--lg rv"><img src="assets/img/dol-plaza.jpg" alt="Father Hidalgo statue" loading="lazy"><figcaption>Father Hidalgo · Main Square of Dolores</figcaption></figure>
+      <figure class="gal rv d1"><img src="assets/img/dol-parroquia.jpg" alt="Parish interior" loading="lazy"><figcaption>Parish interior · Dolores Hidalgo</figcaption></figure>
       <figure class="gal rv d2"><img src="assets/img/viaje-grito.jpg" alt="Tour guide recreating El Grito" loading="lazy"><figcaption>The Grito · re-enacted live</figcaption></figure>
-      <figure class="gal gal--tall rv d3"><img src="assets/img/gto-pipila.jpg" alt="Monument to El Pípila" loading="lazy"><figcaption>El Pípila · Guanajuato</figcaption></figure>
-      <figure class="gal rv d4"><img src="assets/img/dol-casa-hidalgo.jpg" alt="Façade of Hidalgo's House" loading="lazy"><figcaption>Hidalgo's House · Dolores</figcaption></figure>
-      <figure class="gal gal--wide rv d6"><img src="assets/img/gto-alhondiga.jpg" alt="Façade of the Alhóndiga de Granaditas" loading="lazy"><figcaption>Alhóndiga de Granaditas · Guanajuato</figcaption></figure>
+      <figure class="gal gal--tall rv d3"><img src="assets/img/gto-pipila.jpg" alt="El Pípila monument" loading="lazy"><figcaption>El Pípila · Guanajuato</figcaption></figure>
+      <figure class="gal rv d4"><img src="assets/img/dol-casa-hidalgo.jpg" alt="Hidalgo's House" loading="lazy"><figcaption>Hidalgo's House · Dolores</figcaption></figure>
+      <figure class="gal gal--wide rv d6"><img src="assets/img/gto-alhondiga.jpg" alt="Alhóndiga de Granaditas" loading="lazy"><figcaption>Alhóndiga de Granaditas · Guanajuato</figcaption></figure>
       <figure class="gal rv d3"><img src="assets/img/viaje-hidalgo-bust.jpg" alt="Student next to Hidalgo's bust" loading="lazy"><figcaption>Beside Hidalgo · Museum of Independence</figcaption></figure>
-      <figure class="gal rv d4"><img src="assets/img/gto-mercado.jpg" alt="Hidalgo Market interior with papel picado" loading="lazy"><figcaption>Hidalgo Market · Guanajuato</figcaption></figure>
-      <figure class="gal rv d5"><img src="assets/img/dol-carcel.jpg" alt="Original cell door of the Former Royal Prison" loading="lazy"><figcaption>Cell door · Former Royal Prison</figcaption></figure>
-      <figure class="gal rv d6"><img src="assets/img/viaje-vitrina.jpg" alt="Independence-era artifacts in display case" loading="lazy"><figcaption>Independence-era artifacts</figcaption></figure>
-      <figure class="gal gal--wide rv"><img src="assets/img/gto-aerial.jpg" alt="Wide view of the historic center" loading="lazy"><figcaption>Historic Center · UNESCO</figcaption></figure>
-      <figure class="gal rv d2"><img src="assets/img/viaje-sereno.jpg" alt="The Sereno mural — Dolores street art" loading="lazy"><figcaption>The Sereno · Dolores street art</figcaption></figure>
-      <figure class="gal rv d4"><img src="assets/img/viaje-camino.jpg" alt="On the road — Querétaro to Guanajuato" loading="lazy"><figcaption>On the road · Qro → Gto</figcaption></figure>
+      <figure class="gal rv d4"><img src="assets/img/gto-mercado.jpg" alt="Hidalgo Market" loading="lazy"><figcaption>Hidalgo Market · Guanajuato</figcaption></figure>
+      <figure class="gal rv d5"><img src="assets/img/dol-carcel.jpg" alt="Former Royal Prison cell" loading="lazy"><figcaption>Cell door · Former Royal Prison</figcaption></figure>
+      <figure class="gal rv d6"><img src="assets/img/viaje-vitrina.jpg" alt="Independence-era artifacts" loading="lazy"><figcaption>Independence-era artifacts</figcaption></figure>
+      <figure class="gal gal--wide rv"><img src="assets/img/gto-aerial.jpg" alt="Historic center aerial" loading="lazy"><figcaption>Historic Center · UNESCO</figcaption></figure>
+      <figure class="gal rv d2"><img src="assets/img/viaje-sereno.jpg" alt="The Sereno mural" loading="lazy"><figcaption>The Sereno · Dolores street art</figcaption></figure>
+      <figure class="gal rv d4"><img src="assets/img/viaje-camino.jpg" alt="On the road" loading="lazy"><figcaption>On the road · Qro → Gto</figcaption></figure>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════ CTA ═══════════════ -->
+<!-- CTA -->
 <section class="cta-block">
   <div class="container">
     <div class="cta-block__inner rv">
-      <div>
-        <span class="eyebrow">Travel Log · Back from the trip</span>
-        <h3 class="display">The journey happened.<br>It lives <em>here</em>.</h3>
+      <div class="cta-block__copy">
+        <span class="label">Travel Log · Back from the trip</span>
+        <h3 class="cta-block__title">The journey happened.<br>It lives <em>here</em>.</h3>
       </div>
-      <p>Each subject has its own dedicated section. Real photographs from Dolores Hidalgo and Guanajuato Capital are now in place, alongside the chemistry documentary and the rest of the term's deliverables.</p>
+      <p class="cta-block__body">Each subject has its own dedicated section with real photographs, the chemistry documentary, and the rest of the term's deliverables.</p>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════ FOOTER ═══════════════ -->
+<!-- FOOTER -->
 <footer class="footer">
   <div class="container">
     <div class="footer__top">
@@ -379,9 +381,7 @@
           <div class="mono">Technological Baccalaureate in Programming · DGETI</div>
         </div>
       </a>
-      <div class="footer__motto">
-        <p class="display">"Forming young people with <em>respect</em>, <em>culture</em> and <em>honor</em>"</p>
-      </div>
+      <p class="footer__motto">"Forming young people with <em>respect</em>, <em>culture</em> and <em>honor</em>"</p>
     </div>
     <div class="footer__bot">
       <span class="mono">© MMXXVI · DA016</span>
@@ -391,7 +391,7 @@
   </div>
 </footer>
 
-<!-- ═══════════════ MODAL ═══════════════ -->
+<!-- MODAL -->
 <div class="modal" id="modal" aria-hidden="true">
   <div class="modal__backdrop"></div>
   <div class="modal__panel">
@@ -399,7 +399,7 @@
     <div class="modal__media"><img id="modalImg" src="" alt=""></div>
     <div class="modal__body">
       <div class="modal__num mono" id="modalNum">/00</div>
-      <h3 class="display" id="modalTitle"></h3>
+      <h3 class="modal__title" id="modalTitle"></h3>
       <p class="modal__teacher" id="modalTeacher"></p>
       <div class="modal__text" id="modalText"></div>
       <div class="modal__meta" id="modalMeta"></div>

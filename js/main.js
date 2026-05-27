@@ -754,13 +754,13 @@ window.addEventListener('scroll', () => {
   progressBar.style.transform = `scaleX(${p})`;
 }, { passive: true });
 
-/* ============= HERO PARALLAX ============= */
+/* ============= HERO PARALLAX (scroll) ============= */
 const heroImg = document.getElementById('heroImg');
 window.addEventListener('scroll', () => {
   if (!heroImg) return;
   const y = window.scrollY;
-  if (y < window.innerHeight * 1.3) {
-    heroImg.style.transform = `translate3d(0, ${y * 0.3}px, 0) scale(${1 + y * 0.0003})`;
+  if (y < window.innerHeight * 1.4) {
+    heroImg.style.transform = `translate3d(0, ${y * 0.16}px, 0) scale(${1 + y * 0.00018})`;
   }
 }, { passive: true });
 
@@ -890,14 +890,14 @@ function setupHeroParallax() {
   });
   hero.addEventListener('mouseleave', () => { tx = 0; ty = 0; });
   function tick() {
-    cx += (tx - cx) * 0.08;
-    cy += (ty - cy) * 0.08;
-    const media = hero.querySelector('.hero__media');
+    cx += (tx - cx) * 0.07;
+    cy += (ty - cy) * 0.07;
+    const frame   = hero.querySelector('.hero__frame');
     const content = hero.querySelector('.hero__content');
-    const stamp = hero.querySelector('.hero__stamp');
-    if (media)   media.style.transform   = `translate3d(${cx * -18}px, ${cy * -10}px, 0) scale(1.04)`;
-    if (content) content.style.transform = `translate3d(${cx *  10}px, ${cy *  6}px, 0)`;
-    if (stamp)   stamp.style.transform   = `translate3d(${cx *  20}px, ${cy * 14}px, 0) rotate(8deg)`;
+    const stamp   = hero.querySelector('.hero__stamp');
+    if (frame)   frame.style.transform   = `perspective(1400px) rotateY(${-8 + cx * 5}deg) rotateX(${3 + cy * -3}deg)`;
+    if (content) content.style.transform = `translate3d(${cx * 7}px, ${cy * 4}px, 0)`;
+    if (stamp)   stamp.style.transform   = `translate3d(${cx * 16}px, ${cy * 10}px, 0) rotate(-12deg)`;
     if (Math.abs(tx - cx) > 0.001 || Math.abs(ty - cy) > 0.001) {
       raf = requestAnimationFrame(tick);
     } else {
@@ -1076,7 +1076,7 @@ activeCardCta?.addEventListener('click', () => {
 /* ============= FILTER CHIPS ============= */
 function setFilter(filter) {
   currentFilter = filter;
-  document.querySelectorAll('.filter-chip').forEach(btn => {
+  document.querySelectorAll('.chip').forEach(btn => {
     const on = btn.dataset.filter === filter;
     btn.classList.toggle('is-active', on);
     btn.setAttribute('aria-selected', String(on));
@@ -1119,7 +1119,7 @@ function setFilter(filter) {
   }
 }
 
-document.querySelectorAll('.filter-chip').forEach(btn => {
+document.querySelectorAll('.chip').forEach(btn => {
   btn.addEventListener('click', () => setFilter(btn.dataset.filter));
 });
 
@@ -1176,8 +1176,121 @@ function updateNavProgress() {
   if (count === total) wrap?.classList.add('is-complete');
 }
 
+/* ============= HERO 3D CANVAS (constellation particles) ============= */
+function initHero3D() {
+  const canvas = document.getElementById('hero3d');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let W, H;
+
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize, { passive: true });
+
+  // Palette weighted: gold 55%, coral 25%, cream 20%
+  const palette = [
+    [184,133, 53],[184,133, 53],[184,133, 53],
+    [201, 67, 28],[201, 67, 28],
+    [235,228,216],[235,228,216],
+  ];
+  const N    = 110;
+  const LINK = 165;
+
+  const pts = Array.from({ length: N }, () => {
+    const z   = 0.28 + Math.random() * 0.72;
+    const col = palette[Math.floor(Math.random() * palette.length)];
+    return {
+      x:  Math.random() * W,
+      y:  Math.random() * H,
+      z,
+      vx: (Math.random() - 0.5) * 0.20 * z,
+      vy: (Math.random() - 0.5) * 0.20 * z,
+      r:  0.5 + z * 2.8,
+      a:  0.07 + z * 0.40,
+      col,
+    };
+  });
+
+  let mx = -9999, my = -9999;
+  window.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; }, { passive: true });
+
+  let running = true;
+  let animId  = null;
+
+  const heroEl = document.querySelector('.hero');
+  if (heroEl) {
+    const obs = new IntersectionObserver(([e]) => {
+      running = e.isIntersecting;
+      if (running && !animId) tick();
+    });
+    obs.observe(heroEl);
+  }
+
+  function tick() {
+    animId = requestAnimationFrame(tick);
+    if (!running) { cancelAnimationFrame(animId); animId = null; return; }
+
+    ctx.clearRect(0, 0, W, H);
+
+    // Draw constellation lines
+    for (let i = 0; i < N; i++) {
+      for (let j = i + 1; j < N; j++) {
+        const a = pts[i], b = pts[j];
+        const dx = a.x - b.x, dy = a.y - b.y;
+        const d2 = dx * dx + dy * dy;
+        if (d2 < LINK * LINK) {
+          const alpha = (1 - Math.sqrt(d2) / LINK) * 0.09;
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.strokeStyle = `rgba(184,133,53,${alpha})`;
+          ctx.lineWidth   = 0.5;
+          ctx.stroke();
+        }
+      }
+    }
+
+    // Update & draw particles
+    pts.forEach(p => {
+      // Mouse repulsion
+      const dx = p.x - mx, dy = p.y - my;
+      const d  = Math.sqrt(dx * dx + dy * dy);
+      if (d < 200 && d > 0.1) {
+        const f = (1 - d / 200) * 0.004 * p.z;
+        p.vx += (dx / d) * f;
+        p.vy += (dy / d) * f;
+      }
+      p.vx *= 0.978;
+      p.vy *= 0.978;
+      p.x   = ((p.x + p.vx) + W) % W;
+      p.y   = ((p.y + p.vy) + H) % H;
+
+      const [r, g, b] = p.col;
+      // Soft glow
+      const grd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 5.5);
+      grd.addColorStop(0, `rgba(${r},${g},${b},${p.a * 0.65})`);
+      grd.addColorStop(1, `rgba(${r},${g},${b},0)`);
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r * 5.5, 0, Math.PI * 2);
+      ctx.fillStyle = grd;
+      ctx.fill();
+      // Hard core
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${r},${g},${b},${Math.min(p.a * 2, 0.92)})`;
+      ctx.fill();
+    });
+  }
+
+  tick();
+}
+
 /* ============= INIT ============= */
 document.addEventListener('DOMContentLoaded', () => {
+  initHero3D();
   initMap();
   triggerReveals();
   animateCounters();
