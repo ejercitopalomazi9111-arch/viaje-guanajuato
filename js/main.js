@@ -1192,36 +1192,40 @@ function initHero3D() {
   resize();
   window.addEventListener('resize', resize, { passive: true });
 
-  // Palette weighted: gold 55%, coral 25%, cream 20%
+  // Vivid palette: gold × 3, coral × 2, teal × 1, warm-white × 1
   const palette = [
-    [184,133, 53],[184,133, 53],[184,133, 53],
-    [201, 67, 28],[201, 67, 28],
-    [235,228,216],[235,228,216],
+    [218, 162,  48], [218, 162,  48], [218, 162,  48],
+    [225,  82,  42], [225,  82,  42],
+    [ 45, 185, 160],
+    [255, 240, 205],
   ];
-  const N    = 110;
-  const LINK = 165;
+  const N    = 125;
+  const LINK = 190;
 
   const pts = Array.from({ length: N }, () => {
-    const z   = 0.28 + Math.random() * 0.72;
+    const z   = 0.3 + Math.random() * 0.7;
     const col = palette[Math.floor(Math.random() * palette.length)];
     return {
-      x:  Math.random() * W,
-      y:  Math.random() * H,
+      x: Math.random() * W,
+      y: Math.random() * H,
       z,
-      vx: (Math.random() - 0.5) * 0.20 * z,
-      vy: (Math.random() - 0.5) * 0.20 * z,
-      r:  0.5 + z * 2.8,
-      a:  0.07 + z * 0.40,
+      vx: (Math.random() - 0.5) * 0.24 * z,
+      vy: (Math.random() - 0.5) * 0.24 * z,
+      r:  0.8 + z * 3.5,
+      baseA: 0.38 + z * 0.52,
+      phase: Math.random() * Math.PI * 2,
       col,
     };
   });
 
+  // Shooting stars
+  const shooters = [];
+  let shootTimer = 0, nextShoot = 320;
+
   let mx = -9999, my = -9999;
   window.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; }, { passive: true });
 
-  let running = true;
-  let animId  = null;
-
+  let running = true, animId = null;
   const heroEl = document.querySelector('.hero');
   if (heroEl) {
     const obs = new IntersectionObserver(([e]) => {
@@ -1237,52 +1241,78 @@ function initHero3D() {
 
     ctx.clearRect(0, 0, W, H);
 
-    // Draw constellation lines
+    // Spawn shooting stars
+    shootTimer++;
+    if (shootTimer >= nextShoot) {
+      const vx = 9 + Math.random() * 8, vy = 2.5 + Math.random() * 4;
+      shooters.push({ x: -25, y: Math.random() * H * 0.55, vx, vy, len: 110 + Math.random() * 140, life: 1.0 });
+      shootTimer = 0;
+      nextShoot = 280 + Math.floor(Math.random() * 220);
+    }
+
+    // Draw shooting stars
+    for (let i = shooters.length - 1; i >= 0; i--) {
+      const s = shooters[i];
+      s.x += s.vx; s.y += s.vy; s.life -= 0.017;
+      if (s.life <= 0 || s.x > W + 100) { shooters.splice(i, 1); continue; }
+      const al = s.life;
+      const ratio = s.vy / s.vx;
+      const grad = ctx.createLinearGradient(s.x - s.len, s.y - s.len * ratio, s.x, s.y);
+      grad.addColorStop(0,   `rgba(218,162,48,0)`);
+      grad.addColorStop(0.6, `rgba(218,162,48,${al * 0.55})`);
+      grad.addColorStop(1,   `rgba(255,235,160,${al * 0.95})`);
+      ctx.beginPath();
+      ctx.moveTo(s.x - s.len, s.y - s.len * ratio);
+      ctx.lineTo(s.x, s.y);
+      ctx.strokeStyle = grad; ctx.lineWidth = 2.2; ctx.stroke();
+      const tipG = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, 14);
+      tipG.addColorStop(0, `rgba(255,245,195,${al})`);
+      tipG.addColorStop(1, `rgba(218,162,48,0)`);
+      ctx.beginPath(); ctx.arc(s.x, s.y, 14, 0, Math.PI * 2); ctx.fillStyle = tipG; ctx.fill();
+    }
+
+    // Constellation lines
     for (let i = 0; i < N; i++) {
       for (let j = i + 1; j < N; j++) {
         const a = pts[i], b = pts[j];
         const dx = a.x - b.x, dy = a.y - b.y;
         const d2 = dx * dx + dy * dy;
         if (d2 < LINK * LINK) {
-          const alpha = (1 - Math.sqrt(d2) / LINK) * 0.09;
-          ctx.beginPath();
-          ctx.moveTo(a.x, a.y);
-          ctx.lineTo(b.x, b.y);
-          ctx.strokeStyle = `rgba(184,133,53,${alpha})`;
-          ctx.lineWidth   = 0.5;
-          ctx.stroke();
+          ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y);
+          ctx.strokeStyle = `rgba(218,162,48,${(1 - Math.sqrt(d2) / LINK) * 0.18})`;
+          ctx.lineWidth = 0.7; ctx.stroke();
         }
       }
     }
 
     // Update & draw particles
     pts.forEach(p => {
-      // Mouse repulsion
       const dx = p.x - mx, dy = p.y - my;
       const d  = Math.sqrt(dx * dx + dy * dy);
-      if (d < 200 && d > 0.1) {
-        const f = (1 - d / 200) * 0.004 * p.z;
-        p.vx += (dx / d) * f;
-        p.vy += (dy / d) * f;
+      if (d < 220 && d > 0.1) {
+        const f = (1 - d / 220) * 0.006 * p.z;
+        p.vx += (dx / d) * f; p.vy += (dy / d) * f;
       }
-      p.vx *= 0.978;
-      p.vy *= 0.978;
-      p.x   = ((p.x + p.vx) + W) % W;
-      p.y   = ((p.y + p.vy) + H) % H;
+      p.vx *= 0.978; p.vy *= 0.978;
+      p.x = ((p.x + p.vx) + W) % W;
+      p.y = ((p.y + p.vy) + H) % H;
+      p.phase += 0.027 + p.z * 0.012;
 
+      const tw    = 0.62 + 0.38 * Math.sin(p.phase);
+      const alpha = p.baseA * tw;
       const [r, g, b] = p.col;
-      // Soft glow
-      const grd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 5.5);
-      grd.addColorStop(0, `rgba(${r},${g},${b},${p.a * 0.65})`);
-      grd.addColorStop(1, `rgba(${r},${g},${b},0)`);
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r * 5.5, 0, Math.PI * 2);
-      ctx.fillStyle = grd;
-      ctx.fill();
-      // Hard core
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${r},${g},${b},${Math.min(p.a * 2, 0.92)})`;
+
+      // Soft glow halo
+      const grd = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 9);
+      grd.addColorStop(0,    `rgba(${r},${g},${b},${alpha * 0.80})`);
+      grd.addColorStop(0.38, `rgba(${r},${g},${b},${alpha * 0.28})`);
+      grd.addColorStop(1,    `rgba(${r},${g},${b},0)`);
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r * 9, 0, Math.PI * 2);
+      ctx.fillStyle = grd; ctx.fill();
+
+      // Bright core
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${r},${g},${b},${Math.min(alpha * 2.1, 0.98)})`;
       ctx.fill();
     });
   }
@@ -1320,68 +1350,70 @@ function addGeoDeco() {
   const config = [
     {
       sel: '.hero', shapes: [
-        { t:'ring', w:260, h:260, x:'78%', y:'4%',  c:'gold',  o:.08, bw:2,   rot:15,  dur:14, dly:0   },
-        { t:'tri',  w:60,  h:60,  x:'7%',  y:'68%', c:'coral', o:.10, rot:25,  dur:11,  dly:1   },
-        { t:'dia',  w:50,  h:50,  x:'90%', y:'80%', c:'teal',  o:.09, rot:45,  dur:16,  dly:2   },
-        { t:'dot',  w:12,  h:12,  x:'26%', y:'12%', c:'white', o:.18, rot:0,   dur:9,   dly:0.5 },
-        { t:'ring', w:90,  h:90,  x:'55%', y:'88%', c:'coral', o:.07, bw:1.5, rot:0,   dur:13,  dly:3   },
-        { t:'sq',   w:36,  h:36,  x:'42%', y:'6%',  c:'teal',  o:.07, rot:30,  dur:20,  dly:1   },
-        { t:'dot',  w:7,   h:7,   x:'88%', y:'50%', c:'gold',  o:.25, rot:0,   dur:7,   dly:2   },
+        { t:'ring', w:300, h:300, x:'74%', y:'3%',  c:'gold',  o:.26, bw:2,   rot:15,  dur:14, dly:0   },
+        { t:'tri',  w:78,  h:78,  x:'7%',  y:'65%', c:'coral', o:.35, rot:25,  dur:11,  dly:1   },
+        { t:'dia',  w:62,  h:62,  x:'88%', y:'78%', c:'teal',  o:.30, rot:45,  dur:16,  dly:2   },
+        { t:'dot',  w:16,  h:16,  x:'26%', y:'12%', c:'white', o:.58, rot:0,   dur:9,   dly:0.5 },
+        { t:'ring', w:115, h:115, x:'52%', y:'85%', c:'coral', o:.24, bw:1.5, rot:0,   dur:13,  dly:3   },
+        { t:'sq',   w:50,  h:50,  x:'40%', y:'5%',  c:'teal',  o:.26, rot:30,  dur:20,  dly:1   },
+        { t:'dot',  w:12,  h:12,  x:'85%', y:'50%', c:'gold',  o:.62, rot:0,   dur:7,   dly:2   },
+        { t:'hex',  w:74,  h:74,  x:'16%', y:'28%', c:'gold',  o:.22, rot:20,  dur:17,  dly:0.8 },
+        { t:'tri',  w:46,  h:46,  x:'60%', y:'14%', c:'white', o:.32, rot:180, dur:12,  dly:1.5 },
       ]
     },
     {
       sel: '.intro', shapes: [
-        { t:'hex',  w:140, h:140, x:'91%', y:'12%', c:'teal',  o:.07, rot:20,  dur:18, dly:0   },
-        { t:'ring', w:75,  h:75,  x:'3%',  y:'72%', c:'gold',  o:.09, bw:1.5, rot:0,  dur:12,  dly:1   },
-        { t:'dot',  w:9,   h:9,   x:'74%', y:'85%', c:'coral', o:.22, rot:0,   dur:8,  dly:2   },
-        { t:'sq',   w:55,  h:55,  x:'14%', y:'22%', c:'white', o:.05, rot:35,  dur:21, dly:0   },
-        { t:'tri',  w:42,  h:42,  x:'58%', y:'92%', c:'gold',  o:.09, rot:180, dur:13, dly:0.5 },
+        { t:'hex',  w:155, h:155, x:'91%', y:'12%', c:'teal',  o:.22, rot:20,  dur:18, dly:0   },
+        { t:'ring', w:88,  h:88,  x:'3%',  y:'72%', c:'gold',  o:.26, bw:1.5, rot:0,  dur:12,  dly:1   },
+        { t:'dot',  w:12,  h:12,  x:'74%', y:'85%', c:'coral', o:.58, rot:0,   dur:8,  dly:2   },
+        { t:'sq',   w:60,  h:60,  x:'14%', y:'22%', c:'white', o:.16, rot:35,  dur:21, dly:0   },
+        { t:'tri',  w:50,  h:50,  x:'58%', y:'92%', c:'gold',  o:.28, rot:180, dur:13, dly:0.5 },
       ]
     },
     {
       sel: '.map-section', shapes: [
-        { t:'ring', w:190, h:190, x:'93%', y:'48%', c:'gold',  o:.07, bw:2,   rot:10,  dur:16, dly:2   },
-        { t:'tri',  w:44,  h:44,  x:'2%',  y:'28%', c:'teal',  o:.09, rot:15,  dur:10,  dly:0   },
-        { t:'dia',  w:65,  h:65,  x:'84%', y:'86%', c:'coral', o:.08, rot:45,  dur:14,  dly:1   },
-        { t:'dot',  w:10,  h:10,  x:'50%', y:'5%',  c:'white', o:.16, rot:0,   dur:9,   dly:1.5 },
-        { t:'hex',  w:80,  h:80,  x:'3%',  y:'80%', c:'coral', o:.07, rot:30,  dur:19,  dly:3   },
+        { t:'ring', w:210, h:210, x:'93%', y:'48%', c:'gold',  o:.22, bw:2,   rot:10,  dur:16, dly:2   },
+        { t:'tri',  w:54,  h:54,  x:'2%',  y:'28%', c:'teal',  o:.30, rot:15,  dur:10,  dly:0   },
+        { t:'dia',  w:72,  h:72,  x:'84%', y:'86%', c:'coral', o:.26, rot:45,  dur:14,  dly:1   },
+        { t:'dot',  w:14,  h:14,  x:'50%', y:'5%',  c:'white', o:.48, rot:0,   dur:9,   dly:1.5 },
+        { t:'hex',  w:90,  h:90,  x:'3%',  y:'80%', c:'coral', o:.24, rot:30,  dur:19,  dly:3   },
       ]
     },
     {
       sel: '.places', shapes: [
-        { t:'hex',  w:110, h:110, x:'2%',  y:'8%',  c:'gold',  o:.08, rot:30,  dur:17, dly:0   },
-        { t:'ring', w:170, h:170, x:'89%', y:'68%', c:'teal',  o:.06, bw:2,   rot:0,   dur:19, dly:3   },
-        { t:'tri',  w:52,  h:52,  x:'48%', y:'94%', c:'white', o:.07, rot:180, dur:13,  dly:1   },
-        { t:'dot',  w:14,  h:14,  x:'20%', y:'48%', c:'coral', o:.16, rot:0,   dur:8,   dly:2   },
-        { t:'sq',   w:44,  h:44,  x:'75%', y:'10%', c:'gold',  o:.07, rot:20,  dur:15,  dly:0.5 },
-        { t:'ring', w:55,  h:55,  x:'62%', y:'50%', c:'coral', o:.06, bw:1,   rot:0,   dur:11,  dly:4   },
+        { t:'hex',  w:125, h:125, x:'2%',  y:'8%',  c:'gold',  o:.24, rot:30,  dur:17, dly:0   },
+        { t:'ring', w:185, h:185, x:'89%', y:'68%', c:'teal',  o:.20, bw:2,   rot:0,   dur:19, dly:3   },
+        { t:'tri',  w:60,  h:60,  x:'48%', y:'94%', c:'white', o:.24, rot:180, dur:13,  dly:1   },
+        { t:'dot',  w:18,  h:18,  x:'20%', y:'48%', c:'coral', o:.52, rot:0,   dur:8,   dly:2   },
+        { t:'sq',   w:52,  h:52,  x:'75%', y:'10%', c:'gold',  o:.24, rot:20,  dur:15,  dly:0.5 },
+        { t:'ring', w:68,  h:68,  x:'62%', y:'50%', c:'coral', o:.20, bw:1,   rot:0,   dur:11,  dly:4   },
       ]
     },
     {
       sel: '.subjects', shapes: [
-        { t:'dia',  w:88,  h:88,  x:'4%',  y:'18%', c:'teal',  o:.08, rot:45,  dur:15, dly:0   },
-        { t:'ring', w:210, h:210, x:'87%', y:'12%', c:'coral', o:.06, bw:2,   rot:20,  dur:21, dly:2   },
-        { t:'sq',   w:44,  h:44,  x:'91%', y:'53%', c:'gold',  o:.08, rot:30,  dur:12,  dly:1   },
-        { t:'dot',  w:9,   h:9,   x:'38%', y:'88%', c:'white', o:.16, rot:0,   dur:7,   dly:0.5 },
-        { t:'hex',  w:90,  h:90,  x:'7%',  y:'68%', c:'coral', o:.07, rot:15,  dur:18,  dly:3   },
-        { t:'tri',  w:48,  h:48,  x:'55%', y:'4%',  c:'gold',  o:.08, rot:10,  dur:10,  dly:1.5 },
+        { t:'dia',  w:100, h:100, x:'4%',  y:'18%', c:'teal',  o:.26, rot:45,  dur:15, dly:0   },
+        { t:'ring', w:225, h:225, x:'87%', y:'12%', c:'coral', o:.20, bw:2,   rot:20,  dur:21, dly:2   },
+        { t:'sq',   w:52,  h:52,  x:'91%', y:'53%', c:'gold',  o:.26, rot:30,  dur:12,  dly:1   },
+        { t:'dot',  w:12,  h:12,  x:'38%', y:'88%', c:'white', o:.50, rot:0,   dur:7,   dly:0.5 },
+        { t:'hex',  w:100, h:100, x:'7%',  y:'68%', c:'coral', o:.24, rot:15,  dur:18,  dly:3   },
+        { t:'tri',  w:56,  h:56,  x:'55%', y:'4%',  c:'gold',  o:.28, rot:10,  dur:10,  dly:1.5 },
       ]
     },
     {
       sel: '.gallery', shapes: [
-        { t:'ring', w:130, h:130, x:'4%',  y:'8%',  c:'teal',  o:.07, bw:1.5, rot:0,  dur:14,  dly:1   },
-        { t:'tri',  w:48,  h:48,  x:'92%', y:'22%', c:'gold',  o:.10, rot:210, dur:11,  dly:0   },
-        { t:'dia',  w:60,  h:60,  x:'48%', y:'90%', c:'coral', o:.08, rot:45,  dur:16,  dly:2   },
-        { t:'dot',  w:11,  h:11,  x:'80%', y:'60%', c:'white', o:.15, rot:0,   dur:8,   dly:0.5 },
-        { t:'sq',   w:38,  h:38,  x:'15%', y:'75%', c:'gold',  o:.07, rot:25,  dur:18,  dly:3   },
+        { t:'ring', w:145, h:145, x:'4%',  y:'8%',  c:'teal',  o:.22, bw:1.5, rot:0,  dur:14,  dly:1   },
+        { t:'tri',  w:56,  h:56,  x:'92%', y:'22%', c:'gold',  o:.30, rot:210, dur:11,  dly:0   },
+        { t:'dia',  w:68,  h:68,  x:'48%', y:'90%', c:'coral', o:.26, rot:45,  dur:16,  dly:2   },
+        { t:'dot',  w:14,  h:14,  x:'80%', y:'60%', c:'white', o:.48, rot:0,   dur:8,   dly:0.5 },
+        { t:'sq',   w:46,  h:46,  x:'15%', y:'75%', c:'gold',  o:.24, rot:25,  dur:18,  dly:3   },
       ]
     },
     {
       sel: '.cta-block', shapes: [
-        { t:'ring', w:270, h:270, x:'91%', y:'48%', c:'gold',  o:.06, bw:2,   rot:15,  dur:22, dly:0   },
-        { t:'hex',  w:75,  h:75,  x:'4%',  y:'28%', c:'teal',  o:.08, rot:10,  dur:15,  dly:1   },
-        { t:'tri',  w:38,  h:38,  x:'68%', y:'78%', c:'coral', o:.10, rot:30,  dur:10,  dly:2   },
-        { t:'dot',  w:8,   h:8,   x:'30%', y:'15%', c:'white', o:.18, rot:0,   dur:6,   dly:0.5 },
+        { t:'ring', w:290, h:290, x:'91%', y:'48%', c:'gold',  o:.20, bw:2,   rot:15,  dur:22, dly:0   },
+        { t:'hex',  w:85,  h:85,  x:'4%',  y:'28%', c:'teal',  o:.26, rot:10,  dur:15,  dly:1   },
+        { t:'tri',  w:48,  h:48,  x:'68%', y:'78%', c:'coral', o:.32, rot:30,  dur:10,  dly:2   },
+        { t:'dot',  w:11,  h:11,  x:'30%', y:'15%', c:'white', o:.52, rot:0,   dur:6,   dly:0.5 },
       ]
     },
   ];

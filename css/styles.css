@@ -165,8 +165,8 @@ section { position: relative; padding: clamp(5rem, 9vw, 10rem) 0; }
   width: 80vmax; height: 80vmax;
   border-radius: 50%;
   background: radial-gradient(circle at var(--gx,50%) var(--gy,40%),
-    rgba(200,153,46,.10) 0%,
-    rgba(200,153,46,.04) 35%,
+    rgba(200,153,46,.22) 0%,
+    rgba(200,153,46,.09) 38%,
     transparent 65%);
   pointer-events: none; z-index: 0;
   animation: ambientA 14s ease-in-out infinite alternate;
@@ -178,8 +178,8 @@ section { position: relative; padding: clamp(5rem, 9vw, 10rem) 0; }
   width: 65vmax; height: 65vmax;
   border-radius: 50%;
   background: radial-gradient(circle,
-    rgba(217,77,40,.09) 0%,
-    rgba(217,77,40,.03) 40%,
+    rgba(217,77,40,.20) 0%,
+    rgba(217,77,40,.08) 40%,
     transparent 68%);
   pointer-events: none; z-index: 0;
   animation: ambientB 18s ease-in-out infinite alternate;
@@ -394,6 +394,7 @@ section { position: relative; padding: clamp(5rem, 9vw, 10rem) 0; }
   display: flex; flex-direction: column; justify-content: flex-end;
   padding: clamp(5rem, 12vw, 11rem) clamp(2rem, 4vw, 4rem) 3.5rem clamp(2rem, 7vw, 8rem);
   position: relative; z-index: 1;
+  background: radial-gradient(ellipse 95% 90% at 20% 70%, rgba(9,9,15,.90) 0%, rgba(9,9,15,.58) 48%, transparent 72%);
 }
 .hero__eyebrow {
   display: flex; align-items: center; gap: 1rem;
@@ -424,6 +425,7 @@ section { position: relative; padding: clamp(5rem, 9vw, 10rem) 0; }
 .hero__title-main {
   font-weight: 300; font-size: var(--4xl);
   letter-spacing: -.03em;
+  filter: drop-shadow(0 0 28px rgba(200,153,46,.55)) drop-shadow(0 0 60px rgba(200,153,46,.20));
 }
 .hero__title-main em {
   font-style: italic; color: var(--tx);
