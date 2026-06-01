@@ -175,6 +175,34 @@ const PLACES = [
       operator: 'Secretaría de Cultura de Guanajuato · Teatro Juárez',
       note: 'Programming &amp; box office · Sopeña s/n · Wed–Sun 10–15h, 17–19h'
     }
+  },
+  {
+    id: 13, num: '12', name: 'Casa de la Tía Aura',
+    nameEn: 'House of Aunt Aura',
+    city: 'Guanajuato', cityShort: 'Guanajuato',
+    coords: [21.0089, -101.2480], img: 'assets/img/gto-tia-aura.jpg',
+    short: 'A 19th-century mansion turned living museum of legend, mystery, and the Inquisition.',
+    history: 'On the elegant <em>Paseo de la Presa</em>, this 19th-century mansion is the setting of one of Guanajuato\'s most famous legends. Around 1840, <strong>Aura</strong>, a wealthy and joyful woman from Cádiz, Spain, came to live in the house built by her ancestors. Her sudden death opened a chain of dark events: her eldest daughter Cristina was walled up alive for a forbidden love, and her youngest, Carlota, was murdered by her own husband. Reopened as a museum on April 2, 1999, it now holds eight rooms that recreate the tragedy and exhibit the punishments of the Inquisition era.',
+    highlights: ['Authentic 19th-century mansion on Paseo de la Presa', 'Eight themed rooms with scenic ambience', 'Legend of Aura, Cristina and Carlota', 'Replicas of Inquisition-era instruments'],
+    ticket: {
+      url: 'https://guanajuato.mx/en/blog/experiences/la-casa-de-la-tia-aura-an-unforgettable-experience-in-guanajuato/',
+      operator: 'Museo Casa de la Tía Aura · Paseo de la Presa 62',
+      note: 'Daily tours · evening sessions recommended · ticket at the door'
+    }
+  },
+  {
+    id: 14, num: '13', name: 'Ex-Hacienda del Cochero',
+    nameEn: 'Former Cochero Estate',
+    city: 'Guanajuato', cityShort: 'Guanajuato',
+    coords: [21.0411, -101.2456], img: 'assets/img/gto-cochero.jpg',
+    short: 'A 1692 mining estate that hid a secret Inquisition dungeon — today a museum of torture and legend.',
+    history: 'Built in <strong>1692</strong> by order of the Marqués de Rayas to process ore from the nearby mines, this stone estate on the road to Dolores held a chilling secret. Around 1764 it began to serve as a clandestine prison: the Marqués, a friend of the inquisitor Fernando de Miera, allowed those accused of <em>blasphemy, heresy and sorcery</em> to be brought here. In 1954 the landowner Manuel Valenzuela uncovered a hidden cell block and a small cemetery with human remains and torture devices. Opened to the public in 2000, the museum is led by guides dressed as monks.',
+    highlights: ['17th-century mining estate in masonry stone', 'Hidden Inquisition dungeon discovered in 1954', 'Original torture instruments on display', 'Guided tours with costumed monks'],
+    ticket: {
+      url: 'https://guanajuato.travel/spot/museo-ex-hacienda-del-cochero/',
+      operator: 'Museo Ex-Hacienda del Cochero · Carretera a Dolores, Valenciana',
+      note: 'Mon–Sun 10–19h · guided tours · ticket at the door'
+    }
   }
 ];
 
@@ -259,9 +287,9 @@ const SUBJECTS = [
       <h4>Proposal</h4>
       <p>This very website —the one you are browsing— is the deliverable interactive digital tourist guide. It meets every criterion of the rubric:</p>
       <ul>
-        <li><strong>Tourist content:</strong> 12 historic sites described in detail.</li>
+        <li><strong>Tourist content:</strong> 13 historic sites described in detail.</li>
         <li><strong>Maps and routes:</strong> interactive Leaflet map with a polyline route connecting the stops.</li>
-        <li><strong>Multimedia resources:</strong> 12 high-resolution images from Wikimedia Commons.</li>
+        <li><strong>Multimedia resources:</strong> high-resolution images of all 13 sites.</li>
         <li><strong>QR integration:</strong> deploying the site on GitHub Pages generates a QR for mobile access.</li>
         <li><strong>Digital design:</strong> editorial Anthropic-style typography (Newsreader + Inter), smooth animations, warm Mexican palette.</li>
         <li><strong>Writing &amp; communication:</strong> English text without errors, clear hierarchy.</li>
@@ -392,9 +420,9 @@ const SUBJECTS = [
     key: 'literatura', num: '07', eyebrow: 'Subject · All semesters',
     title: 'Literature · <em>STEAM</em>',
     teacher: 'Prof. Omar Ávila Cruz · PBL "The Bison Route"',
-    placeIds: [7],
-    tagline: 'Legend of the Alley of the Kiss',
-    body: '<p>Written production: legend, myth, chronicle, and script. As a preliminary deliverable, the <strong>most famous legend of Guanajuato</strong> is included: that of the Alley of the Kiss.</p>',
+    placeIds: [7, 13, 14],
+    tagline: 'Legends of Guanajuato',
+    body: '<p>Written production: legend, myth, chronicle, and script. As preliminary deliverables, the <strong>most famous legends of Guanajuato</strong> are included: the Alley of the Kiss, and the haunted houses of the Tía Aura and the Ex-Hacienda del Cochero.</p>',
     tags: ['Written legend', 'Myth · Chronicle', 'PBL'],
     status: 'ready',
     content: `
@@ -406,11 +434,13 @@ const SUBJECTS = [
       <p class="legend-prose">Since then, the couples who kiss on the <em>third step</em> of the alley are promised fifteen years of happiness. Those who do not… seven years of bad luck. And the eldest swear that, on full-moon nights, two voices can still be heard whispering in the wind between the balconies.</p>
       <h4>Associated Myth — El Pípila</h4>
       <p>Another legendary figure is <em>Juan José de los Reyes Martínez</em>, "El Pípila". Although his historical existence is documented, the myth has grown over the years: it is said that the stone slab tied to his back was so heavy that only a body blessed by the Virgin could carry it. Today his monument watches over the city from the hill, torch raised, reminding us that from the humblest the greatest heroes are born.</p>
+      <h4>Haunted Houses — Tía Aura &amp; Ex-Hacienda del Cochero</h4>
+      <p>Guanajuato also guards its darker stories. The <strong>Casa de la Tía Aura</strong>, on the Paseo de la Presa, tells of a woman from Cádiz whose mysterious death unleashed tragedy upon her daughters —one walled up for a forbidden love, the other murdered. The <strong>Ex-Hacienda del Cochero</strong>, built in 1692, concealed a secret Inquisition dungeon where the accused of heresy and sorcery were tortured; its cells and a hidden cemetery were not found until 1954. Both legends feed the <em>oral tradition</em> that makes Guanajuato a city of whispers.</p>
       <h4>Structure for the Travel Chronicle</h4>
       <p>The chronicle to be submitted after the expedition will follow this structure:</p>
       <ul>
         <li><strong>Sensory opening</strong> — the first impact upon arriving at Dolores Hidalgo</li>
-        <li><strong>Narrative axis</strong> — the chronological tour of the 12 sites</li>
+        <li><strong>Narrative axis</strong> — the chronological tour of the 13 sites</li>
         <li><strong>Personal voice</strong> — reflections and links to what was learned in class</li>
         <li><strong>Closing</strong> — a single image that captures the experience</li>
       </ul>
@@ -422,8 +452,24 @@ const placeById = id => PLACES.find(p => p.id === id);
 const subjectByKey = k => SUBJECTS.find(s => s.key === k);
 function stripHtml(html) { const d = document.createElement('div'); d.innerHTML = html; return d.textContent || ''; }
 
+/* ============= i18n (EN / ES) ============= */
+let LANG = (localStorage.getItem('viaje_lang') === 'es') ? 'es' : 'en';
+const ES_P = window.ES_PLACES || {};
+const ES_S = window.ES_SUBJECTS || {};
+/* place field with ES override */
+function ph(p, f) { return (LANG === 'es' && ES_P[p.id] && ES_P[p.id][f] != null) ? ES_P[p.id][f] : p[f]; }
+/* subject field with ES override */
+function sh(s, f) { return (LANG === 'es' && ES_S[s.key] && ES_S[s.key][f] != null) ? ES_S[s.key][f] : s[f]; }
+/* ticket note with ES override */
+function pnote(p) { return (LANG === 'es' && ES_P[p.id] && ES_P[p.id].note != null) ? ES_P[p.id].note : (p.ticket && p.ticket.note); }
+/* UI string for current language */
+function ui(k) {
+  const U = window.UI_STRINGS || { en: {}, es: {} };
+  return (U[LANG] && U[LANG][k] != null) ? U[LANG][k] : (U.en[k] != null ? U.en[k] : k);
+}
+
 /* ============= INJECT MAP LIST ============= */
-(function injectMapList() {
+function injectMapList() {
   const list = document.getElementById('mapList');
   if (!list) return;
   list.innerHTML = PLACES.map(p => `
@@ -436,10 +482,10 @@ function stripHtml(html) { const d = document.createElement('div'); d.innerHTML 
       <svg class="map-list-item__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
     </li>
   `).join('');
-})();
+}
 
 /* ============= INJECT PLACE SECTIONS (NEW) ============= */
-(function injectPlaces() {
+function injectPlaces() {
   const wrap = document.getElementById('placeSections');
   if (!wrap) return;
   wrap.innerHTML = PLACES.map(p => {
@@ -447,18 +493,18 @@ function stripHtml(html) { const d = document.createElement('div'); d.innerHTML 
     const bookingHtml = t ? `
       <div class="place-card__booking">
         <div class="place-card__booking-head">
-          <h5>Booking &amp; Tickets</h5>
-          <span class="mono">Scan or tap</span>
+          <h5>${ui('booking')}</h5>
+          <span class="mono">${ui('scan')}</span>
         </div>
         <div class="place-card__booking-row">
-          <a class="place-card__qr" href="${t.url}" target="_blank" rel="noopener" aria-label="Open official site for ${p.name}">
-            <img src="${qrUrl(t.url, 220)}" alt="QR code to ${t.operator}" loading="lazy" width="120" height="120">
+          <a class="place-card__qr" href="${t.url}" target="_blank" rel="noopener" aria-label="${ui('openSite')} — ${p.name}">
+            <img src="${qrUrl(t.url, 220)}" alt="QR · ${t.operator}" loading="lazy" width="120" height="120">
           </a>
           <div class="place-card__booking-info">
             <span class="place-card__booking-operator">${t.operator}</span>
-            <span class="place-card__booking-note">${t.note}</span>
+            <span class="place-card__booking-note">${pnote(p)}</span>
             <a class="place-card__booking-link" href="${t.url}" target="_blank" rel="noopener">
-              <span>Open official site</span>
+              <span>${ui('openSite')}</span>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>
             </a>
           </div>
@@ -475,32 +521,32 @@ function stripHtml(html) { const d = document.createElement('div'); d.innerHTML 
       <div class="place-card__body">
         <h3 class="place-card__title">${p.name}</h3>
         <p class="place-card__sub"><em>${p.nameEn}</em></p>
-        <p class="place-card__short">${p.short}</p>
+        <p class="place-card__short">${ph(p, 'short')}</p>
         <details class="place-card__more">
           <summary>
-            <span class="summary-text">Read history</span>
+            <span class="summary-text">${ui('readHistory')}</span>
             <span class="summary-icon" aria-hidden="true">+</span>
           </summary>
           <div class="place-card__deep">
-            <p>${p.history}</p>
-            <h5>Highlights</h5>
+            <p>${ph(p, 'history')}</p>
+            <h5>${ui('highlights')}</h5>
             <ul>
-              ${p.highlights.map(h => `<li>${h}</li>`).join('')}
+              ${ph(p, 'highlights').map(h => `<li>${h}</li>`).join('')}
             </ul>
             ${bookingHtml}
           </div>
         </details>
         <button class="place-card__locate" type="button" data-locate-place="${p.id}">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s-7-7.58-7-13a7 7 0 0 1 14 0c0 5.42-7 13-7 13z"/><circle cx="12" cy="9" r="2.5"/></svg>
-          <span>Locate on map</span>
+          <span>${ui('locate')}</span>
         </button>
       </div>
     </article>`;
   }).join('');
-})();
+}
 
 /* ============= INJECT SUBJECT SECTIONS ============= */
-(function injectSubjects() {
+function injectSubjects() {
   const wrap = document.getElementById('subjectSections');
   if (!wrap) return;
   wrap.innerHTML = SUBJECTS.map(s => {
@@ -514,42 +560,42 @@ function stripHtml(html) { const d = document.createElement('div'); d.innerHTML 
           <img src="${primary.img}" alt="${primary.name}" loading="lazy">
         </div>
         <div class="subject__media-tag">${s.num} · ${primary.name}</div>
-        <div class="subject__media-placeholder">${ready ? 'Content available · photos from the trip' : 'Pending deliverable'}</div>
+        <div class="subject__media-placeholder">${ready ? ui('mediaReady') : ui('mediaPending')}</div>
       </div>
       <div class="subject__body">
         <div class="subject__head">
           <span class="subject__num">${s.num}</span>
-          <span class="subject__eyebrow">${s.eyebrow}</span>
-          <span class="status-badge status-badge--${s.status}">${ready ? '● Ready' : '○ Pending'}</span>
+          <span class="subject__eyebrow">${sh(s, 'eyebrow')}</span>
+          <span class="status-badge status-badge--${s.status}">${ready ? ui('ready') : ui('pending')}</span>
         </div>
-        <h3 class="subject__title">${s.title}</h3>
-        <p class="subject__teacher">${s.teacher} · <em>${s.tagline}</em></p>
-        ${s.body}
+        <h3 class="subject__title">${sh(s, 'title')}</h3>
+        <p class="subject__teacher">${sh(s, 'teacher')} · <em>${sh(s, 'tagline')}</em></p>
+        ${sh(s, 'body')}
         <div class="subject__meta">
           ${locations.map(l => `<span class="tag tag--accent">${l}</span>`).join('')}
-          ${s.tags.map(t => `<span class="tag">${t}</span>`).join('')}
+          ${sh(s, 'tags').map(t => `<span class="tag">${t}</span>`).join('')}
         </div>
         ${ready ? `
           <details class="subject__content">
             <summary>
-              <span class="summary-text">Content</span>
+              <span class="summary-text">${ui('content')}</span>
               <span class="summary-icon" aria-hidden="true">+</span>
             </summary>
             <div class="subject__content-inner">
-              ${s.content}
+              ${sh(s, 'content')}
             </div>
           </details>
         ` : ''}
         <div class="subject__actions">
           <button class="subject__cta" data-subject="${s.key}" data-magnetic>
-            <span>View full rubric</span>
+            <span>${ui('rubric')}</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
           </button>
         </div>
       </div>
     </article>`;
   }).join('');
-})();
+}
 
 /* ============= LEAFLET MAP ============= */
 let map = null;
@@ -573,10 +619,11 @@ function initMap() {
   const bounds = L.latLngBounds(PLACES.map(p => p.coords)).pad(0.15);
   map.fitBounds(bounds);
 
-  // Google Maps-style tiles (OpenStreetMap standard, free, no API key)
-  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+  // Dark premium tiles (CartoDB dark, free, no API key) — matches the espresso theme
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    maxZoom: 20,
+    subdomains: 'abcd',
+    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> · © CARTO'
   }).addTo(map);
 
   map.getContainer().addEventListener('mouseenter', () => map.scrollWheelZoom.enable());
@@ -625,15 +672,7 @@ function initMap() {
     const icon = L.divIcon({ html, className: 'leaflet-marker-pin-wrap', iconSize: [40, 40], iconAnchor: [20, 20], popupAnchor: [0, -22] });
     const marker = L.marker(p.coords, { icon }).addTo(map);
 
-    const popup = `
-      <img src="${p.img}" class="popup-img" alt="${p.name}">
-      <div class="popup-inner">
-        <div class="popup-loc">${p.num} · ${p.cityShort}</div>
-        <div class="popup-title">${p.name}</div>
-        <div class="popup-desc">${p.short}</div>
-        <span class="popup-link" data-place="${p.id}">Read history →</span>
-      </div>`;
-    marker.bindPopup(popup, { offset: [0, -8], closeButton: false, maxWidth: 320, autoPanPadding: [60, 60] });
+    marker.bindPopup(buildPopup(p), { offset: [0, -8], closeButton: false, maxWidth: 320, autoPanPadding: [60, 60] });
 
     marker.on('click', () => {
       setActive(p.id);
@@ -644,6 +683,22 @@ function initMap() {
 
     markers[p.id] = marker;
   });
+}
+
+/* Build a marker popup in the current language */
+function buildPopup(p) {
+  return `
+      <img src="${p.img}" class="popup-img" alt="${p.name}">
+      <div class="popup-inner">
+        <div class="popup-loc">${p.num} · ${p.cityShort}</div>
+        <div class="popup-title">${p.name}</div>
+        <div class="popup-desc">${ph(p, 'short')}</div>
+        <span class="popup-link" data-place="${p.id}">${ui('readHistoryArrow')}</span>
+      </div>`;
+}
+/* Re-render every marker popup (used on language switch) */
+function rebuildPopups() {
+  PLACES.forEach(p => { markers[p.id]?.setPopupContent(buildPopup(p)); });
 }
 
 /* ============= CONFETTI BURST AT MARKER ============= */
@@ -827,6 +882,7 @@ function animateCounters() {
 /* ============= MAGNETIC BUTTONS ============= */
 function setupMagnetic() {
   document.querySelectorAll('[data-magnetic]').forEach(el => {
+    if (el.dataset.magBound) return; el.dataset.magBound = '1';
     el.addEventListener('mousemove', e => {
       const r = el.getBoundingClientRect();
       const x = e.clientX - r.left - r.width / 2;
@@ -836,6 +892,7 @@ function setupMagnetic() {
     el.addEventListener('mouseleave', () => { el.style.transform = ''; });
   });
   document.querySelectorAll('[data-magnetic-soft]').forEach(el => {
+    if (el.dataset.magBound) return; el.dataset.magBound = '1';
     el.addEventListener('mousemove', e => {
       const r = el.getBoundingClientRect();
       const x = e.clientX - r.left - r.width / 2;
@@ -848,6 +905,7 @@ function setupMagnetic() {
 /* ============= 3D TILT ON SUBJECT MEDIA ============= */
 function setupTilt() {
   document.querySelectorAll('[data-tilt]').forEach(el => {
+    if (el.dataset.tiltBound) return; el.dataset.tiltBound = '1';
     el.addEventListener('mousemove', e => {
       const r = el.getBoundingClientRect();
       const x = (e.clientX - r.left) / r.width;
@@ -870,6 +928,7 @@ function setupTilt() {
 function setupCardTilt() {
   if (window.matchMedia('(hover: none)').matches) return;
   document.querySelectorAll('.place-card, .gal').forEach(el => {
+    if (el.dataset.tiltBound) return; el.dataset.tiltBound = '1';
     el.addEventListener('mousemove', e => {
       const r = el.getBoundingClientRect();
       const x = (e.clientX - r.left) / r.width;
@@ -952,10 +1011,10 @@ function openModal(key) {
   const primary = placeById(s.placeIds[0]);
   const locations = s.placeIds.map(id => placeById(id)?.name).filter(Boolean);
   modalNum.textContent = `/${s.num} · ${locations.join(' · ')}`;
-  modalTitle.innerHTML = s.title;
-  modalTeacher.textContent = s.teacher;
-  modalText.innerHTML = s.body + (s.content ? `<div class="modal__deep">${s.content}</div>` : '');
-  modalMeta.innerHTML = locations.map(l => `<span class="tag tag--accent">${l}</span>`).join('') + s.tags.map(t => `<span class="tag">${t}</span>`).join('');
+  modalTitle.innerHTML = sh(s, 'title');
+  modalTeacher.textContent = sh(s, 'teacher');
+  modalText.innerHTML = sh(s, 'body') + (sh(s, 'content') ? `<div class="modal__deep">${sh(s, 'content')}</div>` : '');
+  modalMeta.innerHTML = locations.map(l => `<span class="tag tag--accent">${l}</span>`).join('') + sh(s, 'tags').map(t => `<span class="tag">${t}</span>`).join('');
   modalImg.src = primary?.img || '';
   modalImg.alt = primary?.name || '';
   modal.classList.add('is-open');
@@ -1043,17 +1102,17 @@ function updateActiveCard(id) {
   activeCardNum.textContent = p.num;
   activeCardCity.textContent = p.cityShort;
   activeCardTitle.textContent = p.name;
-  activeCardDesc.textContent = p.short;
+  activeCardDesc.textContent = ph(p, 'short');
 
   const idx = PLACES.findIndex(x => x.id === id);
   const next = PLACES[idx + 1];
   if (next) {
     const km = haversineKm(p.coords, next.coords);
     const lbl = km < 1 ? `${Math.round(km * 1000)} m` : `${km.toFixed(1)} km`;
-    activeCardDist.textContent = `→ next · ${lbl} · ${next.name}`;
+    activeCardDist.textContent = `${ui('next')} ${lbl} · ${next.name}`;
     activeCardDist.style.visibility = 'visible';
   } else {
-    activeCardDist.textContent = '✦ last stop';
+    activeCardDist.textContent = ui('last');
     activeCardDist.style.visibility = 'visible';
   }
 
@@ -1135,6 +1194,7 @@ document.querySelectorAll('.chip').forEach(btn => {
 /* ============= HOVER PREVIEW (SIDEBAR) ============= */
 function setupSidebarHoverPreview() {
   document.querySelectorAll('.map-list-item').forEach(el => {
+    if (el.dataset.hoverBound) return; el.dataset.hoverBound = '1';
     el.addEventListener('mouseenter', () => {
       const id = +el.dataset.place;
       const pin = document.querySelector(`.leaflet-marker-pin[data-id="${id}"]`);
@@ -1199,14 +1259,18 @@ function initHero3D() {
   resize();
   window.addEventListener('resize', resize, { passive: true });
 
-  // Astrophage particles — warm orange + science blue mix
+  // Warm constellation particles — gold + teal + terracotta mix
   const palette = [
-    [224, 104, 24],   // Astrophage orange
-    [104, 184, 248],  // science blue
-    [224, 104, 24],   // orange (weighted 2:1)
+    [226, 169, 62],   // warm gold
+    [79, 203, 181],   // teal
+    [237, 116, 72],   // terracotta (warm weighting)
   ];
-  const N    = 125;
-  const LINK = 190;
+  // Scale particle work to the device so it stays fluid everywhere
+  const small  = window.innerWidth < 768;
+  const touch  = window.matchMedia('(hover: none)').matches;
+  const N    = small ? 46 : (window.innerWidth < 1200 ? 85 : 120);
+  const LINK = small ? 130 : 185;
+  const DRAW_LINES = !touch; // skip the O(N²) constellation links on touch devices
 
   const pts = Array.from({ length: N }, () => {
     const z   = 0.3 + Math.random() * 0.7;
@@ -1264,8 +1328,8 @@ function initHero3D() {
       const al = s.life;
       const ratio = s.vy / s.vx;
       const grad = ctx.createLinearGradient(s.x - s.len, s.y - s.len * ratio, s.x, s.y);
-      grad.addColorStop(0,   `rgba(224,104,24,0)`);
-      grad.addColorStop(0.6, `rgba(224,104,24,${al * 0.55})`);
+      grad.addColorStop(0,   `rgba(226,169,62,0)`);
+      grad.addColorStop(0.6, `rgba(226,169,62,${al * 0.55})`);
       grad.addColorStop(1,   `rgba(248,180,120,${al * 0.95})`);
       ctx.beginPath();
       ctx.moveTo(s.x - s.len, s.y - s.len * ratio);
@@ -1273,20 +1337,22 @@ function initHero3D() {
       ctx.strokeStyle = grad; ctx.lineWidth = 2.2; ctx.stroke();
       const tipG = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, 14);
       tipG.addColorStop(0, `rgba(255,200,140,${al})`);
-      tipG.addColorStop(1, `rgba(224,104,24,0)`);
+      tipG.addColorStop(1, `rgba(226,169,62,0)`);
       ctx.beginPath(); ctx.arc(s.x, s.y, 14, 0, Math.PI * 2); ctx.fillStyle = tipG; ctx.fill();
     }
 
-    // Constellation lines
-    for (let i = 0; i < N; i++) {
-      for (let j = i + 1; j < N; j++) {
-        const a = pts[i], b = pts[j];
-        const dx = a.x - b.x, dy = a.y - b.y;
-        const d2 = dx * dx + dy * dy;
-        if (d2 < LINK * LINK) {
-          ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y);
-          ctx.strokeStyle = `rgba(224,104,24,${(1 - Math.sqrt(d2) / LINK) * 0.18})`;
-          ctx.lineWidth = 0.7; ctx.stroke();
+    // Constellation lines (skipped on touch devices for fluidity)
+    if (DRAW_LINES) {
+      for (let i = 0; i < N; i++) {
+        for (let j = i + 1; j < N; j++) {
+          const a = pts[i], b = pts[j];
+          const dx = a.x - b.x, dy = a.y - b.y;
+          const d2 = dx * dx + dy * dy;
+          if (d2 < LINK * LINK) {
+            ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y);
+            ctx.strokeStyle = `rgba(226,169,62,${(1 - Math.sqrt(d2) / LINK) * 0.18})`;
+            ctx.lineWidth = 0.7; ctx.stroke();
+          }
         }
       }
     }
@@ -1332,10 +1398,10 @@ function addGeoDeco() {
 
   // RGBA channels for each named color
   const P = {
-    gold:  [200, 153,  46],
-    coral: [217,  77,  40],
-    teal:  [ 40, 168, 146],
-    white: [255, 255, 255],
+    gold:  [226, 169, 62],
+    coral: [217, 84, 43],
+    teal:  [47, 167, 150],
+    white: [246, 239, 226],
   };
 
   // Animation names defined in CSS
@@ -1699,8 +1765,93 @@ function setupScrollReveal() {
   document.querySelectorAll('.places, .subjects, .gallery, .intro, .cta-block').forEach(s => io.observe(s));
 }
 
+/* ============= APPLY STATIC STRINGS (index.html [data-i18n]) ============= */
+function applyStaticStrings() {
+  const S = window.STATIC_STRINGS;
+  if (!S) return;
+  const dict = S[LANG] || S.en;
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const k = el.getAttribute('data-i18n');
+    if (dict[k] != null) el.innerHTML = dict[k];
+  });
+  // Tickers (forward = word loop, reverse = place names)
+  const sep = '<span class="ticker__sep">◆</span>';
+  const words = dict.ticker1 || S.en.ticker1;
+  const t1 = [...words, ...words].map(w => `<span>${w}</span>`).join(sep) + sep;
+  document.querySelectorAll('.ticker:not(.ticker--reverse) .ticker__track').forEach(tr => tr.innerHTML = t1);
+  const tk2 = dict.ticker2 || S.en.ticker2;
+  const t2 = `<span class="italic">${tk2}</span> <span class="italic">${tk2}</span>`;
+  document.querySelectorAll('.ticker--reverse .ticker__track').forEach(tr => tr.innerHTML = t2);
+  // Active card default text (only when no site is selected)
+  if (activeId == null) {
+    if (activeCardTitle) activeCardTitle.textContent = ui('acTitle');
+    if (activeCardDesc) activeCardDesc.textContent = ui('acDesc');
+  }
+  document.documentElement.lang = LANG;
+}
+
+/* Re-inject dynamic content in the active language (used on toggle) */
+function renderDynamic() {
+  injectMapList();
+  injectPlaces();
+  injectSubjects();
+  rebuildPopups();
+  // freshly injected .rv nodes start hidden — reveal them immediately
+  document.querySelectorAll('#placeSections .rv, #subjectSections .rv, #placeSections .place-card, #subjectSections .subject')
+    .forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; });
+  // rebind interactions for the new nodes (guards prevent duplicate listeners)
+  setupCardTilt(); setupTilt(); setupMagnetic(); setupSidebarHoverPreview(); setupPlaceScrollSync();
+}
+
+/* ============= LANGUAGE SWITCH ============= */
+function setLang(lang) {
+  LANG = (lang === 'es') ? 'es' : 'en';
+  localStorage.setItem('viaje_lang', LANG);
+  applyStaticStrings();
+  renderDynamic();
+  if (activeId != null) updateActiveCard(activeId);
+  const lbl = document.querySelector('#langToggle .dock-btn__label');
+  if (lbl) lbl.textContent = (LANG === 'es') ? 'EN' : 'ES';
+}
+
+/* ============= BACKGROUND MUSIC ============= */
+function setupAudio() {
+  const audio = document.getElementById('bgAudio');
+  const btn = document.getElementById('musicToggle');
+  if (!audio || !btn) return;
+  audio.loop = true; audio.volume = 0;
+  let playing = false, fadeTimer = null;
+  const TARGET = 0.3;
+  function fadeTo(target) {
+    clearInterval(fadeTimer);
+    fadeTimer = setInterval(() => {
+      const d = target - audio.volume;
+      if (Math.abs(d) < 0.02) { audio.volume = Math.max(0, Math.min(1, target)); clearInterval(fadeTimer); if (target === 0) audio.pause(); return; }
+      audio.volume = Math.max(0, Math.min(1, audio.volume + d * 0.12));
+    }, 60);
+  }
+  function play() { audio.play().then(() => { playing = true; btn.classList.add('is-on'); btn.setAttribute('aria-pressed', 'true'); fadeTo(TARGET); }).catch(() => {}); }
+  function stop() { playing = false; btn.classList.remove('is-on'); btn.setAttribute('aria-pressed', 'false'); fadeTo(0); }
+  btn.addEventListener('click', () => { playing ? stop() : play(); });
+}
+
+/* ============= DOCK (language + music) ============= */
+function setupDock() {
+  const lt = document.getElementById('langToggle');
+  if (lt) {
+    const lbl = lt.querySelector('.dock-btn__label');
+    if (lbl) lbl.textContent = (LANG === 'es') ? 'EN' : 'ES';
+    lt.addEventListener('click', () => setLang(LANG === 'es' ? 'en' : 'es'));
+  }
+  setupAudio();
+}
+
 /* ============= INIT ============= */
 document.addEventListener('DOMContentLoaded', () => {
+  injectMapList();
+  injectPlaces();
+  injectSubjects();
+  applyStaticStrings();
   initHero3D();
   addGeoDeco();
   animateReticle();
@@ -1719,5 +1870,6 @@ document.addEventListener('DOMContentLoaded', () => {
   setupRouteDrawOnView();
   setupSidebarHoverPreview();
   setupPlaceScrollSync();
+  setupDock();
   updateNavProgress();
 });

@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <path d="M32 2C18.7 2 8 12.7 8 26c0 17 24 36 24 36s24-19 24-36C56 12.7 45.3 2 32 2z"
-        fill="#D73220" stroke="#A8200F" stroke-width="2.5"/>
-  <circle cx="32" cy="26" r="13" fill="#F9F3CC"/>
+        fill="#D9542B" stroke="#A8350F" stroke-width="2.5"/>
+  <circle cx="32" cy="26" r="13" fill="#F6EFE2"/>
   <text x="32" y="31" text-anchor="middle"
         font-family="Georgia, 'Newsreader', serif"
-        font-size="17" font-weight="700" fill="#2A1812">11</text>
+        font-size="16" font-weight="700" fill="#161013">13</text>
 </svg>
