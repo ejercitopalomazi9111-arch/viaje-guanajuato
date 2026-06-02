@@ -910,14 +910,30 @@ section { position: relative; padding: clamp(2.5rem, 5vw, 6rem) 0; }
 .map-list-item.is-active .map-list-item__arrow { opacity: 1; color: var(--gold); }
 
 .map-canvas { position: relative; border-radius: 10px; overflow: hidden; border: 1px solid var(--b1); }
-.map-canvas__leaflet { height: 100%; }
+/* z-index:0 traps Leaflet's internal panes so the HTML overlays (brand, legend, reset) paint above the map */
+.map-canvas__leaflet { height: 100%; position: relative; z-index: 0; }
 .map-canvas__corner {
   position: absolute; bottom: .75rem; right: .75rem; z-index: 10;
   background: var(--glass); backdrop-filter: blur(8px); border-radius: 4px;
   padding: .25rem .6rem; color: var(--tx-3);
 }
+/* Custom institutional brand on the map */
+.map-brand {
+  position: absolute; top: .85rem; right: .85rem; z-index: 10;
+  display: flex; align-items: center; gap: .55rem;
+  background: var(--glass); backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  border: 1px solid var(--b2); border-radius: 10px;
+  padding: .4rem .75rem .4rem .5rem;
+  box-shadow: 0 6px 20px rgba(0,0,0,.45);
+  transition: opacity var(--mid);
+}
+.map-brand img { width: 26px; height: 26px; object-fit: contain; border-radius: 4px; flex-shrink: 0; }
+.map-brand__txt { display: flex; flex-direction: column; font-family: var(--serif); font-size: .82rem; font-weight: 500; color: var(--tx); line-height: 1.12; }
+.map-brand__txt em { font-family: var(--mono); font-style: normal; font-size: .5rem; letter-spacing: .12em; text-transform: uppercase; color: var(--tx-3); margin-top: 2px; }
+@media (max-width: 640px) { .map-brand__txt { display: none; } .map-brand { padding: .4rem; } }
 .map-canvas__reset {
-  position: absolute; top: 1rem; right: 1rem; z-index: 10;
+  position: absolute; bottom: 2.6rem; right: 1rem; z-index: 10;
   display: flex; align-items: center; gap: .5rem;
   padding: .5rem 1rem;
   background: var(--glass); backdrop-filter: blur(10px);
@@ -1034,16 +1050,30 @@ section { position: relative; padding: clamp(2.5rem, 5vw, 6rem) 0; }
   100% { opacity: 0; transform: scale(2.2); }
 }
 .leaflet-marker-pin__circle {
-  width: 28px; height: 28px; border-radius: 50%;
+  width: 30px; height: 30px; border-radius: 50%;
   background: var(--coral); color: #fff;
-  font-family: var(--mono); font-size: .58rem; font-weight: 500;
-  letter-spacing: .06em;
   display: flex; align-items: center; justify-content: center;
-  border: 2px solid rgba(255,255,255,.2);
-  box-shadow: 0 4px 14px rgba(217,84,43,.45);
+  border: 2px solid rgba(255,255,255,.25);
+  box-shadow: 0 4px 14px rgba(217,84,43,.5), inset 0 1px 0 rgba(255,255,255,.25);
   transition: transform var(--fast) var(--ease), box-shadow var(--fast);
 }
-.leaflet-marker-pin.dolores .leaflet-marker-pin__circle { background: var(--gold); box-shadow: 0 4px 14px rgba(226,169,62,.45); }
+.leaflet-marker-pin__circle svg { width: 16px; height: 16px; }
+.leaflet-marker-pin.dolores .leaflet-marker-pin__circle { background: var(--gold); box-shadow: 0 4px 14px rgba(226,169,62,.5), inset 0 1px 0 rgba(255,255,255,.3); }
+/* Sequence badge (itinerary order) */
+.leaflet-marker-pin__seq {
+  position: absolute; top: 1px; right: 1px;
+  min-width: 15px; height: 15px; padding: 0 3px;
+  border-radius: 8px;
+  background: var(--bg); color: var(--gold);
+  border: 1px solid var(--gold-b);
+  font-family: var(--mono); font-size: .5rem; font-weight: 600; line-height: 13px;
+  text-align: center; letter-spacing: 0;
+  box-shadow: 0 2px 6px rgba(0,0,0,.55);
+  transition: transform var(--fast) var(--ease);
+}
+.leaflet-marker-pin.dolores .leaflet-marker-pin__seq { color: var(--gold-l); }
+.leaflet-marker-pin.is-active .leaflet-marker-pin__seq,
+.leaflet-marker-pin.is-bounce .leaflet-marker-pin__seq { transform: scale(1.1); }
 .leaflet-marker-pin.is-active .leaflet-marker-pin__circle,
 .leaflet-marker-pin.is-bounce .leaflet-marker-pin__circle { transform: scale(1.25); }
 

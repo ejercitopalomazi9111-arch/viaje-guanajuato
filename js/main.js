@@ -223,7 +223,7 @@ const SUBJECTS = [
       <p>Filmed and edited during the expedition. It explores the chemistry of the silver mines around Valenciana —oxidation of metals, sulfide ores— and the biology of the Hidalgo Market produce, with field observations from the historic center of Guanajuato.</p>
       <div class="video-embed">
         <iframe
-          src="https://www.youtube.com/embed/8FbQBO30PzQ"
+          src="https://www.youtube.com/embed/91Np4m9tDXg"
           title="Chemistry &amp; Biology — Trip Documentary"
           frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -597,6 +597,25 @@ function injectSubjects() {
   }).join('');
 }
 
+/* ============= CUSTOM MARKER ICONS (professional category glyphs) ============= */
+const MARKER_ICONS = {
+  church:     '<path d="M12 2.5v3.5M10.3 4.2h3.4"/><path d="M6 21V11l6-3.4 6 3.4v10"/><path d="M9.5 21v-4a2.5 2.5 0 0 1 5 0v4"/>',
+  museum:     '<path d="M3.5 9 12 4.3 20.5 9"/><path d="M5.5 9.5v8M9.2 9.5v8M14.8 9.5v8M18.5 9.5v8"/><path d="M3.5 20.5h17"/>',
+  house:      '<path d="M3.5 11 12 4.5 20.5 11"/><path d="M5.5 10v10.5h13V10"/><path d="M10 20.5V15h4v5.5"/>',
+  statue:     '<circle cx="12" cy="5.4" r="2.1"/><path d="M9.6 20.5 10.6 12h2.8l1 8.5"/><path d="M7.5 20.5h9"/>',
+  market:     '<path d="M4.5 9.2h15l-1 11.3H5.5z"/><path d="M3.5 9.2 5 5h14l1.5 4.2"/><path d="M9.5 20.5V14h5v6.5"/>',
+  mine:       '<circle cx="7.5" cy="19" r="1.5"/><circle cx="15" cy="19" r="1.5"/><path d="M4 8.5h13l1.6 8H5.6z"/><path d="M4 8.5 3 5.5"/>',
+  university: '<path d="M12 4.2 2.5 8.7 12 13.2l9.5-4.5z"/><path d="M6.5 10.7v4.6c0 1.3 2.7 2.4 5.5 2.4s5.5-1.1 5.5-2.4v-4.6"/><path d="M21.5 8.7v5"/>',
+  theatre:    '<path d="M3.5 4.5h8v5.5a4 4 0 0 1-8 0z"/><path d="M12.5 8h8v4a4 4 0 0 1-8 0z"/><path d="M5.5 7.6q2 1 4 0M14.5 11.1q2 1 4 0"/>',
+  monument:   '<path d="M12 3v9M9.5 12h5M8 21h8M10 12v9M14 12v9"/>'
+};
+/* Place id → category (drives the custom icon shown on each marker) */
+const PLACE_CAT = {
+  1: 'church', 2: 'museum', 3: 'house', 4: 'statue', 5: 'statue',
+  7: 'church', 8: 'museum', 9: 'market', 10: 'mine', 11: 'university',
+  12: 'theatre', 13: 'house', 14: 'museum'
+};
+
 /* ============= LEAFLET MAP ============= */
 let map = null;
 let markers = {};
@@ -664,10 +683,14 @@ function initMap() {
 
   PLACES.forEach(p => {
     const cityClass = p.city === 'Dolores Hidalgo' ? 'dolores' : '';
+    const cat = PLACE_CAT[p.id] || 'monument';
     const html = `
       <div class="leaflet-marker-pin ${cityClass}" data-id="${p.id}">
         <div class="leaflet-marker-pin__pulse"></div>
-        <div class="leaflet-marker-pin__circle">${p.num}</div>
+        <div class="leaflet-marker-pin__circle">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${MARKER_ICONS[cat] || MARKER_ICONS.monument}</svg>
+        </div>
+        <span class="leaflet-marker-pin__seq">${p.num}</span>
       </div>`;
     const icon = L.divIcon({ html, className: 'leaflet-marker-pin-wrap', iconSize: [40, 40], iconAnchor: [20, 20], popupAnchor: [0, -22] });
     const marker = L.marker(p.coords, { icon }).addTo(map);
