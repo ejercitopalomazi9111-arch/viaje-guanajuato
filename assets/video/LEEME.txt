@@ -1,0 +1,10 @@
+VIDEOS DE LAS MAQUETAS (fondo verde ya removido por ti)
+=======================================================
+Coloca aquí los dos videos finales, con EXACTAMENTE estos nombres:
+
+  maqueta-mina.mp4     -> maqueta de la Mina La Valenciana (inicio)
+  maqueta-pipila.mp4   -> maqueta del Monumento al Pípila (final)
+
+Formato recomendado: MP4 (H.264 + AAC), vertical u horizontal, < 15 MB.
+Mientras no existan, la página muestra "Video próximamente" sobre la foto real.
+No hace falta tocar el código: en cuanto subas los archivos con estos nombres, se reproducen solos.

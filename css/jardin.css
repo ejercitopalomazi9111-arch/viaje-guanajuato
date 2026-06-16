@@ -1,0 +1,83 @@
+/* =========================================================
+   JARDÍN · school herb-garden styles (mobile-first)
+   Reuses :root palette/fonts from styles.css + feria.css base.
+   ========================================================= */
+
+.jardin-body { padding-bottom: 2rem; }
+.jd-main { width: min(960px, 100%); margin: 0 auto; padding: clamp(1.1rem, 4vw, 2.2rem); }
+
+/* ---------- Hero ---------- */
+.jd-hero { text-align: center; padding: 1.4rem 0 2rem; }
+.jd-title { font: 600 clamp(1.8rem, 7vw, 3rem)/1.08 var(--serif); margin: 0 0 1rem; }
+.jd-title em { font-style: italic; color: var(--teal-l); }
+.jd-lead { max-width: 56ch; margin: 0 auto; color: var(--tx-2); font-size: var(--md); line-height: 1.7; }
+
+/* ---------- Diagram ---------- */
+.jd-diagram {
+  background: linear-gradient(160deg, var(--bg-2), var(--bg-3));
+  border: 1px solid var(--b2); border-radius: 20px;
+  padding: 1.4rem clamp(1rem, 4vw, 2rem) 1rem;
+  margin: 0 auto 2.4rem; max-width: 640px;
+}
+.jd-svg { width: 100%; height: auto; display: block; }
+.jd-drop-lbl {
+  text-align: center; margin: .6rem 0 0;
+  font: 500 var(--sm)/1.3 var(--sans); letter-spacing: .04em;
+  color: var(--teal-l);
+}
+
+/* ---------- How it works ---------- */
+.jd-how { margin-bottom: 2.6rem; }
+.jd-how h2, .jd-plants h2 {
+  font: 500 var(--xs)/1 var(--sans); letter-spacing: .18em; text-transform: uppercase;
+  color: var(--gold-l); margin: 0 0 1.2rem; text-align: center;
+}
+.jd-steps {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; gap: .8rem;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+}
+.jd-step {
+  display: flex; gap: .8rem; align-items: flex-start;
+  background: var(--bg-2); border: 1px solid var(--b1); border-radius: 14px; padding: 1rem;
+}
+.jd-step__n {
+  flex: none; width: 30px; height: 30px; border-radius: 9px;
+  display: grid; place-items: center; font: 600 var(--md)/1 var(--mono);
+  color: var(--gold); background: var(--gold-a); border: 1px solid var(--gold-b);
+}
+.jd-step strong { display: block; font: 600 var(--md)/1.2 var(--serif); color: var(--tx); margin-bottom: .2rem; }
+.jd-step span { font-size: var(--sm); color: var(--tx-3); line-height: 1.45; }
+
+/* ---------- Plants grid ---------- */
+.jd-plants-lead { text-align: center; color: var(--tx-3); font-size: var(--sm); margin: -0.6rem 0 1.6rem; }
+.jd-grid {
+  display: grid; gap: 1.1rem;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+.jd-card {
+  background: var(--bg-2); border: 1px solid var(--b1); border-radius: 18px;
+  overflow: hidden; display: flex; flex-direction: column;
+  transition: transform var(--mid) var(--ease), border-color var(--mid) var(--ease), box-shadow var(--mid) var(--ease);
+}
+.jd-card:hover {
+  transform: translateY(-4px); border-color: var(--gold-b);
+  box-shadow: 0 22px 50px -30px rgba(0,0,0,.8);
+}
+.jd-card__img { aspect-ratio: 4 / 3; overflow: hidden; background: var(--bg-3); }
+.jd-card__img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform var(--slow) var(--ease); }
+.jd-card:hover .jd-card__img img { transform: scale(1.06); }
+.jd-card__body { padding: 1rem 1.1rem 1.2rem; display: flex; flex-direction: column; gap: .4rem; }
+.jd-card__body h3 { font: 600 var(--lg)/1.1 var(--serif); margin: 0; color: var(--tx); }
+.jd-card__sci { font: 400 var(--xs)/1.3 var(--mono); color: var(--tx-3); margin: 0; }
+.jd-card__sci em { color: var(--teal-l); font-style: italic; }
+.jd-card__desc { font-size: var(--sm); color: var(--tx-2); line-height: 1.55; margin: .25rem 0 0; }
+.jd-card__use { font-size: var(--sm); color: var(--tx-3); line-height: 1.5; margin: .15rem 0 0; }
+.jd-card__use strong { color: var(--gold-l); }
+
+/* ---------- Footer links ---------- */
+.jd-foot { display: flex; gap: .8rem; justify-content: center; flex-wrap: wrap; padding: 2.6rem 0 1rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  .jd-card, .jd-card__img img { transition: none; }
+}

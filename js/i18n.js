@@ -31,7 +31,7 @@ window.UI_STRINGS = {
 /* ---- Static strings for index.html [data-i18n] elements ---- */
 window.STATIC_STRINGS = {
   en: {
-    navHome: 'Home', navMap: 'Map', navPlaces: 'Places', navSubjects: 'Subjects', navGallery: 'Gallery', navCta: 'Explore map',
+    navHome: 'Home', navMap: 'Map', navPlaces: 'Places', navSubjects: 'Subjects', navGallery: 'Gallery', navFair: 'Tour · QR', navGarden: 'Garden', navCta: 'Explore map',
     heroEyebrow: 'STEAM Expedition · 3rd Term · DA016',
     heroTitleTop: 'Journey to',
     heroLead: 'Thirteen stops between Dolores Hidalgo and Guanajuato Capital. Seven academic subjects in dialogue with stone and history.',
@@ -77,7 +77,7 @@ window.STATIC_STRINGS = {
     gcap18: 'Colonial facade · Dolores Hidalgo'
   },
   es: {
-    navHome: 'Inicio', navMap: 'Mapa', navPlaces: 'Lugares', navSubjects: 'Materias', navGallery: 'Galería', navCta: 'Ver mapa',
+    navHome: 'Inicio', navMap: 'Mapa', navPlaces: 'Lugares', navSubjects: 'Materias', navGallery: 'Galería', navFair: 'Recorrido · QR', navGarden: 'Jardín', navCta: 'Ver mapa',
     heroEyebrow: 'Expedición STEAM · 3er Parcial · DA016',
     heroTitleTop: 'Viaje a',
     heroLead: 'Trece paradas entre Dolores Hidalgo y Guanajuato Capital. Siete materias académicas en diálogo con la piedra y la historia.',

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>El Jardín · Viaje a Guanajuato — Feria de Ciencias</title>
+<meta name="theme-color" content="#161013">
+<meta name="description" content="Jardín de hierbas aromáticas regado con el agua del lavabo — reutilización de aguas grises. Instituto Rembrandt.">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Space+Grotesk:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/feria.css">
+<link rel="stylesheet" href="css/jardin.css">
+</head>
+<body class="feria-body jardin-body">
+
+  <header class="fr-topbar">
+    <a class="fr-brand" href="index.html"><img src="assets/img/logo_rembrandt.png" alt="Instituto Rembrandt" height="34"></a>
+    <span class="fr-kicker" id="jd-kicker">Feria de Ciencias · Jardín sustentable</span>
+    <button class="fr-lang" id="jd-lang" type="button" aria-label="Cambiar idioma">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 2.5 15.3 0 18M12 3c-2.5 2.7-2.5 15.3 0 18"/></svg>
+      <span>EN</span>
+    </button>
+  </header>
+
+  <main class="jd-main">
+    <section class="jd-hero">
+      <h1 class="jd-title" id="jd-title" data-anim>El jardín que riegas<br>al <em>lavarte las manos</em>.</h1>
+      <p class="jd-lead" id="jd-lead" data-anim></p>
+    </section>
+
+    <!-- Animated greywater diagram -->
+    <section class="jd-diagram" data-anim>
+      <svg viewBox="0 0 400 220" class="jd-svg" role="img" aria-label="Diagrama: lavabo, tubería y jardín">
+        <!-- Sink -->
+        <g class="jd-sink">
+          <rect x="20" y="34" width="78" height="14" rx="4" fill="rgba(246,239,226,.20)"/>
+          <path d="M44 34 v-12 a14 14 0 0 1 28 0" fill="none" stroke="#a08c7b" stroke-width="4" stroke-linecap="round"/>
+          <path d="M30 48 q29 30 38 0" fill="none" stroke="rgba(246,239,226,.20)" stroke-width="3"/>
+        </g>
+        <!-- Pipe flow path: sink -> down -> right -> garden -->
+        <path id="jd-pipe" d="M59 66 V120 Q59 150 110 150 H300" fill="none" stroke="rgba(246,239,226,.12)" stroke-width="9" stroke-linecap="round"/>
+        <path id="jd-flow" d="M59 66 V120 Q59 150 110 150 H300" fill="none" stroke="#4fcbb5" stroke-width="4" stroke-linecap="round"/>
+        <!-- Filter node -->
+        <rect x="150" y="138" width="24" height="24" rx="5" fill="#271c20" stroke="rgba(226,169,62,.34)" stroke-width="1.5"/>
+        <text x="162" y="154" text-anchor="middle" font-size="11" fill="#f4c766" font-family="JetBrains Mono">≈</text>
+        <!-- Garden bed -->
+        <g class="jd-bed">
+          <rect x="300" y="150" width="84" height="40" rx="6" fill="#271c20" stroke="rgba(246,239,226,.20)" stroke-width="1.5"/>
+          <path d="M314 150 q4 -22 8 0 M334 150 q5 -26 9 0 M356 150 q4 -20 8 0" fill="none" stroke="#2fa796" stroke-width="3" stroke-linecap="round"/>
+        </g>
+        <!-- Travelling drop -->
+        <circle id="jd-drop" r="5" cx="0" cy="0" fill="#f4c766" opacity="0"/>
+      </svg>
+      <p class="jd-drop-lbl" id="jd-drop-lbl">Al lavarte las manos, riegas el jardín</p>
+    </section>
+
+    <section class="jd-how">
+      <h2 id="jd-how-title" data-anim>¿Cómo funciona?</h2>
+      <ol class="jd-steps" id="jd-steps"></ol>
+    </section>
+
+    <section class="jd-plants">
+      <h2 id="jd-plants-title" data-anim>Las seis hierbas</h2>
+      <p class="jd-plants-lead" id="jd-plants-lead" data-anim></p>
+      <div class="jd-grid" id="jd-grid"></div>
+    </section>
+
+    <section class="jd-foot">
+      <a class="fr-end__btn" id="jd-back-fair" href="feria.html">Volver al recorrido</a>
+      <a class="fr-end__btn fr-end__btn--ghost" id="jd-back-map" href="index.html">Ver mapa completo</a>
+    </section>
+  </main>
+
+<script src="https://unpkg.com/animejs@3.2.2/lib/anime.min.js"></script>
+<script src="js/jardin.js"></script>
+</body>
+</html>
