@@ -247,11 +247,8 @@ section { position: relative; padding: clamp(2.5rem, 5vw, 6rem) 0; }
   pointer-events: none; z-index: 9990;
   width: 0; height: 0; display: none;
 }
-@media (min-width: 1025px) and (hover: hover) {
-  .cursor { display: block; }
-  body { cursor: none; }
-  button, a, [data-magnetic], .map-list-item, .gal, details summary { cursor: none; }
-}
+/* Cursor personalizado DESACTIVADO: se usa el mouse normal del sistema. */
+.cursor { display: none !important; }
 .cursor__dot {
   position: absolute; width: 5px; height: 5px; border-radius: 50%;
   background: var(--gold); transform: translate(-50%,-50%);

@@ -44,7 +44,7 @@ def qr_img(data, px):
 def center(d, txt, f, cx, y, fill):
     d.text((cx - d.textlength(txt, font=f)/2, y), txt, font=f, fill=fill)
 
-W, H = 1500, 2320
+W, H = 1500, 2420
 img = Image.new("RGB", (W, H), BG)
 d = ImageDraw.Draw(img)
 
@@ -55,15 +55,25 @@ for (x, y, dx, dy) in [(m,m,1,1),(W-m,m,-1,1),(m,H-m,1,-1),(W-m,H-m,-1,-1)]:
     d.line([(x, y), (x+dx*70, y)], fill=GOLD, width=6)
     d.line([(x, y), (x, y+dy*70)], fill=GOLD, width=6)
 
+# Logo institucional (escudo Rembrandt)
+try:
+    logo = Image.open("C:/Users/ejerc/OneDrive/Desktop/Proyectos/Viaje Guanajuato Feria/assets/img/logo_rembrandt.png").convert("RGBA")
+    lh = 132
+    lw = int(logo.width * lh / logo.height)
+    logo = logo.resize((lw, lh), Image.LANCZOS)
+    img.paste(logo, (int(W/2 - lw/2), 60), logo)
+except Exception as e:
+    print("logo:", e)
+
 # Encabezado
-center(d, "INSTITUTO REMBRANDT · FERIA DE CIENCIAS", F_EYE, W/2, 92, GOLD)
-center(d, "Códigos QR del Recorrido", F_TITLE, W/2, 132, CARD)
-center(d, "Abre esta imagen en la laptop y escanea cada código con la cámara del celular.", F_SUB, W/2, 244, MUTED)
+center(d, "INSTITUTO REMBRANDT · FERIA DE CIENCIAS", F_EYE, W/2, 212, GOLD)
+center(d, "Códigos QR del Recorrido", F_TITLE, W/2, 252, CARD)
+center(d, "Abre esta imagen en la laptop y escanea cada código con la cámara del celular.", F_SUB, W/2, 364, MUTED)
 
 margin = 90
 
 # ---- Tarjeta DESTACADA: Videoblog (ancho completo) ----
-fx, fy, fw, fh = margin, 326, W - 2*margin, 460
+fx, fy, fw, fh = margin, 446, W - 2*margin, 460
 d.rounded_rectangle([fx, fy, fx+fw, fy+fh], radius=26, fill=CARD)
 d.rounded_rectangle([fx, fy, fx+fw, fy+fh], radius=26, outline=GOLD, width=5)
 fq = 360
