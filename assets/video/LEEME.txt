@@ -8,3 +8,9 @@ Coloca aquí los dos videos finales, con EXACTAMENTE estos nombres:
 Formato recomendado: MP4 (H.264 + AAC), vertical u horizontal, < 15 MB.
 Mientras no existan, la página muestra "Video próximamente" sobre la foto real.
 No hace falta tocar el código: en cuanto subas los archivos con estos nombres, se reproducen solos.
+
+VIDEOBLOG DEL VIAJE (pagina videoblog.html)
+===========================================
+  videoblog-guanajuato.mp4   -> el videoblog/cronica del viaje (~10 min)
+[YA SUBIDO 2026-06-22: H.264, 768x576, 10.7 min, 64 MB, faststart OK]
+Si quieres reemplazarlo, sustituye este archivo con el mismo nombre.
