@@ -7,14 +7,16 @@ from PIL import Image, ImageDraw, ImageFont
 
 BASE = "https://ejercitopalomazi9111-arch.github.io/viaje-guanajuato/"
 
-FEATURE = ("VIDEOBLOG · ≈10 MIN", "Videoblog del Viaje",
-           "Crónica en video de la expedición a Guanajuato", "videoblog.html")
+FEATURE = ("RECORRIDO 3D · INTERACTIVO", "Hotel Virtual 3D",
+           "Camina con WASD e inspecciona · Posada Rembrandt", "hotel.html")
 
 ITEMS = [
-    ("MAQUETA · INICIO",   "Mina La Valenciana",  "Maqueta física · vista orbital", "feria.html?stop=mina",   True),
-    ("MAQUETA · FINAL",    "Monumento al Pípila", "Maqueta física · vista orbital", "feria.html?stop=pipila", True),
-    ("ESTACIÓN",           "El Jardín",           "Hierbas regadas con el lavabo",  "jardin.html",            False),
-    ("RECORRIDO COMPLETO", "Mapa interactivo",    "Las 13 paradas del viaje",       "index.html",             False),
+    ("VIDEOBLOG · ≈10 MIN", "Videoblog del Viaje", "Crónica en video de la expedición", "videoblog.html",          False),
+    ("MUJERES EN STEAM",   "Katherine Johnson",   "Las mentes detrás de los números", "index.html#women-steam",   False),
+    ("MAQUETA · INICIO",   "Mina La Valenciana",  "Maqueta física · vista orbital",   "feria.html?stop=mina",     True),
+    ("MAQUETA · FINAL",    "Monumento al Pípila", "Maqueta física · vista orbital",   "feria.html?stop=pipila",   True),
+    ("ESTACIÓN",           "El Jardín",           "Hierbas regadas con el lavabo",    "jardin.html",              False),
+    ("RECORRIDO COMPLETO", "Mapa interactivo",    "Las 13 paradas del viaje",         "index.html",               False),
 ]
 
 # ---- Colores (negro / dorado / crema editorial) ----
@@ -44,7 +46,7 @@ def qr_img(data, px):
 def center(d, txt, f, cx, y, fill):
     d.text((cx - d.textlength(txt, font=f)/2, y), txt, font=f, fill=fill)
 
-W, H = 1500, 2420
+W, H = 1500, 3120
 img = Image.new("RGB", (W, H), BG)
 d = ImageDraw.Draw(img)
 
@@ -108,7 +110,7 @@ for i, (tag, title, sub, path, is_model) in enumerate(ITEMS):
     center(d, "▣  Escanea con la cámara", F_SCAN, cx, qy+96, GOLD_D)
     center(d, (BASE + path).replace("https://", ""), F_URL, cx, qy+136, (169,158,143))
 
-center(d, "Una sola hoja · 1 videoblog + 4 estaciones · " + BASE.replace("https://", ""), F_FOOT, W/2, H-86, MUTED)
+center(d, "Una sola hoja · tour 3D + 6 estaciones · " + BASE.replace("https://", ""), F_FOOT, W/2, H-86, MUTED)
 
 out1 = r"C:\Users\ejerc\OneDrive\Desktop\Proyectos\Viaje Guanajuato Feria\qr\QR-Feria-de-Ciencias.png"
 out2 = r"C:\Users\ejerc\OneDrive\Desktop\QR Feria de Ciencias.png"
