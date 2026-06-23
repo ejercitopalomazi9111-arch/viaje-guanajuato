@@ -15,12 +15,12 @@
   var LANG = (localStorage.getItem('viaje_lang') === 'es') ? 'es' : 'en';
   var T = {
     en: { back:'Back to site', sub:'Virtual Hotel Tour · 3D', auto:'Auto tour', autoStop:'Stop tour',
-      record:'Record', recording:'Stop rec', inspect:'Inspect', enter:'Click to enter',
+      record:'Record', recording:'Stop rec', photo:'Photo', inspect:'Inspect', enter:'Click to enter',
       watch:'Watch auto tour', building:'Building the hotel…', move:'move', look:'look around',
       doInspect:'inspect', run:'run', component:'COMPONENT',
       lead:'An interactive 3D hotel you can walk through. Move with the keyboard, look with the mouse, and inspect every component. Or let the automatic tour drive — and record it as a video.' },
     es: { back:'Volver al sitio', sub:'Recorrido virtual del hotel · 3D', auto:'Tour automático', autoStop:'Detener tour',
-      record:'Grabar', recording:'Detener', inspect:'Inspeccionar', enter:'Haz clic para entrar',
+      record:'Grabar', recording:'Detener', photo:'Foto', inspect:'Inspeccionar', enter:'Haz clic para entrar',
       watch:'Ver tour automático', building:'Construyendo el hotel…', move:'moverte', look:'mirar',
       doInspect:'inspeccionar', run:'correr', component:'COMPONENTE',
       lead:'Un hotel 3D interactivo por el que puedes caminar. Muévete con el teclado, mira con el mouse e inspecciona cada componente. O deja que el recorrido automático conduzca — y grábalo en video.' }
@@ -29,7 +29,7 @@
 
   /* ---------------- renderer / scene / camera ---------------- */
   var canvas = document.getElementById('scene');
-  var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, powerPreference:'high-performance' });
+  var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, powerPreference:'high-performance', preserveDrawingBuffer: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.shadowMap.enabled = true;
@@ -39,8 +39,15 @@
   renderer.toneMappingExposure = 1.08;
 
   var scene = new THREE.Scene();
-  scene.background = new THREE.Color(0xb9c4cf);
-  scene.fog = new THREE.Fog(0xc2bdb2, 38, 120);
+  // vertical sky gradient (zenith blue -> warm horizon)
+  (function(){
+    var c=document.createElement('canvas'); c.width=8; c.height=256; var x=c.getContext('2d');
+    var g=x.createLinearGradient(0,0,0,256);
+    g.addColorStop(0,'#7fa6c4'); g.addColorStop(0.55,'#b9c4cf'); g.addColorStop(0.8,'#e7d4b3'); g.addColorStop(1,'#f0dcbb');
+    x.fillStyle=g; x.fillRect(0,0,8,256);
+    var t=new THREE.CanvasTexture(c); t.encoding=THREE.sRGBEncoding; scene.background=t;
+  })();
+  scene.fog = new THREE.Fog(0xcdc6b8, 42, 130);
 
   var camera = new THREE.PerspectiveCamera(72, window.innerWidth/window.innerHeight, 0.05, 400);
 
@@ -389,7 +396,7 @@
   var R = 0.42;                       // player collision radius
   var EYE = 1.65;
   var player = new THREE.Vector3(0, EYE, 14);   // spawn outside, facing the hotel
-  var yaw = Math.PI, pitch = 0;                 // look toward -z (hotel)
+  var yaw = 0, pitch = 0;                        // yaw 0 = camera faces -z (toward the hotel)
   var vel = new THREE.Vector3();
   var keys = {};
   var locked = false, autoMode = false;
@@ -490,6 +497,7 @@
   var aStartPos=new THREE.Vector3(), aStartLook=new THREE.Vector3();
   var dummy=new THREE.Object3D();
   var lookCur=new THREE.Vector3();
+  var DRIFT=new THREE.Quaternion(), EU=new THREE.Euler();
 
   function startAuto(){
     autoMode=true; if(document.pointerLockElement) document.exitPointerLock();
@@ -541,13 +549,17 @@
         closeInspect();
       }
     }
-    // human-like sway + head bob
-    var swayX=Math.sin(time*0.55)*1.4, swayY=Math.sin(time*0.8)*0.35;
-    var bob=Math.sin(time*5.0)*0.035;
+    // head bob (subtle vertical) + gentle "human" look drift applied as a small
+    // rotation offset, so the camera stays centred on whatever it is inspecting.
+    var bob=Math.sin(time*4.6)*0.03;
     camera.position.set(player.x, player.y+bob, player.z);
     dummy.position.copy(camera.position);
-    dummy.lookAt(lookCur.x+swayX, lookCur.y+swayY, lookCur.z);
-    camera.quaternion.slerp(dummy.quaternion, 1-Math.pow(0.001, dt));
+    dummy.lookAt(lookCur.x, lookCur.y, lookCur.z);
+    var driftYaw   = Math.sin(time*0.5)*0.055 + Math.sin(time*0.17)*0.03;
+    var driftPitch = Math.sin(time*0.72)*0.028;
+    DRIFT.setFromEuler(EU.set(driftPitch, driftYaw, 0, 'YXZ'));
+    dummy.quaternion.multiply(DRIFT);
+    camera.quaternion.slerp(dummy.quaternion, 1-Math.pow(0.0015, dt));
   }
 
   /* ============================================================
@@ -617,6 +629,7 @@
     document.getElementById('hudSub').textContent=tr('sub');
     document.getElementById('autoLbl').textContent=autoMode?tr('autoStop'):tr('auto');
     document.getElementById('recLbl').textContent=(recorder&&recorder.state==='recording')?tr('recording'):tr('record');
+    document.getElementById('photoLbl').textContent=tr('photo');
     document.getElementById('langBtn').textContent=(LANG==='es')?'EN':'ES';
     document.getElementById('startBtnLbl').textContent=tr('enter');
     document.getElementById('startAutoLbl').textContent=autoMode?tr('autoStop'):tr('watch');
@@ -634,6 +647,14 @@
   });
   document.getElementById('autoBtn').addEventListener('click', function(){ autoMode?stopAuto():startAuto(); });
   document.getElementById('recBtn').addEventListener('click', toggleRecord);
+  document.getElementById('photoBtn').addEventListener('click', function(){
+    renderer.render(scene,camera);
+    canvas.toBlob(function(blob){
+      if(!blob) return; var url=URL.createObjectURL(blob);
+      var a=document.createElement('a'); a.href=url; a.download='posada-rembrandt.png'; a.click();
+      setTimeout(function(){URL.revokeObjectURL(url);},1000);
+    },'image/png');
+  });
 
   var hintEl=document.getElementById('hudHint');
   var hintTimer=null;
@@ -675,9 +696,19 @@
 
   /* deep-link: ?auto=1 launches the guided tour automatically (great for recording
      or embedding), ?play=1 drops straight into first-person. */
+  var VIEWS = {
+    reception:  { p:[0,EYE,-1.5],  yaw:0,            pitch:-0.06 },
+    chandelier: { p:[0,EYE,-3.4],  yaw:0,            pitch:0.5   },
+    lounge:     { p:[-3.2,EYE,-3], yaw:-0.6,         pitch:-0.05 },
+    room:       { p:[5.6,EYE,-10.5],yaw:0,           pitch:-0.08 },
+    pool:       { p:[14,EYE,5],    yaw:-Math.PI/2,   pitch:-0.12 },
+    facade:     { p:[0,EYE,9],     yaw:0,            pitch:0.12  }
+  };
   (function(){
     var q=new URLSearchParams(location.search);
+    function enterPlay(){ startScreen.classList.add('is-hidden'); setTimeout(function(){startScreen.style.display='none';},650); hideHintSoon(); }
     if(q.get('auto')==='1'){ startScreen.classList.add('is-hidden'); setTimeout(function(){startScreen.style.display='none';},650); startAuto(); }
-    else if(q.get('play')==='1'){ startScreen.classList.add('is-hidden'); setTimeout(function(){startScreen.style.display='none';},650); hideHintSoon(); }
+    else if(q.get('view') && VIEWS[q.get('view')]){ var v=VIEWS[q.get('view')]; player.set(v.p[0],v.p[1],v.p[2]); yaw=v.yaw; pitch=v.pitch; enterPlay(); }
+    else if(q.get('play')==='1'){ enterPlay(); }
   })();
 })();
