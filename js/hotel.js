@@ -72,6 +72,18 @@
     var t=new THREE.CanvasTexture(c); t.wrapS=t.wrapT=THREE.RepeatWrapping;
     if(repeat) t.repeat.set(repeat[0],repeat[1]); t.anisotropy=4; t.encoding=THREE.sRGBEncoding; return t;
   }
+  // draw centred text scaled DOWN until it fits maxW (fixes the "T sticking out" overflow)
+  function fitText(ctx, text, cx, cy, maxW, startPx, color){
+    var px=startPx; ctx.font='bold '+px+'px Georgia, serif';
+    while(ctx.measureText(text).width>maxW && px>8){ px-=2; ctx.font='bold '+px+'px Georgia, serif'; }
+    ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillStyle=color; ctx.fillText(text,cx,cy);
+  }
+  // text texture on a transparent canvas sized to the aspect of its plane (wide → no overflow)
+  function labelTex(text, wPx, hPx, color){
+    var c=document.createElement('canvas'); c.width=wPx; c.height=hPx; var x=c.getContext('2d');
+    fitText(x, text, wPx/2, hPx/2, wPx*0.92, Math.floor(hPx*0.7), color||'#e2a93e');
+    var t=new THREE.CanvasTexture(c); t.anisotropy=4; t.encoding=THREE.sRGBEncoding; return t;
+  }
 
   var PAL = { sand:0xcaa775, sandDark:0xb08f5e, cream:0xece0cd, wood:0x6e4a2c, woodDark:0x4f351f,
     terra:0xc25a33, gold:0xd8a23a, marble:0xe8e0d2, dark:0x2a2027 };
@@ -111,6 +123,9 @@
   var carpetMat=new THREE.MeshStandardMaterial({map:carpetTex,roughness:1});
   var goldMat  =new THREE.MeshStandardMaterial({color:PAL.gold,roughness:.24,metalness:.96,envMapIntensity:1.35});
   var terraMat =new THREE.MeshStandardMaterial({color:PAL.terra,roughness:.7,envMapIntensity:.5});
+  var roomTex=canvasTex(256,function(ctx,s){ ctx.fillStyle='#7a5436'; ctx.fillRect(0,0,s,s);
+    for(var y=0;y<s;y+=18){ ctx.fillStyle='rgba(40,26,14,.28)'; ctx.fillRect(0,y,s,2);} for(var i=0;i<1300;i++){ ctx.fillStyle='rgba('+(110+Math.random()*50|0)+',72,42,.3)'; ctx.fillRect(Math.random()*s,Math.random()*s,2,2);} },[6,6]);
+  var roomMat=new THREE.MeshStandardMaterial({map:roomTex,roughness:.75,envMapIntensity:.35});
 
   /* ---------------- ground, plaza ---------------- */
   var ground=new THREE.Mesh(new THREE.PlaneGeometry(360,360), new THREE.MeshStandardMaterial({map:groundTex,roughness:1}));
@@ -158,7 +173,7 @@
     var fr=box(1.9,2.3,0.16,woodDarkMat); fr.position.set(wx, 3.0+wy*2.7, 0.05); world.add(fr);
     var gl=box(1.6,2.0,0.12,winMat); gl.position.set(wx,3.0+wy*2.7,0.16); world.add(gl);
   }
-  var signTex=canvasTex(512,function(ctx,s){ ctx.clearRect(0,0,s,s); ctx.font='bold 60px Georgia,serif'; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillStyle='#e2a93e'; ctx.fillText('POSADA REMBRANDT',s/2,s*0.5); });
+  var signTex=labelTex('POSADA REMBRANDT',1024,200,'#e2a93e');
   var signPanel=box(6.6,1.1,0.18,mat(PAL.dark,.6)); signPanel.position.set(0,OPEN+1.0,0.2); world.add(signPanel);
   var signText=new THREE.Mesh(new THREE.PlaneGeometry(6.3,1.5), new THREE.MeshStandardMaterial({map:signTex,transparent:true,emissive:0xe2a93e,emissiveIntensity:.5,emissiveMap:signTex})); signText.position.set(0,OPEN+1.0,0.32); world.add(signText);
   tagObject(signPanel,{ name:{en:'Hotel facade & sign',es:'Fachada y letrero del hotel'},
@@ -207,12 +222,12 @@
   wallX(-8.5,-12,-7,null,creamMat,H1);
   wallX(-8.5,-5, 5,null,creamMat,H1);
   wallX(-8.5, 7,12,null,creamMat,H1);
-  floorSlab(0,-10.0,24,3.0, 0, carpetMat);
+  floorSlab(0,-10.0,24,3.0, 0.06, carpetMat);
   // room dividing wall x=0 between the two ground rooms (z[-20,-11])
   wallZ(0,-20,-11,[-16,-14],creamMat,H1);
   // ground room floors
-  floorSlab(-6,-15.5,11,9, 0, mat(0x8a5a3e,.85));
-  floorSlab( 6,-15.5,11,9, 0, mat(0x7d5a44,.85));
+  floorSlab(-6,-15.5,11,9, 0.06, roomMat);
+  floorSlab( 6,-15.5,11,9, 0.06, roomMat);
 
   /* ---------------- UPPER FLOOR: corridor + 2 rooms ---------------- */
   // outer upper walls (z=-8.5 front has railing; back/sides are the outer facade up to H2 already)
@@ -223,9 +238,9 @@
   // upper room divider x=0
   wallZ(0,-20,-11,[-16,-14],creamMat,H1,FH);
   // upper room/corridor floors already covered by slab top; add carpet upper corridor
-  floorSlab(0,-9.6,24,2.0, FH, carpetMat);
-  floorSlab(-6,-15.5,11,8.5, FH, mat(0x8a5a3e,.85));
-  floorSlab( 6,-15.5,11,8.5, FH, mat(0x7d5a44,.85));
+  floorSlab(0,-9.6,24,2.0, FH+0.06, carpetMat);
+  floorSlab(-6,-15.5,11,8.5, FH+0.06, roomMat);
+  floorSlab( 6,-15.5,11,8.5, FH+0.06, roomMat);
   // simple ceiling over upper rooms is the roof (H2)
 
   /* ---------------- RECEPTION DESK + RECEPTIONIST ---------------- */
@@ -237,7 +252,7 @@
     var top2=box(1.6,0.12,3.2,mat(PAL.dark,.3,.1)); top2.position.set(-3.1,1.16,1.4); g.add(top2);
     var front=box(5,0.9,0.06,goldMat); front.position.set(0,0.6,0.66); g.add(front);
     var board=box(4.4,2.0,0.14,woodDarkMat); board.position.set(0,2.0,-1.0); g.add(board);
-    var logoT=canvasTex(512,function(ctx,s){ ctx.clearRect(0,0,s,s); ctx.font='bold 50px Georgia,serif'; ctx.textAlign='center'; ctx.fillStyle='#e2a93e'; ctx.fillText('RECEPCIÓN',s/2,s*0.5); });
+    var logoT=labelTex('RECEPCIÓN',640,256,'#e2a93e');
     var logo=new THREE.Mesh(new THREE.PlaneGeometry(3.6,1.3), new THREE.MeshStandardMaterial({map:logoT,transparent:true,emissive:0xe2a93e,emissiveIntensity:.4,emissiveMap:logoT})); logo.position.set(0,2.1,-0.9); g.add(logo);
     var bell=new THREE.Mesh(new THREE.SphereGeometry(0.14,16,12,0,Math.PI*2,0,Math.PI/2),goldMat); bell.position.set(1.6,1.27,0.2); g.add(bell);
     g.position.set(-7.5,0,-6.5); g.traverse(function(o){o.castShadow=true;o.receiveShadow=true;}); world.add(g);
@@ -523,8 +538,13 @@
   var aIdx=0, aPhase='move', aT=0, aTimer=0, panelShown=false;
   var aStart=new THREE.Vector3(); var dummy=new THREE.Object3D();
   var desired=new THREE.Vector3(), subj=new THREE.Vector3(), aheadV=new THREE.Vector3();
+  var FWD=new THREE.Vector3(), DIR=new THREE.Vector3(), dwellEl=0;
   var DRIFT=new THREE.Quaternion(), EU=new THREE.Euler();
   function easeIO(t){ return t<0.5?2*t*t:1-Math.pow(-2*t+2,2)/2; }
+  // set manual yaw/pitch so the camera looks from `pos` toward `tx,ty,tz`
+  // (explicit formula — avoids the 180° flip of quaternion->euler decomposition)
+  function aimAt(pos, tx, ty, tz){ DIR.set(tx-pos.x, ty-pos.y, tz-pos.z).normalize();
+    pitch=Math.asin(Math.max(-1,Math.min(1,DIR.y))); yaw=Math.atan2(-DIR.x,-DIR.z); }
   function resolveAuto(p){ for(var i=0;i<WALLS.length;i++){ var w=WALLS[i];
     if(p.x>w.x1-R&&p.x<w.x2+R&&p.z>w.z1-R&&p.z<w.z2+R){ var dl=p.x-(w.x1-R),drr=(w.x2+R)-p.x,dtt=p.z-(w.z1-R),dbb=(w.z2+R)-p.z; var m=Math.min(dl,drr,dtt,dbb);
       if(m===dl)p.x=w.x1-R; else if(m===drr)p.x=w.x2+R; else if(m===dtt)p.z=w.z1-R; else p.z=w.z2+R; } } }
@@ -540,32 +560,34 @@
     document.getElementById('autoBtn').classList.remove('is-on');
     document.getElementById('autoLbl').textContent=tr('auto');
     document.getElementById('startAutoLbl').textContent=tr('watch');
-    var e=new THREE.Euler().setFromQuaternion(camera.quaternion,'YXZ'); yaw=e.y; pitch=e.x; }
+    camera.getWorldDirection(FWD); pitch=Math.asin(Math.max(-1,Math.min(1,FWD.y))); yaw=Math.atan2(-FWD.x,-FWD.z); }
 
   function updateAuto(dt,time){
     var w=WP[aIdx]; var tp=w.p;
+    // ALWAYS aim at this waypoint's subject — the camera turns toward it WHILE it
+    // walks, so it is already framed on arrival (it never presents before focusing).
+    subj.set(w.look[0],w.look[1],w.look[2]); desired.copy(subj);
     if(aPhase==='move'){
       var seg=Math.max(1.0, aStart.distanceTo(aheadV.set(tp[0],tp[1],tp[2]))/2.2);
       aT+=dt/seg; var k=easeIO(Math.min(aT,1));
       player.set(aStart.x+(tp[0]-aStart.x)*k, aStart.y+(tp[1]-aStart.y)*k, aStart.z+(tp[2]-aStart.z)*k);
-      // look ahead toward destination, then blend toward subject as we arrive
-      desired.set(tp[0],tp[1]-0.2,tp[2]);
-      subj.set(w.look[0],w.look[1],w.look[2]);
-      var blend=Math.max(0,(aT-0.5)/0.5); desired.lerp(subj,Math.min(blend,1));
-      if(aT>=1){ aPhase='dwell'; aTimer=w.d; panelShown=false; }
+      if(aT>=1){ aPhase='dwell'; aTimer=w.d; panelShown=false; dwellEl=0; }
     } else {
-      desired.set(w.look[0],w.look[1],w.look[2]);
-      aTimer-=dt;
-      if(!panelShown && aTimer < w.d-0.5){ if(w.infoObj) openInspect(w.infoObj); else closeInspect(); panelShown=true; }
+      aTimer-=dt; dwellEl+=dt;
       if(aTimer<=0){ aPhase='move'; aT=0; aStart.copy(player); aIdx=(aIdx+1)%WP.length; closeInspect(); }
     }
     resolveAuto(player);
-    var bob=Math.sin(time*4.4)*0.025;
+    var bob=Math.sin(time*4.4)*0.022;
     camera.position.set(player.x,player.y+bob,player.z);
     dummy.position.copy(camera.position); dummy.lookAt(desired.x,desired.y,desired.z);
-    var dyaw=Math.sin(time*0.5)*0.04+Math.sin(time*0.17)*0.02, dpitch=Math.sin(time*0.72)*0.02;
+    var dyaw=Math.sin(time*0.5)*0.03+Math.sin(time*0.17)*0.015, dpitch=Math.sin(time*0.72)*0.015;
     DRIFT.setFromEuler(EU.set(dpitch,dyaw,0,'YXZ')); dummy.quaternion.multiply(DRIFT);
-    camera.quaternion.slerp(dummy.quaternion, 1-Math.pow(0.0009,dt));
+    camera.quaternion.slerp(dummy.quaternion, Math.min(1, dt*5));
+    // open the description ONLY once the camera is truly pointing at the subject
+    if(aPhase==='dwell' && !panelShown && dwellEl>0.15){
+      camera.getWorldDirection(FWD); DIR.copy(subj).sub(camera.position).normalize();
+      if(FWD.dot(DIR) > 0.97){ if(w.infoObj) openInspect(w.infoObj); panelShown=true; }
+    }
   }
 
   /* ---------------- manual update ---------------- */
@@ -660,7 +682,8 @@
     function enterPlay(){ startScreen.classList.add('is-hidden'); setTimeout(function(){startScreen.style.display='none';},650); hideHintSoon(); }
     if(q.get('auto')==='1'){ startScreen.classList.add('is-hidden'); setTimeout(function(){startScreen.style.display='none';},650); startAuto(); }
     else if(q.get('view') && VIEWS[q.get('view')]){ var v=VIEWS[q.get('view')]; player.set(v.p[0],v.p[1],v.p[2]);
-      dummy.position.copy(player); dummy.lookAt(v.look[0],v.look[1],v.look[2]); var e=new THREE.Euler().setFromQuaternion(dummy.quaternion,'YXZ'); yaw=e.y; pitch=e.x; enterPlay(); }
+      aimAt(player, v.look[0],v.look[1],v.look[2]); enterPlay(); }
     else if(q.get('play')==='1'){ enterPlay(); }
+    else { startScreen.classList.add('is-hidden'); setTimeout(function(){startScreen.style.display='none';},650); startAuto(); }
   })();
 })();
