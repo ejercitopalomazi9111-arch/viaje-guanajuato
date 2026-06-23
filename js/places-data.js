@@ -66,8 +66,8 @@ window.PLACES_DATA = [
     city: 'Guanajuato', cityShort: 'Guanajuato',
     coords: [21.0144, -101.2557], img: 'assets/img/gto-pipila.jpg',
     short: 'Panoramic lookout — statue of the hero who set the Alhóndiga on fire in 1810.',
-    history: 'Inaugurated in 1939, this 28-meter pink-quarry statue honors <strong>Juan José de los Reyes Martínez, "El Pípila"</strong>, the young miner who —tying a flat stone to his back as a shield— set fire to the wooden door of the Alhóndiga de Granaditas, allowing the insurgents to take the building. The monument bears the inscription <em>"Aún hay otras Alhóndigas por incendiar"</em> ("There are still other Alhóndigas to burn"). From its base, the entire historic center unfolds below.',
-    highlights: ['28-meter monumental statue', 'Best panoramic view of Guanajuato', 'Accessible by funicular or stairway', 'Famous historical inscription on the pedestal'],
+    history: 'Inaugurated in 1939, this 28-metre pink-quarry statue honours <strong>Juan José de los Reyes Martínez, "El Pípila"</strong>, the young miner who —tying a flat stone to his back as a shield— set fire to the wooden door of the Alhóndiga de Granaditas, allowing the insurgents to take the building. The monument bears the inscription <em>"Aún hay otras Alhóndigas por incendiar"</em> ("There are still other Alhóndigas to burn"). From its base, the entire historic centre unfolds below.',
+    highlights: ['28-metre monumental statue', 'Best panoramic view of Guanajuato', 'Accessible by funicular or stairway', 'Famous historical inscription on the pedestal'],
     ticket: {
       url: 'https://guanajuato.travel/el-funicular-panoramico-de-guanajuato/',
       operator: 'Guanajuato Travel · Funicular Panorámico',
@@ -107,8 +107,8 @@ window.PLACES_DATA = [
     nameEn: 'Hidalgo Market',
     city: 'Guanajuato', cityShort: 'Guanajuato',
     coords: [21.0188, -101.2602], img: 'assets/img/gto-mercado.jpg',
-    short: 'Historic wrought-iron market opened in 1910 — gastronomy, crafts, and color.',
-    history: 'Inaugurated on September 16, 1910 to celebrate the centennial of the Independence, this market was built with a metal structure imported from <strong>France</strong> —the same style as the Eiffel Tower— and was originally planned as a railway station. Its 16-meter-high central clock and its mezzanine floor of artisan stalls make it one of the most photographed civic buildings in the state.',
+    short: 'Historic wrought-iron market opened in 1910 — gastronomy, crafts, and colour.',
+    history: 'Inaugurated on September 16, 1910 to celebrate the centennial of the Independence, this market was built with a metal structure imported from <strong>France</strong> —the same style as the Eiffel Tower— and was originally planned as a railway station. Its 16-metre-high central clock and its mezzanine floor of artisan stalls make it one of the most photographed civic buildings in the state.',
     highlights: ['French wrought-iron structure (1910)', 'Central tower with original 16 m clock', 'Two floors: food downstairs, crafts upstairs', 'Local specialties: enchiladas mineras, charamuscas'],
     ticket: {
       url: 'https://guanajuato.travel/spots/listing/mercado-hidalgo/',
@@ -122,7 +122,7 @@ window.PLACES_DATA = [
     city: 'Guanajuato', cityShort: 'Guanajuato',
     coords: [21.0341, -101.2516], img: 'assets/img/gto-valenciana.jpg',
     short: 'One of the most productive silver mines in the world in the 18th century. Baroque temple next door.',
-    history: 'Discovered in 1768 by Antonio Obregón y Alcocer, this mine became the largest silver producer in colonial New Spain —at its peak it produced two-thirds of all the silver in the world. The main shaft, the <em>Tiro de San Cayetano</em>, descends more than 500 meters. Next to it stands the <strong>Templo de San Cayetano</strong>, a Churrigueresque jewel financed entirely with the mine\'s silver, with three altarpieces covered in 23-karat gold leaf.',
+    history: 'Discovered in 1768 by Antonio Obregón y Alcocer, this mine became the largest silver producer in colonial New Spain —at its peak it produced two-thirds of all the silver in the world. The main shaft, the <em>Tiro de San Cayetano</em>, descends more than 500 metres. Next to it stands the <strong>Templo de San Cayetano</strong>, a Churrigueresque jewel financed entirely with the mine\'s silver, with three altarpieces covered in 23-karat gold leaf.',
     highlights: ['Original 500 m mine shaft', 'Templo de San Cayetano with three gold altarpieces', 'Guided tours into the mining tunnels', 'Old miners\' tools and explosives exhibition'],
     ticket: {
       url: 'https://valenciana1791.webnode.es/',

@@ -17,7 +17,9 @@ kbd{font-family:'JetBrains Mono',monospace;font-size:.68rem;display:inline-flex;
   background:rgba(239,227,208,.1);border:1px solid var(--line);border-radius:5px;
   box-shadow:0 1px 0 rgba(0,0,0,.4)}
 
-#scene{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:none}
+#scene{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:default}
+/* hide the OS cursor only while actively pointer-locked (playing) */
+body.is-locked, body.is-locked #scene{cursor:none}
 
 /* ---- Crosshair ---- */
 .crosshair{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);

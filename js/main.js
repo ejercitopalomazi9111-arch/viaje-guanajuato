@@ -5,7 +5,7 @@
 
 /* ============= QR CODE HELPER =============
    Renders a QR via api.qrserver.com (no JS library needed).
-   Colors match the site palette (ink on paper).
+   Colours match the site palette (ink on paper).
 */
 function qrUrl(targetUrl, size = 220) {
   const params = new URLSearchParams({
@@ -37,7 +37,7 @@ const SUBJECTS = [
     status: 'ready',
     content: `
       <h4>Documentary video</h4>
-      <p>Filmed and edited during the expedition. It explores the chemistry of the silver mines around Valenciana —oxidation of metals, sulfide ores— and the biology of the Hidalgo Market produce, with field observations from the historic center of Guanajuato.</p>
+      <p>Filmed and edited during the expedition. It explores the chemistry of the silver mines around Valenciana —oxidation of metals, sulfide ores— and the biology of the Hidalgo Market produce, with field observations from the historic centre of Guanajuato.</p>
       <div class="video-embed">
         <iframe
           src="https://www.youtube.com/embed/91Np4m9tDXg"
@@ -130,12 +130,12 @@ const SUBJECTS = [
     teacher: 'Prof. Patricia Martínez',
     placeIds: [8, 7],
     tagline: 'Poster and photo-montage of the trip',
-    body: '<p>Create a <strong>digital poster/banner</strong> and a <strong>creative photo-montage</strong> based on the experience of the trip. Evaluated criteria: composition, color, typography, creativity, editing, and command of Canva / Photoshop.</p>',
+    body: '<p>Create a <strong>digital poster/banner</strong> and a <strong>creative photo-montage</strong> based on the experience of the trip. Evaluated criteria: composition, colour, typography, creativity, editing, and command of Canva / Photoshop.</p>',
     tags: ['Digital poster', 'Photo-montage', 'Adobe / Canva'],
     status: 'ready',
     content: `
       <h4>Photo-montage poster</h4>
-      <p>Vertical composition built around the great stone arch of Guanajuato, with framed insets of El Pípila, the Basilica of Valenciana, a walk through the historic center, the Plaza de Dolores and a portrait scene labelled <em>Mystical Stories</em>. The tagline <strong>"EXPLORE · CAPTURE · REMEMBER"</strong> ties the design to the trip's narrative.</p>
+      <p>Vertical composition built around the great stone arch of Guanajuato, with framed insets of El Pípila, the Basilica of Valenciana, a walk through the historic centre, the Plaza de Dolores and a portrait scene labelled <em>Mystical Stories</em>. The tagline <strong>"EXPLORE · CAPTURE · REMEMBER"</strong> ties the design to the trip's narrative.</p>
       <figure class="poster-figure">
         <img src="assets/img/cartel-multimedia.jpg" alt="Photo-montage poster — Unforgettable Journey Through Guanajuato" loading="lazy">
         <figcaption>Photo-montage · Unforgettable Journey Through Guanajuato</figcaption>
@@ -143,7 +143,7 @@ const SUBJECTS = [
       <h4>Design choices</h4>
       <ul>
         <li><strong>Composition:</strong> a hero arch as background unifies the frame; smaller insets create visual rhythm.</li>
-        <li><strong>Color:</strong> warm sandstone, ochres and a deep red accent — consistent with the Guanajuato palette of the site.</li>
+        <li><strong>Colour:</strong> warm sandstone, ochres and a deep red accent — consistent with the Guanajuato palette of the site.</li>
         <li><strong>Typography:</strong> uppercase serif headings for monumentality, contrasted with a thin all-caps tagline.</li>
         <li><strong>Editing technique:</strong> isolated cut-outs with shaped frames, drop shadow, and a paper-texture base layer.</li>
       </ul>
@@ -199,9 +199,9 @@ const SUBJECTS = [
       <h4>Exploring Guanajuato · A STEAM Journey</h4>
       <p><strong>Science · </strong> The mummies of Guanajuato, naturally preserved by the dry mineral-rich soil, teach us about <em>desiccation, halophilic bacteria</em>, and the chemistry of preservation. The silver mines around Valenciana show us the oxidation of metals and the geology of the Sierra de Guanajuato.</p>
       <p><strong>Technology · </strong> The underground tunnel network —once a drainage system for floods, now a road system— is a fascinating example of <em>hydraulic engineering</em>. The Hidalgo Market, with its iron structure imported from France, shows the technology transfer of the early 20th century.</p>
-      <p><strong>Engineering · </strong> The Valenciana mine descends more than 500 meters underground. Its shaft, pumps, and ventilation system represent one of the most advanced mining engineering feats of the colonial era.</p>
+      <p><strong>Engineering · </strong> The Valenciana mine descends more than 500 metres underground. Its shaft, pumps, and ventilation system represent one of the most advanced mining engineering feats of the colonial era.</p>
       <p><strong>Arts · </strong> Baroque Churrigueresque architecture (Templo de la Compañía, Valenciana), the gold-leaf interiors, and the Cervantes Festival held in Teatro Juárez every October all show how Guanajuato lives <em>between past and present art</em>.</p>
-      <p><strong>Mathematics · </strong> The labyrinthine layout of the historic center, the perfect cone of the Pípila viewpoint, and the geometric tiles inside the Basílica Colegiata are exercises in geometry and proportion.</p>
+      <p><strong>Mathematics · </strong> The labyrinthine layout of the historic centre, the perfect cone of the Pípila viewpoint, and the geometric tiles inside the Basílica Colegiata are exercises in geometry and proportion.</p>
       <h4>Key vocabulary</h4>
       <p><em>silver mining</em> · <em>cobblestone alley</em> · <em>UNESCO World Heritage</em> · <em>colonial architecture</em> · <em>Baroque facade</em> · <em>underground tunnels</em> · <em>independence movement</em> · <em>mining shaft</em></p>
       <blockquote>"In Guanajuato, every stone tells a story that started 500 years ago and continues today."</blockquote>
@@ -222,7 +222,7 @@ const SUBJECTS = [
       <h4>Miguel Hidalgo y Costilla <span class="bio-dates">1753 — 1811</span></h4>
       <p>Priest and military leader, born on the Corralejo Estate, Pénjamo, Guanajuato. He was parish priest of Dolores from 1803, where he encouraged agricultural, industrial, and cultural activities forbidden by the Spanish Crown (pottery, vineyards, sericulture). At dawn on <strong>September 16, 1810</strong>, he rang the bells of the parish and gave the <em>Grito de Dolores</em>, calling the people to fight for independence. He led an insurgent army that took San Miguel el Grande, Celaya, and the Alhóndiga de Granaditas. He was captured at Acatita de Baján and executed in Chihuahua in 1811.</p>
       <h4>Ignacio Allende <span class="bio-dates">1769 — 1811</span></h4>
-      <p>Creole military officer born in San Miguel el Grande (today San Miguel de Allende). Captain of the Queen\'s Regiment, he joined the Querétaro conspiracy and brought the military discipline the movement needed. He was a <strong>key strategist</strong> of the first campaigns. He was captured together with Hidalgo and executed in Chihuahua. His name today honors the city that saw him born.</p>
+      <p>Creole military officer born in San Miguel el Grande (today San Miguel de Allende). Captain of the Queen\'s Regiment, he joined the Querétaro conspiracy and brought the military discipline the movement needed. He was a <strong>key strategist</strong> of the first campaigns. He was captured together with Hidalgo and executed in Chihuahua. His name today honours the city that saw him born.</p>
       <h4>The Grito de Dolores · September 16, 1810</h4>
       <p>In the early hours of that Sunday, Hidalgo summoned the people of Dolores with the ringing of bells. From the atrium of the <em>Parish of Our Lady of Sorrows</em>, he addressed the crowd with cheers for independence, for the Virgin of Guadalupe, and death to bad government. It is the founding act of the Mexican nation.</p>
       <h4>The Storming of the Alhóndiga de Granaditas · September 28, 1810</h4>
