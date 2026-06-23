@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Posada Rembrandt · Virtual Hotel Tour — Feria de Ciencias</title>
+<meta name="theme-color" content="#161013">
+<meta name="description" content="Recorrido virtual 3D de un hotel — explora con WASD, inspecciona componentes y graba un video. Proyecto STEAM · Instituto Rembrandt.">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Space+Grotesk:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/hotel.css">
+</head>
+<body>
+
+  <canvas id="scene"></canvas>
+
+  <!-- Crosshair -->
+  <div id="crosshair" class="crosshair" aria-hidden="true"><span></span></div>
+
+  <!-- Interact prompt -->
+  <div id="prompt" class="prompt" hidden>
+    <kbd>E</kbd> <span id="promptText">Inspect</span>
+  </div>
+
+  <!-- HUD top bar -->
+  <header class="hud-top">
+    <a class="hud-brand" href="index.html" title="Volver al sitio / Back to site">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+      <span id="backLbl">Back to site</span>
+    </a>
+    <div class="hud-title">
+      <strong>Posada Rembrandt</strong>
+      <em id="hudSub">Virtual Hotel Tour · 3D</em>
+    </div>
+    <div class="hud-actions">
+      <button class="hud-btn" id="autoBtn" type="button"><span class="hud-btn__ic">▶</span><span id="autoLbl">Auto tour</span></button>
+      <button class="hud-btn" id="recBtn" type="button"><span class="rec-dot"></span><span id="recLbl">Record</span></button>
+      <button class="hud-btn hud-btn--ghost" id="langBtn" type="button">ES</button>
+    </div>
+  </header>
+
+  <!-- Controls hint -->
+  <div class="hud-hint" id="hudHint">
+    <span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> <i id="hintMove">move</i></span>
+    <span><kbd>Mouse</kbd> <i id="hintLook">look around</i></span>
+    <span><kbd>E</kbd> / <kbd>Click</kbd> <i id="hintInspect">inspect</i></span>
+    <span><kbd>Shift</kbd> <i id="hintRun">run</i></span>
+  </div>
+
+  <!-- Inspect panel -->
+  <aside id="inspect" class="inspect" hidden>
+    <button class="inspect__close" id="inspectClose" aria-label="Close">&times;</button>
+    <span class="inspect__tag mono" id="inspectTag">COMPONENT</span>
+    <h2 class="inspect__title" id="inspectTitle">—</h2>
+    <p class="inspect__desc" id="inspectDesc">—</p>
+    <div class="inspect__note" id="inspectNote"></div>
+  </aside>
+
+  <!-- Start overlay -->
+  <div id="startScreen" class="start">
+    <div class="start__card">
+      <span class="start__eyebrow mono">STEAM · Tecnología · 3D</span>
+      <h1 class="start__title">Posada <em>Rembrandt</em></h1>
+      <p class="start__lead" id="startLead">An interactive 3D hotel you can walk through. Move with the keyboard, look with the mouse, and inspect every component. Or let the automatic tour drive — and record it as a video.</p>
+      <button class="start__btn" id="startBtn" data-magnetic>
+        <span id="startBtnLbl">Click to enter</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+      <div class="start__row">
+        <button class="start__alt" id="startAuto">▶ <span id="startAutoLbl">Watch auto tour</span></button>
+      </div>
+      <div class="start__loading" id="loading"><span></span> <em id="loadingLbl">Building the hotel…</em></div>
+    </div>
+  </div>
+
+  <!-- REC indicator -->
+  <div id="recIndicator" class="rec-indicator" hidden><span class="rec-dot"></span> REC</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="js/hotel.js"></script>
+</body>
+</html>

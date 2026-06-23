@@ -48,6 +48,8 @@
     <li><a href="#map" data-i18n="navMap">Map</a></li>
     <li><a href="#places" data-i18n="navPlaces">Places</a></li>
     <li><a href="#asignaturas" data-i18n="navSubjects">Subjects</a></li>
+    <li><a href="#women-steam" data-i18n="navWomen">Women in STEAM</a></li>
+    <li><a href="hotel.html" data-i18n="navHotel">Hotel 3D</a></li>
     <li><a href="#galeria" data-i18n="navGallery">Gallery</a></li>
     <li><a href="feria.html" data-i18n="navFair">Tour · QR</a></li>
     <li><a href="videoblog.html">Videoblog</a></li>
@@ -397,6 +399,93 @@
       </p>
     </header>
     <div class="subject-list" id="subjectSections"></div>
+  </div>
+</section>
+
+<!-- WOMEN IN STEAM · Katherine Johnson -->
+<section id="women-steam" class="wsteam">
+  <div class="container">
+    <header class="section-head">
+      <span class="label rv" data-i18n="wsLabel">Women in STEAM</span>
+      <h2 class="section-title rv d1" data-i18n="wsTitle">
+        The minds<br>behind the <em>numbers</em>.
+      </h2>
+      <p class="section-lead rv d2" data-i18n="wsLead">
+        STEAM is not only about places and tools — it is about the people who made science possible. This short film honors Katherine Johnson and the women who fought their way into laboratories, agencies, and history.
+      </p>
+    </header>
+
+    <div class="wsteam__grid rv d2">
+      <figure class="wsteam__video">
+        <video id="wsVideo" controls preload="none" playsinline
+               poster="assets/img/mujeres-steam-poster.jpg">
+          <source src="assets/video/mujeres-steam.mp4" type="video/mp4">
+        </video>
+        <figcaption class="wsteam__cap mono" data-i18n="wsCaption">The Katherine Johnson Legacy · Women in STEAM</figcaption>
+      </figure>
+
+      <div class="wsteam__copy">
+        <span class="wsteam__kicker mono" data-i18n="wsKicker">1918 — 2020 · NASA</span>
+        <h3 class="wsteam__name" data-i18n="wsName">Katherine Johnson</h3>
+        <p data-i18n="wsBody1">
+          Katherine Johnson was an African-American mathematician at <strong>NASA</strong> whose hand-calculated orbital trajectories made human spaceflight possible. She computed the path for the first American in space and verified the numbers for John Glenn's orbit around the Earth — by his own request, because he trusted her math over the new computers.
+        </p>
+        <p data-i18n="wsBody2">
+          She did it while facing the barriers of racial segregation and a field that did not expect women. Her story — told in <em>Hidden Figures</em> — is why this expedition closes with her: the <strong>A</strong> in STEAM is also for the <em>courage</em> it takes to belong where you were told you could not.
+        </p>
+        <ul class="wsteam__facts">
+          <li><span class="wsteam__facts-n">3</span><span data-i18n="wsFact1">space missions her calculations made possible</span></li>
+          <li><span class="wsteam__facts-n">2015</span><span data-i18n="wsFact2">Presidential Medal of Freedom</span></li>
+          <li><span class="wsteam__facts-n">33</span><span data-i18n="wsFact3">years breaking barriers at NASA</span></li>
+        </ul>
+        <blockquote class="wsteam__quote" data-i18n="wsQuote">
+          "We will always have STEM with us. Some things will drop out of the public eye and go away, but there will always be science, engineering, and technology."
+        </blockquote>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOTEL 3D VIRTUAL TOUR -->
+<section id="hotel3d" class="hotel-cta">
+  <div class="container">
+    <header class="section-head">
+      <span class="label rv" data-i18n="htLabel">Technology · Interactive 3D</span>
+      <h2 class="section-title rv d1" data-i18n="htTitle">
+        Walk through a hotel<br>that <em>doesn't exist</em>.
+      </h2>
+      <p class="section-lead rv d2" data-i18n="htLead">
+        A real-time 3D model of a hotel, built in the browser with Three.js. Move with WASD, look with the mouse, and inspect every component — or let the automatic tour drive itself and record it as a video.
+      </p>
+    </header>
+
+    <a class="hotel-cta__card rv d2" href="hotel.html">
+      <div class="hotel-cta__glow" aria-hidden="true"></div>
+      <div class="hotel-cta__body">
+        <span class="hotel-cta__tag mono" data-i18n="htTag">POSADA REMBRANDT · 3D ENGINE</span>
+        <h3 class="hotel-cta__name">Posada <em>Rembrandt</em></h3>
+        <p class="hotel-cta__desc" data-i18n="htDesc">Lobby, reception, chandelier, guest room, pool and façade — fully explorable in first person.</p>
+        <div class="hotel-cta__features">
+          <span class="hotel-cta__feat"><b>WASD</b> <span data-i18n="htF1">free movement</span></span>
+          <span class="hotel-cta__feat"><b>E</b> <span data-i18n="htF2">inspect parts</span></span>
+          <span class="hotel-cta__feat"><b>▶</b> <span data-i18n="htF3">auto tour</span></span>
+          <span class="hotel-cta__feat"><b>●</b> <span data-i18n="htF4">record video</span></span>
+        </div>
+        <span class="hotel-cta__btn" data-i18n="htBtn">
+          Enter the 3D tour
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </div>
+      <div class="hotel-cta__art" aria-hidden="true">
+        <div class="hotel-cta__bld">
+          <span class="hotel-cta__sign">POSADA REMBRANDT</span>
+          <div class="hotel-cta__win"></div><div class="hotel-cta__win"></div>
+          <div class="hotel-cta__win"></div><div class="hotel-cta__win"></div>
+          <div class="hotel-cta__win"></div><div class="hotel-cta__win"></div>
+          <div class="hotel-cta__door"></div>
+        </div>
+      </div>
+    </a>
   </div>
 </section>
 

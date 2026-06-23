@@ -1654,3 +1654,79 @@ section { position: relative; padding: clamp(2.5rem, 5vw, 6rem) 0; }
   *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
   html { scroll-behavior: auto; }
 }
+
+/* =========================================================
+   WOMEN IN STEAM (Katherine Johnson) + HOTEL 3D CTA
+   ========================================================= */
+.wsteam { padding: clamp(3.5rem, 8vw, 7rem) 0; background:
+  radial-gradient(120% 80% at 80% 0%, rgba(226,169,62,.06), transparent 60%); }
+.wsteam__grid { display:grid; grid-template-columns: 1.1fr .9fr; gap: clamp(1.5rem,4vw,3.5rem);
+  align-items:center; margin-top: clamp(1.5rem,4vw,3rem); }
+.wsteam__video { position:relative; margin:0; border-radius:16px; overflow:hidden;
+  border:1px solid var(--b2); box-shadow: 0 30px 70px rgba(0,0,0,.5);
+  background:#0c0809; aspect-ratio:16/9; }
+.wsteam__video video { width:100%; height:100%; display:block; object-fit:cover; background:#0c0809; }
+.wsteam__cap { position:absolute; left:0; right:0; bottom:0; padding:14px 16px; font-size:var(--xs);
+  letter-spacing:.16em; text-transform:uppercase; color:var(--tx-2);
+  background:linear-gradient(0deg, rgba(12,8,9,.85), transparent); pointer-events:none; }
+.wsteam__kicker { font-size:var(--xs); letter-spacing:.22em; text-transform:uppercase; color:var(--gold); }
+.wsteam__name { font-family:var(--serif); font-weight:700; font-size:var(--xl); line-height:1.04;
+  margin:.3rem 0 1rem; }
+.wsteam__copy p { color:var(--tx-2); font-size:var(--md); line-height:1.72; margin-bottom:1rem; }
+.wsteam__copy strong { color:var(--tx); } .wsteam__copy em { color:var(--gold-l); font-style:italic; }
+.wsteam__facts { list-style:none; padding:0; margin:1.5rem 0; display:grid;
+  grid-template-columns:repeat(3,1fr); gap:1rem; border-top:1px solid var(--b2);
+  border-bottom:1px solid var(--b2); padding:1.2rem 0; }
+.wsteam__facts li { display:flex; flex-direction:column; gap:.3rem; }
+.wsteam__facts-n { font-family:var(--serif); font-weight:700; font-size:1.9rem; color:var(--gold); line-height:1; }
+.wsteam__facts li span:last-child { font-size:var(--xs); color:var(--tx-3); line-height:1.4; }
+.wsteam__quote { font-family:var(--serif); font-style:italic; font-size:var(--lg); line-height:1.4;
+  color:var(--tx); border-left:3px solid var(--gold); padding-left:1.1rem; margin:1.2rem 0 0; }
+@media (max-width:860px){ .wsteam__grid { grid-template-columns:1fr; }
+  .wsteam__facts { grid-template-columns:1fr; gap:.7rem; } }
+
+/* ---- HOTEL 3D CTA ---- */
+.hotel-cta { padding: clamp(3rem,7vw,6rem) 0 clamp(4rem,9vw,8rem); }
+.hotel-cta__card { position:relative; display:grid; grid-template-columns:1.05fr .95fr;
+  gap:0; margin-top:clamp(1.5rem,4vw,3rem); text-decoration:none; color:inherit;
+  border:1px solid var(--b2); border-radius:20px; overflow:hidden; isolation:isolate;
+  background:linear-gradient(150deg, var(--bg-3), var(--bg-2));
+  transition:transform var(--mid) var(--ease), border-color var(--mid), box-shadow var(--mid); }
+.hotel-cta__card:hover { transform:translateY(-4px); border-color:var(--gold-b);
+  box-shadow:0 40px 90px rgba(0,0,0,.55); }
+.hotel-cta__glow { position:absolute; inset:0; z-index:-1; opacity:0; transition:opacity var(--mid);
+  background:radial-gradient(60% 80% at 75% 50%, rgba(226,169,62,.18), transparent 70%); }
+.hotel-cta__card:hover .hotel-cta__glow { opacity:1; }
+.hotel-cta__body { padding: clamp(1.6rem,4vw,3rem); display:flex; flex-direction:column; gap:.7rem; justify-content:center; }
+.hotel-cta__tag { font-size:var(--xs); letter-spacing:.2em; color:var(--gold); }
+.hotel-cta__name { font-family:var(--serif); font-weight:700; font-size:var(--2xl); line-height:.98; margin:.2rem 0; }
+.hotel-cta__name em { font-style:italic; color:var(--gold); }
+.hotel-cta__desc { color:var(--tx-2); font-size:var(--md); line-height:1.6; max-width:42ch; }
+.hotel-cta__features { display:flex; flex-wrap:wrap; gap:.5rem; margin:.5rem 0 .3rem; }
+.hotel-cta__feat { display:inline-flex; align-items:center; gap:.4rem; font-size:var(--xs);
+  color:var(--tx-2); padding:.4rem .7rem; border:1px solid var(--b2); border-radius:999px;
+  background:rgba(246,239,226,.03); }
+.hotel-cta__feat b { font-family:var(--mono); color:var(--gold-l); }
+.hotel-cta__btn { display:inline-flex; align-items:center; gap:.5rem; margin-top:1rem; align-self:flex-start;
+  font-weight:600; color:var(--bg); background:var(--gold); padding:.85rem 1.4rem; border-radius:999px;
+  transition:gap var(--fast), background var(--fast); }
+.hotel-cta__card:hover .hotel-cta__btn { gap:.85rem; background:var(--gold-l); }
+/* CSS hotel illustration */
+.hotel-cta__art { position:relative; min-height:300px; overflow:hidden;
+  background:linear-gradient(180deg, #2a3a47 0%, #44525c 55%, #7a6a52 55%, #93805f 100%); }
+.hotel-cta__bld { position:absolute; left:50%; bottom:0; transform:translateX(-50%);
+  width:62%; height:78%; background:linear-gradient(180deg,#cba876,#b08f5e);
+  border:3px solid #8a6f48; border-bottom:none; border-radius:8px 8px 0 0;
+  display:grid; grid-template-columns:repeat(3,1fr); gap:14% 12%; padding:34% 12% 12%;
+  box-shadow:0 20px 50px rgba(0,0,0,.4); }
+.hotel-cta__sign { position:absolute; top:9%; left:0; right:0; text-align:center;
+  font-family:var(--mono); font-size:.6rem; letter-spacing:.12em; color:var(--gold);
+  text-shadow:0 0 8px rgba(226,169,62,.6); }
+.hotel-cta__win { background:#2a2230; border:2px solid #8a6f48; border-radius:2px;
+  box-shadow:inset 0 0 8px rgba(255,217,138,.55); aspect-ratio:3/4; }
+.hotel-cta__win:nth-child(odd){ box-shadow:inset 0 0 10px rgba(255,217,138,.85); }
+.hotel-cta__door { position:absolute; bottom:0; left:50%; transform:translateX(-50%);
+  width:20%; height:24%; background:#3a2a20; border:2px solid #8a6f48; border-bottom:none;
+  border-radius:40% 40% 0 0; }
+@media (max-width:760px){ .hotel-cta__card { grid-template-columns:1fr; }
+  .hotel-cta__art { min-height:200px; order:-1; } }
