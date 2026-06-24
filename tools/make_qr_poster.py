@@ -7,16 +7,16 @@ from PIL import Image, ImageDraw, ImageFont
 
 BASE = "https://ejercitopalomazi9111-arch.github.io/viaje-guanajuato/"
 
-FEATURE = ("RECORRIDO 3D · INTERACTIVO", "Hotel Virtual 3D",
-           "Camina con WASD e inspecciona · Posada Rembrandt", "hotel.html")
+FEATURE = ("3D TOUR · INTERACTIVE", "Virtual Hotel 3D",
+           "Walk in WASD and inspect · Posada Rembrandt", "hotel.html")
 
 ITEMS = [
-    ("VIDEOBLOG · ≈10 MIN", "Videoblog del Viaje", "Crónica en video de la expedición", "videoblog.html",          False),
-    ("MUJERES EN STEAM",   "Katherine Johnson",   "Las mentes detrás de los números", "index.html#women-steam",   False),
-    ("MAQUETA · INICIO",   "Mina La Valenciana",  "Maqueta física · vista orbital",   "feria.html?stop=mina",     True),
-    ("MAQUETA · FINAL",    "Monumento al Pípila", "Maqueta física · vista orbital",   "feria.html?stop=pipila",   True),
-    ("ESTACIÓN",           "El Jardín",           "Hierbas regadas con el lavabo",    "jardin.html",              False),
-    ("RECORRIDO COMPLETO", "Mapa interactivo",    "Las 13 paradas del viaje",         "index.html",               False),
+    ("VIDEOBLOG · ~10 MIN", "Trip Videoblog",      "Video chronicle of the expedition", "videoblog.html",          False),
+    ("WOMEN IN STEAM",     "Katherine Johnson",   "The minds behind the numbers",      "index.html#women-steam",  False),
+    ("MODEL · START",      "Valenciana Mine",     "Physical model · orbital view",     "feria.html?stop=mina",    True),
+    ("MODEL · END",        "Monument to El Pipila","Physical model · orbital view",    "feria.html?stop=pipila",  True),
+    ("STATION",            "The Garden",          "Herbs watered with the sink",       "jardin.html",             False),
+    ("FULL TOUR",          "Interactive Map",     "The 13 stops of the journey",       "index.html",              False),
 ]
 
 # ---- Colores (negro / dorado / crema editorial) ----
@@ -68,9 +68,9 @@ except Exception as e:
     print("logo:", e)
 
 # Encabezado
-center(d, "INSTITUTO REMBRANDT · FERIA DE CIENCIAS", F_EYE, W/2, 212, GOLD)
-center(d, "Códigos QR del Recorrido", F_TITLE, W/2, 252, CARD)
-center(d, "Abre esta imagen en la laptop y escanea cada código con la cámara del celular.", F_SUB, W/2, 364, MUTED)
+center(d, "INSTITUTO REMBRANDT · SCIENCE FAIR", F_EYE, W/2, 212, GOLD)
+center(d, "Tour QR Codes", F_TITLE, W/2, 252, CARD)
+center(d, "Open this image on the laptop and scan each code with your phone camera.", F_SUB, W/2, 364, MUTED)
 
 margin = 90
 
@@ -84,7 +84,7 @@ tx = fx + 46 + fq + 56
 d.text((tx, fy+70),  FEATURE[0], font=F_TAG,  fill=GOLD_D)
 d.text((tx, fy+104), FEATURE[1], font=F_FEAT, fill=INK)
 d.text((tx, fy+196), FEATURE[2], font=F_SUB,  fill=MUTED)
-d.text((tx, fy+252), "▣  Escanea con la cámara para verlo", font=F_SCAN, fill=GOLD_D)
+d.text((tx, fy+252), "▣  Scan with your camera to watch it", font=F_SCAN, fill=GOLD_D)
 d.text((tx, fy+300), (BASE + FEATURE[3]).replace("https://", ""), font=F_URL, fill=(169,158,143))
 
 # ---- Rejilla 2x2: estaciones ----
@@ -107,10 +107,10 @@ for i, (tag, title, sub, path, is_model) in enumerate(ITEMS):
     qy = y + 62 + qr_px
     center(d, title, F_H1, cx, qy+12, INK)
     center(d, sub, F_SUB, cx, qy+60, MUTED)
-    center(d, "▣  Escanea con la cámara", F_SCAN, cx, qy+96, GOLD_D)
+    center(d, "▣  Scan with your camera", F_SCAN, cx, qy+96, GOLD_D)
     center(d, (BASE + path).replace("https://", ""), F_URL, cx, qy+136, (169,158,143))
 
-center(d, "Una sola hoja · tour 3D + 6 estaciones · " + BASE.replace("https://", ""), F_FOOT, W/2, H-86, MUTED)
+center(d, "One sheet · 3D tour + 6 stations · " + BASE.replace("https://", ""), F_FOOT, W/2, H-86, MUTED)
 
 out1 = r"C:\Users\ejerc\OneDrive\Desktop\Proyectos\Viaje Guanajuato Feria\qr\QR-Feria-de-Ciencias.png"
 out2 = r"C:\Users\ejerc\OneDrive\Desktop\QR Feria de Ciencias.png"

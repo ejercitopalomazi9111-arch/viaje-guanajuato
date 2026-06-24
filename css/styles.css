@@ -1475,6 +1475,9 @@ section { position: relative; padding: clamp(2.5rem, 5vw, 6rem) 0; }
 }
 .footer__motto em { font-style: normal; color: var(--gold); }
 .footer__bot { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+.footer__links { display: flex; flex-wrap: wrap; gap: 1.4rem; padding: 1.6rem 0; margin: 1.2rem 0; border-top: 1px solid var(--b1); border-bottom: 1px solid var(--b1); }
+.footer__links a { color: var(--tx-2); text-decoration: none; font: 500 .92rem/1 var(--sans); letter-spacing: .02em; transition: color .2s ease; }
+.footer__links a:hover { color: var(--gold); }
 
 /* ── MODAL ──────────────────────────────────────────────── */
 .modal {

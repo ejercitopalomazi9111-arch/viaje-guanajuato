@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Recorrido · Viaje a Guanajuato — Feria de Ciencias</title>
+<title>Virtual Tour · Journey to Guanajuato — Science Fair</title>
 <meta name="theme-color" content="#161013">
-<meta name="description" content="Recorrido virtual de la expedición a Guanajuato del Instituto Rembrandt — maquetas y paradas históricas.">
+<meta name="description" content="Virtual tour of Instituto Rembrandt's expedition to Guanajuato — physical models and historic stops.">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,8 +19,8 @@
     <a class="fr-brand" href="index.html">
       <img src="assets/img/logo_rembrandt.png" alt="Instituto Rembrandt" height="34">
     </a>
-    <span class="fr-kicker" id="fr-kicker">Feria de Ciencias · Recorrido virtual</span>
-    <button class="fr-lang" id="fr-lang" type="button" aria-label="Cambiar idioma">
+    <span class="fr-kicker" id="fr-kicker">Science Fair · Virtual tour</span>
+    <button class="fr-lang" id="fr-lang" type="button" aria-label="Switch language">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.7 2.5 15.3 0 18M12 3c-2.5 2.7-2.5 15.3 0 18"/></svg>
       <span>EN</span>
     </button>
@@ -30,11 +30,11 @@
     <div id="fr-stage" class="fr-stage"><!-- stop rendered here --></div>
 
     <section id="fr-end-panel" class="fr-end" hidden>
-      <p class="fr-end__sub" id="fr-end-sub">¡Gracias por recorrer la expedición!</p>
+      <p class="fr-end__sub" id="fr-end-sub">Thank you for exploring the expedition!</p>
       <div class="fr-end__links">
-        <a class="fr-end__btn" id="fr-video-link" href="videoblog.html">Ver el videoblog</a>
-        <a class="fr-end__btn fr-end__btn--ghost" id="fr-garden-link" href="jardin.html">Ver el jardín</a>
-        <a class="fr-end__btn fr-end__btn--ghost" id="fr-map-link" href="index.html">Ver mapa completo</a>
+        <a class="fr-end__btn" id="fr-video-link" href="videoblog.html">Watch the videoblog</a>
+        <a class="fr-end__btn fr-end__btn--ghost" id="fr-garden-link" href="jardin.html">See the garden</a>
+        <a class="fr-end__btn fr-end__btn--ghost" id="fr-map-link" href="index.html">View full map</a>
       </div>
     </section>
   </main>
@@ -42,16 +42,16 @@
   <nav class="fr-nav">
     <button class="fr-navbtn fr-navbtn--prev" id="fr-prev" type="button">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
-      <span>Anterior</span>
+      <span>Previous</span>
     </button>
 
     <div class="fr-progress">
       <div class="fr-dots" id="fr-dots"></div>
-      <span class="fr-progress__txt"><em id="fr-stop-lbl">Parada</em> <b id="fr-progress-now">1</b> <i id="fr-of">de</i> <b id="fr-progress-total">13</b></span>
+      <span class="fr-progress__txt"><em id="fr-stop-lbl">Stop</em> <b id="fr-progress-now">1</b> <i id="fr-of">of</i> <b id="fr-progress-total">13</b></span>
     </div>
 
     <button class="fr-navbtn fr-navbtn--next" id="fr-next" type="button">
-      <span>Siguiente destino</span>
+      <span>Next destination</span>
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
     </button>
   </nav>

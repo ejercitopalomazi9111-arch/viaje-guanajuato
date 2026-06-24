@@ -40,6 +40,7 @@
       of: 'de',
       mapLink: 'Ver mapa completo',
       gardenLink: 'Ver el jardín',
+      videoLink: 'Ver el videoblog',
       end: 'Fin del recorrido',
       endSub: '¡Gracias por recorrer la expedición!',
       official: 'Sitio oficial'
@@ -57,6 +58,7 @@
       of: 'of',
       mapLink: 'View full map',
       gardenLink: 'See the garden',
+      videoLink: 'Watch the videoblog',
       end: 'End of the tour',
       endSub: 'Thank you for exploring the expedition!',
       official: 'Official site'
@@ -185,6 +187,8 @@
     // End panel links
     document.getElementById('fr-map-link').textContent = t('mapLink');
     document.getElementById('fr-garden-link').textContent = t('gardenLink');
+    var vlink = document.getElementById('fr-video-link');
+    if (vlink) vlink.textContent = t('videoLink');
     document.getElementById('fr-end-panel').hidden = !isLast;
     document.getElementById('fr-end-sub').textContent = t('endSub');
 

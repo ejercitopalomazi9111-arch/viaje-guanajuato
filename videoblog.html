@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Videoblog del Viaje · Guanajuato — Feria de Ciencias</title>
+<title>Trip Videoblog · Guanajuato — Science Fair</title>
 <meta name="theme-color" content="#161013">
-<meta name="description" content="Videoblog de la expedición del Instituto Rembrandt a Guanajuato — crónica en video de ~10 minutos.">
+<meta name="description" content="Videoblog of Instituto Rembrandt's expedition to Guanajuato — a ~10-minute video chronicle.">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,7 +29,7 @@
     box-shadow: 0 30px 70px -30px rgba(0,0,0,.8), 0 0 0 4px rgba(226,169,62,.08); }
   .vb-player video { width: 100%; height: 100%; object-fit: cover; display: block; background: #000; }
 
-  /* Espacio "en proceso de subida" (visible hasta que exista el MP4) */
+  /* "Uploading" placeholder (visible until the MP4 exists) */
   .vb-soon { position: absolute; inset: 0; z-index: 4; display: flex; flex-direction: column;
     align-items: center; justify-content: center; gap: 14px; text-align: center; padding: 24px;
     background: linear-gradient(rgba(22,16,19,.55), rgba(22,16,19,.82)),
@@ -67,10 +67,10 @@
     <a class="fr-brand" href="index.html">
       <img src="assets/img/logo_rembrandt.png" alt="Instituto Rembrandt" height="34">
     </a>
-    <span class="fr-kicker">Feria de Ciencias · Videoblog</span>
+    <span class="fr-kicker">Science Fair · Videoblog</span>
     <a class="fr-lang" href="feria.html" style="text-decoration:none">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      <span>Recorrido</span>
+      <span>Tour</span>
     </a>
   </header>
 
@@ -78,12 +78,12 @@
     <div class="vb-wrap">
 
       <div class="vb-hero">
-        <span class="vb-eyebrow">Instituto Rembrandt · Expedición a Guanajuato</span>
-        <h1 class="vb-title">Videoblog del <em>Viaje</em></h1>
-        <p class="vb-sub">La crónica en video de la expedición: lo que vivimos, aprendimos y descubrimos en las calles y monumentos de Guanajuato.</p>
+        <span class="vb-eyebrow">Instituto Rembrandt · Expedition to Guanajuato</span>
+        <h1 class="vb-title">Trip <em>Videoblog</em></h1>
+        <p class="vb-sub">The video chronicle of the expedition: what we lived, learned and discovered in the streets and monuments of Guanajuato.</p>
         <div class="vb-meta">
-          <span class="vb-chip">▶ Duración ≈ 10 min</span>
-          <span class="vb-chip">🎬 Crónica del viaje</span>
+          <span class="vb-chip">▶ Length ≈ 10 min</span>
+          <span class="vb-chip">🎬 Trip chronicle</span>
           <span class="vb-chip">📍 Guanajuato Capital</span>
         </div>
       </div>
@@ -94,52 +94,52 @@
           <source src="assets/video/videoblog-guanajuato.mp4" type="video/mp4">
         </video>
 
-        <!-- Espacio reservado: se oculta solo cuando el MP4 ya está subido -->
+        <!-- Reserved space: hidden only once the MP4 has been uploaded -->
         <div class="vb-soon" id="vbSoon">
           <span class="vb-soon__spin"></span>
-          <strong>Video en proceso de subida</strong>
-          <span>El videoblog (~10 min) se está cargando. En cuanto el archivo esté listo, aparecerá aquí automáticamente.</span>
-          <span class="vb-soon__hint">archivo: assets/video/videoblog-guanajuato.mp4</span>
+          <strong>Video uploading</strong>
+          <span>The videoblog (~10 min) is loading. As soon as the file is ready, it will appear here automatically.</span>
+          <span class="vb-soon__hint">file: assets/video/videoblog-guanajuato.mp4</span>
         </div>
       </div>
 
       <div class="vb-about">
         <div class="vb-card">
-          <h2>Sobre el videoblog</h2>
-          <p>Este video reúne los mejores momentos del viaje a Guanajuato del Instituto Rembrandt: las maquetas, los callejones, los monumentos históricos y las anécdotas del grupo.</p>
-          <p>Escanea el código QR junto a la estación o ábrelo desde el mapa del recorrido para verlo completo.</p>
+          <h2>About the videoblog</h2>
+          <p>This video gathers the best moments of Instituto Rembrandt's trip to Guanajuato: the models, the alleys, the historic monuments and the group's anecdotes.</p>
+          <p>Scan the QR code next to the station, or open it from the tour map, to watch it in full.</p>
         </div>
         <div class="vb-card">
-          <h2>Lo que verás</h2>
+          <h2>What you will see</h2>
           <ul class="vb-list">
-            <li>La llegada y primeras impresiones</li>
-            <li>Las maquetas: Mina y Pípila</li>
-            <li>Callejones y monumentos históricos</li>
-            <li>El cierre y lo aprendido</li>
+            <li>The arrival and first impressions</li>
+            <li>The models: the Mine and El Pípila</li>
+            <li>Alleys and historic monuments</li>
+            <li>The closing and what we learned</li>
           </ul>
         </div>
       </div>
 
       <div class="vb-foot">
-        <a class="vb-btn" href="feria.html">Ver recorrido virtual</a>
-        <a class="vb-btn vb-btn--ghost" href="index.html">Ver mapa completo</a>
-        <a class="vb-btn vb-btn--ghost" href="jardin.html">Ver el jardín</a>
+        <a class="vb-btn" href="feria.html">Open virtual tour</a>
+        <a class="vb-btn vb-btn--ghost" href="index.html">View full map</a>
+        <a class="vb-btn vb-btn--ghost" href="jardin.html">See the garden</a>
       </div>
 
     </div>
   </main>
 
 <script>
-  // El espacio "en proceso de subida" se queda visible hasta que el MP4 exista.
+  // The "uploading" placeholder stays visible until the MP4 exists.
   (function () {
     var vid = document.getElementById('vbVideo');
     var soon = document.getElementById('vbSoon');
     if (!vid || !soon) return;
     var src = vid.querySelector('source');
-    // Cuando el navegador logra leer datos del video, ocultamos el espacio.
+    // When the browser manages to read video data, we hide the placeholder.
     vid.addEventListener('loadeddata', function () { soon.style.display = 'none'; });
     vid.addEventListener('canplay',    function () { soon.style.display = 'none'; });
-    // Si el archivo no existe todavía, mantenemos visible el espacio reservado.
+    // If the file does not exist yet, we keep the reserved space visible.
     var keep = function () { soon.style.display = 'flex'; };
     vid.addEventListener('error', keep);
     if (src) src.addEventListener('error', keep);
