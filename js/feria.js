@@ -110,32 +110,13 @@
     const isLast = idx === total - 1;
     const isFirst = idx === 0;
 
-    // Media block
-    let media;
-    if (step.maqueta) {
-      media = `
-        <div class="fr-media fr-media--video">
-          <video class="fr-video" playsinline muted loop autoplay preload="metadata"
-                 poster="${p.img}">
-            <source src="${step.video}" type="video/mp4">
-          </video>
-          <div class="fr-video-soon" hidden>
-            <img src="${p.img}" alt="${pname(p)}">
-            <div class="fr-video-soon__panel">
-              <span class="fr-video-soon__spin"></span>
-              <strong>${t('videoSoon')}</strong>
-              <span>${t('videoSoonSub')}</span>
-            </div>
-          </div>
-          <span class="fr-tag fr-tag--maqueta">${t('maqueta')}</span>
-        </div>`;
-    } else {
-      media = `
+    // Media block — static photo for every stop (the orbital model videos were never
+    // delivered, so we no longer show a "coming soon" loading placeholder).
+    const media = `
         <div class="fr-media fr-media--photo">
           <img class="fr-photo" src="${p.img}" alt="${pname(p)}" loading="eager">
-          <span class="fr-tag">${t('virtual')}</span>
+          <span class="fr-tag${step.maqueta ? ' fr-tag--maqueta' : ''}">${t(step.maqueta ? 'maqueta' : 'virtual')}</span>
         </div>`;
-    }
 
     const ticketUrl = p.ticket && p.ticket.url;
     const note = pnote(p);

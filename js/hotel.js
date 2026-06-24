@@ -1,5 +1,5 @@
 /* =========================================================
-   POSADA REMBRANDT — Virtual Hotel Tour (Three.js r128)
+   GRAND HOTEL 3D — Virtual Hotel Tour (Three.js r128)
    Two floors · staircase you can climb · bar with a waiter ·
    receptionist · 4 guest rooms · WASD + mouse · inspect ·
    guided auto-tour (door-by-door, never through walls) ·
@@ -37,7 +37,7 @@
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   renderer.outputEncoding = THREE.sRGBEncoding;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.14;
+  renderer.toneMappingExposure = 0.98;
 
   var scene = new THREE.Scene();
   var skyTex;
@@ -56,7 +56,7 @@
 
   /* ---------------- lights ---------------- */
   scene.add(new THREE.HemisphereLight(0xeaf0f8, 0x5c4a36, 0.62));
-  var sun = new THREE.DirectionalLight(0xffe9c4, 1.85);            // warm golden-hour key
+  var sun = new THREE.DirectionalLight(0xffe9c4, 1.5);             // warm golden-hour key
   sun.position.set(40, 56, 34); sun.castShadow = true;
   sun.shadow.mapSize.set(4096, 4096);
   sun.shadow.camera.near=1; sun.shadow.camera.far=200;
@@ -93,7 +93,7 @@
   var FLOORS = [];           // meshes the down-ray walks on (floors + stairs)
   var INTERACTABLES = [];
   var ANIM = [];             // animated characters {update(t)}
-  function addCollider(cx,cz,w,d){ WALLS.push({x1:cx-w/2,x2:cx+w/2,z1:cz-d/2,z2:cz+d/2}); }
+  function addCollider(cx,cz,w,d,soft){ WALLS.push({x1:cx-w/2,x2:cx+w/2,z1:cz-d/2,z2:cz+d/2,soft:!!soft}); }
   function tagObject(obj, info){ obj.userData.info=info; INTERACTABLES.push(obj); obj.traverse(function(o){o.userData.root=obj;}); }
   var world = new THREE.Group(); scene.add(world);
 
@@ -130,9 +130,58 @@
 
   /* ---------------- ground, plaza ---------------- */
   var ground=new THREE.Mesh(new THREE.PlaneGeometry(360,360), new THREE.MeshStandardMaterial({map:groundTex,roughness:1}));
+  var groundMat=ground.material;
   ground.rotation.x=-Math.PI/2; ground.receiveShadow=true; world.add(ground); FLOORS.push(ground);
   var plaza=new THREE.Mesh(new THREE.PlaneGeometry(40,24), new THREE.MeshStandardMaterial({map:plazaTex,roughness:.92}));
   plaza.rotation.x=-Math.PI/2; plaza.position.set(0,0.02,12); plaza.receiveShadow=true; world.add(plaza); FLOORS.push(plaza);
+  var plazaMat=plaza.material;
+
+  /* ---------------- real CC0 photo textures (Polyhaven, 1K) -----------------
+     Loaded over the procedural canvas maps: they appear the instant they
+     arrive and silently fall back to the canvas version if a file is missing
+     (so the tour still works fully offline / on file://).  ----------------- */
+  (function(){
+    var TL=new THREE.TextureLoader();
+    function swap(mat,file,rep,rough){
+      if(!mat) return;
+      TL.load('assets/tex/'+file, function(t){
+        t.wrapS=t.wrapT=THREE.RepeatWrapping; if(rep)t.repeat.set(rep[0],rep[1]);
+        t.anisotropy=8; t.encoding=THREE.sRGBEncoding;
+        mat.map=t; if(rough!=null) mat.roughness=rough; mat.needsUpdate=true;
+      }, undefined, function(){ /* keep procedural fallback */ });
+    }
+    swap(marbleMat,  'marble.jpg', [7,6], .25);     // lobby + stairs floor
+    swap(creamMat,   'wall.jpg',   [3,2], .9);      // interior plaster walls
+    swap(facadeMat,  'facade.jpg', [4,3], .95);     // sandstone facade (Guanajuato)
+    swap(woodMat,    'wood.jpg',   [2,2], .6);      // walnut furniture
+    swap(woodDarkMat,'wood.jpg',   [2,2], .55);     // darker via its color tint
+    woodDarkMat.color.setHex(0x8a6a48);
+    swap(carpetMat,  'carpet.jpg', [8,8], 1);       // corridor carpet
+    swap(roomMat,    'room.jpg',   [4,4], .7);      // guest-room wood floor
+    swap(groundMat,  'ground.jpg', [60,60], 1);     // exterior dry ground
+    swap(plazaMat,   'plaza.jpg',  [8,5], .9);      // sandstone entrance plaza (no more grid)
+  })();
+
+  /* ---------------- distant mountains (fill the empty horizon) ---------------- */
+  (function(){
+    var mtn=new THREE.Group();
+    var cols=[0x8a7a64,0x9c8a6e,0x7a6b58,0xb0a07e,0x6f6354,0xa89070];
+    function ring(N,rMin,rSpan,hMin,hSpan,yoff){
+      for(var i=0;i<N;i++){
+        var a=(i/N)*Math.PI*2 + (Math.random()-0.5)*0.12;
+        var r=rMin+Math.random()*rSpan, h=hMin+Math.random()*hSpan, br=h*(0.85+Math.random()*0.7);
+        var seg=5+(Math.random()*3|0);
+        var m=new THREE.Mesh(new THREE.ConeGeometry(br,h,seg,1),
+              new THREE.MeshStandardMaterial({color:cols[(Math.random()*cols.length)|0],roughness:1,flatShading:true}));
+        m.position.set(Math.cos(a)*r, h/2+yoff, Math.sin(a)*r); m.rotation.y=Math.random()*Math.PI;
+        mtn.add(m);
+      }
+    }
+    ring(32, 110, 36, 26, 32, -2.0);    // tall back range
+    ring(28, 86, 22, 13, 17, -1.5);     // lower foothills for depth
+    mtn.traverse(function(o){ o.castShadow=false; o.receiveShadow=false; });
+    world.add(mtn);
+  })();
 
   /* ---------------- building shell ----------------
      interior x[-12,12], z[-20,0]. FH=floor height. */
@@ -174,7 +223,7 @@
     var fr=box(1.9,2.3,0.16,woodDarkMat); fr.position.set(wx, 3.0+wy*2.7, 0.05); world.add(fr);
     var gl=box(1.6,2.0,0.12,winMat); gl.position.set(wx,3.0+wy*2.7,0.16); world.add(gl);
   }
-  var signTex=labelTex('POSADA REMBRANDT',1024,200,'#e2a93e');
+  var signTex=labelTex('GRAND HOTEL',1024,200,'#e2a93e');
   var signPanel=box(6.6,1.1,0.18,mat(PAL.dark,.6)); signPanel.position.set(0,OPEN+1.0,0.2); world.add(signPanel);
   var signText=new THREE.Mesh(new THREE.PlaneGeometry(6.3,1.5), new THREE.MeshStandardMaterial({map:signTex,transparent:true,emissive:0xe2a93e,emissiveIntensity:.5,emissiveMap:signTex})); signText.position.set(0,OPEN+1.0,0.32); world.add(signText);
   tagObject(signPanel,{ name:{en:'Hotel facade & sign',es:'Fachada y letrero del hotel'},
@@ -191,9 +240,13 @@
 
   /* ---------------- GRAND STAIRCASE (walkable) ---------------- */
   (function(){
-    var steps=13, rise=FH/steps, run=0.34, width=3.4, zb=-5.0, cx=0;  // wider staircase
+    // 14 even steps that climb the full FH and whose TOP step lands exactly on the
+    // upper-floor slab edge (z=-8.5, y=FH) — so you walk straight off onto floor 2,
+    // no gap. (Old stairs kept rising UNDER the slab, leaving a 0.6 m wall at the top.)
+    var steps=14, rise=FH/steps, run=0.30, width=3.4, cx=0;
+    var zb=-4.4;                                   // foot of stairs; topZ = zb-run*steps = -8.6 (overlaps slab front)
     var g=new THREE.Group();
-    for(var i=0;i<steps;i++){ var st=box(width,rise,run, marbleMat); st.position.set(cx, rise*(i+0.5), zb - run*(i+0.5)); g.add(st); FLOORS.push(st); }
+    for(var i=0;i<steps;i++){ var st=box(width,rise,run+0.02, marbleMat); st.position.set(cx, rise*(i+0.5), zb - run*(i+0.5)); g.add(st); FLOORS.push(st); }
     // side stringers (also block side, low colliders)
     var topZ=zb-run*steps;
     var rampL=box(0.25,0.9,Math.abs(topZ-zb)+0.4, goldMat); rampL.position.set(cx-width/2-0.1, FH*0.5+0.6, (zb+topZ)/2); rampL.rotation.x=-Math.atan2(FH,Math.abs(topZ-zb)); g.add(rampL);
@@ -389,7 +442,7 @@
     var water=new THREE.Mesh(new THREE.CylinderGeometry(1.55,1.55,0.1,28),new THREE.MeshStandardMaterial({color:0x4f8fa6,roughness:.08,metalness:.3,transparent:true,opacity:.85,envMapIntensity:1.3})); water.position.y=0.58; g.add(water);
     var stem=new THREE.Mesh(new THREE.CylinderGeometry(0.18,0.28,1.1,16),mat(PAL.sandDark,.9)); stem.position.y=1.0; g.add(stem);
     var bowl=new THREE.Mesh(new THREE.CylinderGeometry(0.7,0.2,0.3,18),mat(PAL.sandDark,.9)); bowl.position.y=1.6; g.add(bowl);
-    g.position.set(0,0,9); g.traverse(function(o){o.castShadow=true;o.receiveShadow=true;}); world.add(g); addCollider(0,9,3.8,3.8);
+    g.position.set(0,0,9); g.traverse(function(o){o.castShadow=true;o.receiveShadow=true;}); world.add(g); addCollider(0,9,3.8,3.8,true);
     tagObject(basin,{ name:{en:'Plaza fountain',es:'Fuente de la plaza'},
       desc:{en:'A two-tier stone fountain on the entrance plaza — the welcoming courtyard found in front of colonial Mexican posadas.',
         es:'Una fuente de cantera de dos niveles en la plaza de entrada — el patio de bienvenida frente a las posadas coloniales mexicanas.'}, note:{en:'',es:''} });
@@ -450,7 +503,7 @@
     var neck=lm(0.06,0.07,0.12,skin); neck.position.y=1.82; g.add(neck);
     var headG=new THREE.Group(); headG.position.set(0,1.95,0);
     var head=new THREE.Mesh(new THREE.SphereGeometry(0.15,20,20),skin); head.scale.set(0.96,1.1,1); headG.add(head);
-    var hairM=new THREE.Mesh(new THREE.SphereGeometry(0.158,20,18,0,Math.PI*2,0,Math.PI*0.68),hair); hairM.position.y=0.025; hairM.scale.set(1.02,1,1.02); headG.add(hairM);
+    var hairM=new THREE.Mesh(new THREE.SphereGeometry(0.158,20,18,0,Math.PI*2,0,Math.PI*0.52),hair); hairM.position.set(0,0.05,-0.012); hairM.scale.set(1.04,1,1.04); headG.add(hairM);  // cap stays on the crown, off the eyes
     var eyeM=mat(0x140f0a,.3);
     [-0.055,0.055].forEach(function(ex){ var e=new THREE.Mesh(new THREE.SphereGeometry(0.02,8,8),eyeM); e.position.set(ex,0.0,0.138); e.scale.set(1,1.3,0.6); headG.add(e); });
     g.add(headG);
@@ -512,7 +565,7 @@
   var yaw=0, pitch=0;
   var keys={}; var locked=false, autoMode=false; var bobT=0;
   var vy=0, grounded=true;                    // vertical velocity + ground flag (jump)
-  var GRAV=16.0, JUMP=5.6, STEP_UP=0.55;      // gravity, jump impulse, max auto-step height
+  var GRAV=16.0, JUMP=5.6, STEP_UP=0.6;       // gravity, jump impulse, max auto-step height
   var downRay=new THREE.Raycaster(); var DOWN=new THREE.Vector3(0,-1,0);
 
   function collides(x,z){ for(var i=0;i<WALLS.length;i++){ var w=WALLS[i]; if(x>w.x1-R&&x<w.x2+R&&z>w.z1-R&&z<w.z2+R) return true; } return false; }
@@ -562,37 +615,43 @@
      y is explicit so the camera climbs the stairs smoothly.
      ============================================================ */
   var Y0=EYE, Y1=EYE+FH;   // eye heights on each floor
+  // Each focus stop stands BACK from its subject and lifts the camera a little, so the
+  // whole object frames inside view with room to breathe; `orb` = orbit amplitude (rad)
+  // for the slow cinematic arc during the dwell.  `d` = dwell seconds.
+  // Camera height stays near each subject's middle and AIMS AT ITS CENTER, so the object
+  // sits centred in frame (not a steep look at the floor).  Lifts are gentle.
   var WP=[
-    {p:[0,Y0,16],   look:[0,1,9],     d:1.4},
-    {p:[3.5,Y0,11], look:[0,0.9,9],   d:2.8, info:'Plaza fountain'},
-    {p:[0,Y0,6],    look:[0,4.2,0.2], d:2.2, info:'Hotel facade & sign'},
-    {p:[0,Y0,1.5],  look:[-7,1.2,-6], d:1.0},                              // enter front door
-    {p:[-4,Y0,-3],  look:[-8.5,1.2,-6.5], d:3.0, info:'Reception & front desk'},
-    {p:[3.5,Y0,-3], look:[8,1.3,-6.6], d:3.0, info:'Lobby bar'},
-    {p:[0,Y0,-2],   look:[0,0.6,-3.6], d:2.2, info:'Lobby lounge'},
-    {p:[0,Y0,-3.6], look:[0,H2-1.7,-3.5], d:2.4, info:'Grand chandelier'},
-    {p:[8.5,Y0,-4], look:[11.3,1.4,-9], d:2.2, info:'Elevator'},
-    {p:[0,Y0,-4.6], look:[0,2.5,-9],  d:1.6, info:'Grand staircase'},      // foot of stairs
-    {p:[0,Y0+1.4,-6.6], look:[0,Y0+1.6,-9.5], d:0.9},                      // climbing
-    {p:[0,Y0+2.8,-7.9], look:[0,Y1,-10.5], d:0.9},                         // climbing
-    {p:[0,Y1,-9.3],  look:[0,Y1-0.4,-12.5], d:1.6},                        // reach mezzanine
-    {p:[0,Y1,-10.2], look:[0,2.2,-3],  d:2.2},                             // look down over railing
-    {p:[6,Y1,-11.6], look:[6,Y1-0.6,-15], d:1.2},                          // into upper east room (door x[5.4,7.4])
-    {p:[5.2,Y1,-13.8],look:[6,Y1-0.8,-17], d:3.0, info:'Upper-floor suite'},
-    {p:[5.2,Y1,-15.5],look:[6,Y1,-19.8], d:2.6, info:'Guest-room window'},
-    {p:[6,Y1,-11.6], look:[0,Y1-0.4,-10], d:1.2},                         // back to landing
-    {p:[0,Y1,-9.6],  look:[0,Y0+2.6,-7], d:1.0},                          // top of stairs
-    {p:[0,Y0+2.8,-7.9], look:[0,Y0+1,-6], d:0.9},                          // descend
-    {p:[0,Y0+1.4,-6.6], look:[6,Y0+1,-9], d:0.9},
-    {p:[0,Y0,-5],    look:[6,Y0,-9.5], d:1.4},
-    {p:[6,Y0,-9.6],  look:[6,0.8,-14], d:1.2},                            // into ground east room (door x[5,7])
-    {p:[6,Y0,-12.5], look:[6,0.85,-15.5], d:3.0, info:'Ground-floor suite'},
-    {p:[6,Y0,-9.6],  look:[0,Y0,-3], d:1.0},                              // back to lobby
-    {p:[0,Y0,-1.5],  look:[0,2,6], d:1.0},                                // face entrance
-    {p:[0,Y0,6],     look:[14,1,5], d:1.2},                               // out the front door
-    {p:[13,Y0,6],    look:[19,0.5,4], d:1.4},                             // round to pool (outside)
-    {p:[14,Y0,5.2],  look:[20,0.4,4], d:3.0, info:'Swimming pool'},
-    {p:[9,Y0,13],    look:[0,3,0], d:2.0}                                 // pull back, loop
+    {p:[0,Y0,15],        look:[0,2.4,0],     d:1.2, orb:0.04},            // establishing — face the hotel
+    {p:[3.4,2.0,13.6],   look:[0,1.0,9],     d:3.0, orb:0.10, info:'Plaza fountain'},
+    {p:[0,3.0,11.5],     look:[0,3.6,0],     d:3.4, orb:0.06, info:'Hotel facade & sign'},
+    {p:[0,Y0,3.0],       look:[-7,1.4,-6],   d:0.8, orb:0},               // step inside
+    {p:[-3.4,1.8,-2.6],  look:[-8.8,1.5,-6.5],d:3.2, orb:0.09, info:'Reception & front desk'},
+    {p:[3.4,1.8,-2.8],   look:[8.2,1.5,-6.6],d:3.2, orb:0.09, info:'Lobby bar'},
+    {p:[0,1.85,0.6],     look:[0,0.7,-3.2],  d:2.8, orb:0.08, info:'Lobby lounge'},
+    {p:[0,1.7,-1.0],     look:[0,6.0,-3.5],  d:2.8, orb:0.05, info:'Grand chandelier'},   // looking up
+    {p:[7.4,1.8,-5.4],   look:[11.3,1.6,-9], d:2.6, orb:0.07, info:'Elevator'},
+    {p:[0,1.8,-2.4],     look:[0,2.4,-7.5],  d:2.4, orb:0.05, info:'Grand staircase'},    // see it rise
+    {p:[0,Y0+1.0,-4.6],  look:[0,Y0+1.8,-8.5],d:0.7, orb:0},              // climbing
+    {p:[0,Y0+2.3,-6.0],  look:[0,Y0+3.0,-9.0],d:0.7, orb:0},              // climbing
+    {p:[0,Y0+3.5,-7.4],  look:[0,Y1,-10.5],  d:0.7, orb:0},               // climbing
+    {p:[0,Y1,-9.2],      look:[0,Y1-0.2,-12.5],d:1.3, orb:0.03},          // reach upper floor
+    {p:[0,Y1+0.3,-9.8],  look:[0,2.6,-3.2],  d:2.4, orb:0.05},            // look down over the railing
+    {p:[6,Y1,-11.6],     look:[6,Y1-0.3,-15],d:1.0, orb:0},               // into upper east room
+    {p:[4.7,Y1+0.3,-12.6],look:[6,Y1-0.3,-15.6],d:3.2, orb:0.09, info:'Upper-floor suite'},
+    {p:[5.6,Y1+0.2,-14.4],look:[6,Y1+0.1,-19.8],d:2.8, orb:0.06, info:'Guest-room window'},
+    {p:[6,Y1,-11.6],     look:[0,Y1-0.2,-10],d:1.0, orb:0},               // back to landing
+    {p:[0,Y1,-9.2],      look:[0,Y0+2.6,-7], d:0.8, orb:0},               // top of stairs
+    {p:[0,Y0+3.5,-7.4],  look:[0,Y0+1.6,-5.5],d:0.7, orb:0},              // descend
+    {p:[0,Y0+1.7,-5.6],  look:[6,Y0+1,-9],   d:0.7, orb:0},
+    {p:[0,Y0,-4.4],      look:[6,Y0,-9.5],   d:1.0, orb:0.03},            // back on lobby floor
+    {p:[6,Y0,-9.2],      look:[6,1.0,-13],   d:1.0, orb:0},               // into ground east room
+    {p:[6,Y0+0.4,-11.4], look:[6,0.95,-15.3],d:3.2, orb:0.09, info:'Ground-floor suite'},
+    {p:[6,Y0,-9.2],      look:[0,Y0,-3],     d:1.0, orb:0.03},            // back to lobby
+    {p:[0,Y0,-2.0],      look:[0,2.2,8],     d:1.0, orb:0.03},            // face the entrance
+    {p:[0,Y0,6.5],       look:[18,1.2,5],    d:1.0, orb:0.03},            // out the front door
+    {p:[12.5,1.9,7.0],   look:[20,0.8,4],    d:1.2, orb:0.05},            // round to the pool
+    {p:[13.5,2.0,6.4],   look:[20,0.6,4],    d:3.2, orb:0.09, info:'Swimming pool'},
+    {p:[8,2.6,13],       look:[0,3.2,-2],    d:2.2, orb:0.04}             // pull back, loop
   ];
   WP.forEach(function(w){ if(w.info){ for(var i=0;i<INTERACTABLES.length;i++){ var inf=INTERACTABLES[i].userData.info; if(inf&&inf.name.en===w.info){ w.infoObj=inf; break; } } } });
 
@@ -601,54 +660,66 @@
   var desired=new THREE.Vector3(), subj=new THREE.Vector3(), aheadV=new THREE.Vector3();
   var FWD=new THREE.Vector3(), DIR=new THREE.Vector3(), dwellEl=0;
   var DRIFT=new THREE.Quaternion(), EU=new THREE.Euler();
+  var _lookM=new THREE.Matrix4(), _up=new THREE.Vector3(0,1,0);
   function easeIO(t){ return t<0.5?2*t*t:1-Math.pow(-2*t+2,2)/2; }
   // set manual yaw/pitch so the camera looks from `pos` toward `tx,ty,tz`
   // (explicit formula — avoids the 180° flip of quaternion->euler decomposition)
   function aimAt(pos, tx, ty, tz){ DIR.set(tx-pos.x, ty-pos.y, tz-pos.z).normalize();
     pitch=Math.asin(Math.max(-1,Math.min(1,DIR.y))); yaw=Math.atan2(-DIR.x,-DIR.z); }
-  function resolveAuto(p){ for(var i=0;i<WALLS.length;i++){ var w=WALLS[i];
+  function resolveAuto(p){ for(var i=0;i<WALLS.length;i++){ var w=WALLS[i]; if(w.soft) continue;   // tour glides past decorations (fountain etc.) — only real walls block it
     if(p.x>w.x1-R&&p.x<w.x2+R&&p.z>w.z1-R&&p.z<w.z2+R){ var dl=p.x-(w.x1-R),drr=(w.x2+R)-p.x,dtt=p.z-(w.z1-R),dbb=(w.z2+R)-p.z; var m=Math.min(dl,drr,dtt,dbb);
       if(m===dl)p.x=w.x1-R; else if(m===drr)p.x=w.x2+R; else if(m===dtt)p.z=w.z1-R; else p.z=w.z2+R; } } }
 
+  var tourMusic=document.getElementById('tourMusic'); if(tourMusic) tourMusic.volume=0.55;
+  function playJazz(){ if(!tourMusic) return; try{ tourMusic.currentTime=tourMusic.currentTime||0; var pr=tourMusic.play(); if(pr&&pr.catch) pr.catch(function(){}); }catch(e){} }
+  function stopJazz(){ if(!tourMusic) return; try{ tourMusic.pause(); }catch(e){} }
   function startAuto(){ autoMode=true; if(document.pointerLockElement) document.exitPointerLock();
-    promptEl.hidden=true; crossEl.classList.remove('is-hot');
+    promptEl.hidden=true; crossEl.classList.remove('is-hot'); playJazz();
     aIdx=0; aPhase='move'; aT=0; panelShown=false; aStart.copy(player);
     document.getElementById('crosshair').style.display='grid';
     document.getElementById('autoBtn').classList.add('is-on');
     document.getElementById('autoLbl').textContent=tr('autoStop');
     document.getElementById('startAutoLbl').textContent=tr('autoStop'); hideHintSoon(); }
-  function stopAuto(){ autoMode=false; closeInspect();
+  function stopAuto(){ autoMode=false; closeInspect(); stopJazz();
     document.getElementById('autoBtn').classList.remove('is-on');
     document.getElementById('autoLbl').textContent=tr('auto');
     document.getElementById('startAutoLbl').textContent=tr('watch');
     camera.getWorldDirection(FWD); pitch=Math.asin(Math.max(-1,Math.min(1,FWD.y))); yaw=Math.atan2(-FWD.x,-FWD.z); }
 
+  var aRes={x:0,z:0};
   function updateAuto(dt,time){
     var w=WP[aIdx]; var tp=w.p;
     // ALWAYS aim at this waypoint's subject — the camera turns toward it WHILE it
-    // walks, so it is already framed on arrival (it never presents before focusing).
+    // glides, so it is already framed on arrival (it never presents before focusing).
     subj.set(w.look[0],w.look[1],w.look[2]); desired.copy(subj);
+    var px=player.x, pz=player.z;
     if(aPhase==='move'){
-      var seg=Math.max(1.0, aStart.distanceTo(aheadV.set(tp[0],tp[1],tp[2]))/2.2);
+      var dist=aStart.distanceTo(aheadV.set(tp[0],tp[1],tp[2]));
+      var seg=Math.max(1.8, dist/1.5);                 // slower, leisurely dolly
       aT+=dt/seg; var k=easeIO(Math.min(aT,1));
       player.set(aStart.x+(tp[0]-aStart.x)*k, aStart.y+(tp[1]-aStart.y)*k, aStart.z+(tp[2]-aStart.z)*k);
+      px=player.x; pz=player.z;
       if(aT>=1){ aPhase='dwell'; aTimer=w.d; panelShown=false; dwellEl=0; }
     } else {
       aTimer-=dt; dwellEl+=dt;
+      // slow cinematic orbit + a touch of dolly-in around the subject while dwelling
+      var ang=Math.sin(dwellEl*0.55)*(w.orb!=null?w.orb:0.10);
+      var ox=player.x-subj.x, oz=player.z-subj.z, cs=Math.cos(ang), sn=Math.sin(ang);
+      var push=1-Math.min(dwellEl,1.2)*0.04;           // ease ~5% closer over the first second
+      px=subj.x+(ox*cs-oz*sn)*push; pz=subj.z+(ox*sn+oz*cs)*push;
       if(aTimer<=0){ aPhase='move'; aT=0; aStart.copy(player); aIdx=(aIdx+1)%WP.length; closeInspect(); }
     }
-    resolveAuto(player);
-    var bob=Math.sin(time*4.4)*0.022;
-    camera.position.set(player.x,player.y+bob,player.z);
-    dummy.position.copy(camera.position); dummy.lookAt(desired.x,desired.y,desired.z);
-    var dyaw=Math.sin(time*0.5)*0.03+Math.sin(time*0.17)*0.015, dpitch=Math.sin(time*0.72)*0.015;
+    aRes.x=px; aRes.z=pz; resolveAuto(aRes); px=aRes.x; pz=aRes.z;   // never clip into a wall
+    var bob=Math.sin(time*3.6)*0.016;                  // softer breathing bob
+    camera.position.set(px, player.y+bob, pz);
+    // orient with CAMERA semantics (its -z toward the subject). A plain Object3D.lookAt
+    // would point its +z at the target → camera ends up facing 180° AWAY. This was the bug.
+    _lookM.lookAt(camera.position, desired, _up); dummy.quaternion.setFromRotationMatrix(_lookM);
+    var dyaw=Math.sin(time*0.4)*0.014+Math.sin(time*0.17)*0.007, dpitch=Math.sin(time*0.55)*0.007;
     DRIFT.setFromEuler(EU.set(dpitch,dyaw,0,'YXZ')); dummy.quaternion.multiply(DRIFT);
-    camera.quaternion.slerp(dummy.quaternion, Math.min(1, dt*5));
-    // open the description ONLY once the camera is truly pointing at the subject
-    if(aPhase==='dwell' && !panelShown && dwellEl>0.15){
-      camera.getWorldDirection(FWD); DIR.copy(subj).sub(camera.position).normalize();
-      if(FWD.dot(DIR) > 0.97){ if(w.infoObj) openInspect(w.infoObj); panelShown=true; }
-    }
+    camera.quaternion.slerp(dummy.quaternion, Math.min(1, dt*5.0));    // turn briskly toward the subject
+    // show the description only AFTER we've arrived and the camera has settled on the subject
+    if(aPhase==='dwell' && !panelShown && dwellEl>0.6 && w.infoObj){ openInspect(w.infoObj); panelShown=true; }
   }
 
   /* ---------------- manual update ---------------- */
@@ -690,7 +761,7 @@
     chunks=[]; recorder=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:6000000});
     recorder.ondataavailable=function(e){ if(e.data.size) chunks.push(e.data); };
     recorder.onstop=function(){ var blob=new Blob(chunks,{type:'video/webm'}); var url=URL.createObjectURL(blob);
-      var a=document.createElement('a'); a.href=url; a.download='posada-rembrandt-tour.webm'; a.click(); setTimeout(function(){URL.revokeObjectURL(url);},1000);
+      var a=document.createElement('a'); a.href=url; a.download='grand-hotel-3d-tour.webm'; a.click(); setTimeout(function(){URL.revokeObjectURL(url);},1000);
       document.getElementById('recBtn').classList.remove('is-on'); document.getElementById('recLbl').textContent=tr('record'); document.getElementById('recIndicator').hidden=true; };
     recorder.start(); document.getElementById('recBtn').classList.add('is-on'); document.getElementById('recLbl').textContent=tr('recording'); document.getElementById('recIndicator').hidden=false;
   }
@@ -718,7 +789,7 @@
   document.getElementById('autoBtn').addEventListener('click', function(){ autoMode?stopAuto():startAuto(); });
   document.getElementById('recBtn').addEventListener('click', toggleRecord);
   document.getElementById('photoBtn').addEventListener('click', function(){ renderer.render(scene,camera);
-    canvas.toBlob(function(blob){ if(!blob)return; var url=URL.createObjectURL(blob); var a=document.createElement('a'); a.href=url; a.download='posada-rembrandt.png'; a.click(); setTimeout(function(){URL.revokeObjectURL(url);},1000); },'image/png'); });
+    canvas.toBlob(function(blob){ if(!blob)return; var url=URL.createObjectURL(blob); var a=document.createElement('a'); a.href=url; a.download='grand-hotel-3d.png'; a.click(); setTimeout(function(){URL.revokeObjectURL(url);},1000); },'image/png'); });
 
   var hintEl=document.getElementById('hudHint'); var hintTimer=null;
   function hideHintSoon(){ clearTimeout(hintTimer); hintTimer=setTimeout(function(){hintEl.classList.add('is-hidden');},7000); }
@@ -728,14 +799,33 @@
   document.getElementById('startAuto').addEventListener('click', function(){ startScreen.classList.add('is-hidden'); setTimeout(function(){startScreen.style.display='none';},650); startAuto(); });
 
   /* ---------------- loop ---------------- */
+  // Size the drawing buffer ONLY when the canvas's CSS box actually changes, and let CSS
+  // own the display size (updateStyle=false). This stops the periodic re-scaling caused by
+  // setSize writing inline px that fought the 100% CSS / the browser chrome resizing.
+  function resizeIfNeeded(){
+    var pr=Math.min(window.devicePixelRatio||1, 2);
+    var w=canvas.clientWidth, h=canvas.clientHeight;
+    if(!w||!h) return;
+    if(canvas.width!==Math.round(w*pr) || canvas.height!==Math.round(h*pr)){
+      renderer.setPixelRatio(pr);
+      renderer.setSize(w, h, false);                 // false → don't touch canvas.style
+      camera.aspect=w/h; camera.updateProjectionMatrix();
+    }
+  }
   var clock=new THREE.Clock();
   function animate(){ requestAnimationFrame(animate);
     var dt=Math.min(clock.getDelta(),0.05), time=clock.elapsedTime;
+    resizeIfNeeded();
     animPeople(time);
     if(autoMode) updateAuto(dt,time); else { updateManual(dt); updateHover(); }
     renderer.render(scene,camera);
   }
-  window.addEventListener('resize', function(){ camera.aspect=window.innerWidth/window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth,window.innerHeight); });
+
+  // lightweight QA / debug hook
+  window.__hotelDebug=function(){ return { autoMode:autoMode, aIdx:aIdx, aPhase:aPhase, panel:!insEl.hidden,
+    title:document.getElementById('inspectTitle').textContent,
+    info:(WP[aIdx]&&WP[aIdx].info)||null, hasObj:!!(WP[aIdx]&&WP[aIdx].infoObj),
+    cam:[+camera.position.x.toFixed(2),+camera.position.y.toFixed(2),+camera.position.z.toFixed(2)] }; };
 
   applyLang();
   document.getElementById('loading').classList.add('is-done');

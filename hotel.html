@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Posada Rembrandt · Virtual Hotel Tour — Science Fair</title>
+<title>Grand Hotel 3D · Virtual Hotel Tour — Science Fair</title>
 <meta name="theme-color" content="#161013">
 <meta name="description" content="Interactive 3D virtual tour of a hotel — explore with WASD, inspect components and record a video. STEAM project · Instituto Rembrandt.">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
@@ -31,7 +31,7 @@
       <span id="backLbl">Back to site</span>
     </a>
     <div class="hud-title">
-      <strong>Posada Rembrandt</strong>
+      <strong>Grand Hotel 3D</strong>
       <em id="hudSub">Virtual Hotel Tour · 3D</em>
     </div>
     <div class="hud-actions">
@@ -64,7 +64,7 @@
   <div id="startScreen" class="start">
     <div class="start__card">
       <span class="start__eyebrow mono">STEAM · Technology · 3D</span>
-      <h1 class="start__title">Posada <em>Rembrandt</em></h1>
+      <h1 class="start__title">Grand <em>Hotel 3D</em></h1>
       <p class="start__lead" id="startLead">An interactive 3D hotel you can walk through. Move with the keyboard, look with the mouse, and inspect every component. Or let the automatic tour drive — and record it as a video.</p>
       <button class="start__btn" id="startBtn" data-magnetic>
         <span id="startBtnLbl">Click to enter</span>
@@ -79,6 +79,9 @@
 
   <!-- REC indicator -->
   <div id="recIndicator" class="rec-indicator" hidden><span class="rec-dot"></span> REC</div>
+
+  <!-- Lounge jazz during the auto tour · "Bossa Antigua" by Kevin MacLeod (incompetech.com) · CC BY 3.0 -->
+  <audio id="tourMusic" src="assets/audio/jazz-tour.mp3" loop preload="auto"></audio>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="js/hotel.js"></script>

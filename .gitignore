@@ -7,3 +7,4 @@ node_modules/
 .env.local
 
 # Trip photos are now committed for GitHub Pages
+_backup_hotel_20260624/
