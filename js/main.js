@@ -279,6 +279,10 @@ function ph(p, f) { return (LANG === 'es' && ES_P[p.id] && ES_P[p.id][f] != null
 function sh(s, f) { return (LANG === 'es' && ES_S[s.key] && ES_S[s.key][f] != null) ? ES_S[s.key][f] : s[f]; }
 /* ticket note with ES override */
 function pnote(p) { return (LANG === 'es' && ES_P[p.id] && ES_P[p.id].note != null) ? ES_P[p.id].note : (p.ticket && p.ticket.note); }
+/* place display name for the current language: English in EN, Spanish proper name in ES */
+function pname(p) { return (LANG === 'es') ? ph(p, 'name') : (p.nameEn || p.name); }
+/* secondary name line — English helper only in ES; empty in EN so no Spanish leaks */
+function psub(p) { return (LANG === 'es') ? (p.nameEn || '') : ''; }
 /* UI string for current language */
 function ui(k) {
   const U = window.UI_STRINGS || { en: {}, es: {} };
@@ -293,7 +297,7 @@ function injectMapList() {
     <li class="map-list-item" data-place="${p.id}" data-magnetic-soft>
       <span class="map-list-item__num">${p.num}</span>
       <span class="map-list-item__text">
-        <span class="map-list-item__title">${p.name}</span>
+        <span class="map-list-item__title">${pname(p)}</span>
         <span class="map-list-item__loc">${p.cityShort}</span>
       </span>
       <svg class="map-list-item__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -314,7 +318,7 @@ function injectPlaces() {
           <span class="mono">${ui('scan')}</span>
         </div>
         <div class="place-card__booking-row">
-          <a class="place-card__qr" href="${t.url}" target="_blank" rel="noopener" aria-label="${ui('openSite')} — ${p.name}">
+          <a class="place-card__qr" href="${t.url}" target="_blank" rel="noopener" aria-label="${ui('openSite')} — ${pname(p)}">
             <img src="${qrUrl(t.url, 220)}" alt="QR · ${t.operator}" loading="lazy" width="120" height="120">
           </a>
           <div class="place-card__booking-info">
@@ -331,13 +335,13 @@ function injectPlaces() {
     return `
     <article class="place-card rv" id="place-${p.id}" data-place-card="${p.id}">
       <div class="place-card__media">
-        <img src="${p.img}" alt="${p.name}" loading="lazy">
+        <img src="${p.img}" alt="${pname(p)}" loading="lazy">
         <span class="place-card__num">${p.num}</span>
         <span class="place-card__city mono">${p.city}</span>
       </div>
       <div class="place-card__body">
-        <h3 class="place-card__title">${p.name}</h3>
-        <p class="place-card__sub"><em>${p.nameEn}</em></p>
+        <h3 class="place-card__title">${pname(p)}</h3>
+        ${psub(p) ? `<p class="place-card__sub"><em>${psub(p)}</em></p>` : ''}
         <p class="place-card__short">${ph(p, 'short')}</p>
         <details class="place-card__more">
           <summary>
@@ -368,15 +372,15 @@ function injectSubjects() {
   if (!wrap) return;
   wrap.innerHTML = SUBJECTS.map(s => {
     const primary = placeById(s.placeIds[0]);
-    const locations = s.placeIds.map(id => placeById(id)?.name).filter(Boolean);
+    const locations = s.placeIds.map(id => { const pp = placeById(id); return pp ? pname(pp) : null; }).filter(Boolean);
     const ready = s.status === 'ready';
     return `
     <article class="subject rv" id="subj-${s.key}" data-subject="${s.key}" data-subject-num="${s.num}" data-status="${s.status}">
       <div class="subject__media" data-tilt>
         <div class="subject__media-inner">
-          <img src="${primary.img}" alt="${primary.name}" loading="lazy">
+          <img src="${primary.img}" alt="${pname(primary)}" loading="lazy">
         </div>
-        <div class="subject__media-tag">${s.num} · ${primary.name}</div>
+        <div class="subject__media-tag">${s.num} · ${pname(primary)}</div>
         <div class="subject__media-placeholder">${ready ? ui('mediaReady') : ui('mediaPending')}</div>
       </div>
       <div class="subject__body">
@@ -528,10 +532,10 @@ function initMap() {
 /* Build a marker popup in the current language */
 function buildPopup(p) {
   return `
-      <img src="${p.img}" class="popup-img" alt="${p.name}">
+      <img src="${p.img}" class="popup-img" alt="${pname(p)}">
       <div class="popup-inner">
         <div class="popup-loc">${p.num} · ${p.cityShort}</div>
-        <div class="popup-title">${p.name}</div>
+        <div class="popup-title">${pname(p)}</div>
         <div class="popup-desc">${ph(p, 'short')}</div>
         <span class="popup-link" data-place="${p.id}">${ui('readHistoryArrow')}</span>
       </div>`;
@@ -856,7 +860,7 @@ function openModal(key) {
   modalText.innerHTML = sh(s, 'body') + (sh(s, 'content') ? `<div class="modal__deep">${sh(s, 'content')}</div>` : '');
   modalMeta.innerHTML = locations.map(l => `<span class="tag tag--accent">${l}</span>`).join('') + sh(s, 'tags').map(t => `<span class="tag">${t}</span>`).join('');
   modalImg.src = primary?.img || '';
-  modalImg.alt = primary?.name || '';
+  modalImg.alt = primary ? pname(primary) : '';
   modal.classList.add('is-open');
   modal.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
@@ -938,10 +942,10 @@ function updateActiveCard(id) {
   const p = placeById(id);
   if (!p) return;
   activeCardImg.src = p.img;
-  activeCardImg.alt = p.name;
+  activeCardImg.alt = pname(p);
   activeCardNum.textContent = p.num;
   activeCardCity.textContent = p.cityShort;
-  activeCardTitle.textContent = p.name;
+  activeCardTitle.textContent = pname(p);
   activeCardDesc.textContent = ph(p, 'short');
 
   const idx = PLACES.findIndex(x => x.id === id);
@@ -949,7 +953,7 @@ function updateActiveCard(id) {
   if (next) {
     const km = haversineKm(p.coords, next.coords);
     const lbl = km < 1 ? `${Math.round(km * 1000)} m` : `${km.toFixed(1)} km`;
-    activeCardDist.textContent = `${ui('next')} ${lbl} · ${next.name}`;
+    activeCardDist.textContent = `${ui('next')} ${lbl} · ${pname(next)}`;
     activeCardDist.style.visibility = 'visible';
   } else {
     activeCardDist.textContent = ui('last');

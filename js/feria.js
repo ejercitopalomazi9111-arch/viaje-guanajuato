@@ -74,6 +74,10 @@
   const ph = (p, f) => (LANG === 'es' && ES_P[p.id] && ES_P[p.id][f] != null) ? ES_P[p.id][f] : p[f];
   const pnote = p => (LANG === 'es' && ES_P[p.id] && ES_P[p.id].note != null)
     ? ES_P[p.id].note : (p.ticket && p.ticket.note);
+  /* display name: English in EN, Spanish proper name in ES */
+  const pname = p => (LANG === 'es') ? ph(p, 'name') : (p.nameEn || p.name);
+  /* secondary name line: English helper only in ES; empty in EN */
+  const psub = p => (LANG === 'es') ? (p.nameEn || '') : '';
   const t = k => (FERIA_UI[LANG] && FERIA_UI[LANG][k] != null) ? FERIA_UI[LANG][k] : FERIA_UI.en[k];
 
   /* ---- Which stop are we on? from ?stop=slug | ?id=10 | ?i=0 ---- */
@@ -116,7 +120,7 @@
             <source src="${step.video}" type="video/mp4">
           </video>
           <div class="fr-video-soon" hidden>
-            <img src="${p.img}" alt="${p.name}">
+            <img src="${p.img}" alt="${pname(p)}">
             <div class="fr-video-soon__panel">
               <span class="fr-video-soon__spin"></span>
               <strong>${t('videoSoon')}</strong>
@@ -128,7 +132,7 @@
     } else {
       media = `
         <div class="fr-media fr-media--photo">
-          <img class="fr-photo" src="${p.img}" alt="${p.name}" loading="eager">
+          <img class="fr-photo" src="${p.img}" alt="${pname(p)}" loading="eager">
           <span class="fr-tag">${t('virtual')}</span>
         </div>`;
     }
@@ -141,8 +145,8 @@
         <header class="fr-head" data-anim>
           <span class="fr-num">${p.num}</span>
           <div>
-            <h1 class="fr-name">${p.name}</h1>
-            <p class="fr-name-en">${p.nameEn}</p>
+            <h1 class="fr-name">${pname(p)}</h1>
+            ${psub(p) ? `<p class="fr-name-en">${psub(p)}</p>` : ''}
             <p class="fr-city">${p.cityShort}</p>
           </div>
         </header>

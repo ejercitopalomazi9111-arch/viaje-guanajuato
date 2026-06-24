@@ -262,7 +262,7 @@
     rec.group.position.set(-9.2,0,-6.6); rec.group.rotation.y=Math.PI/2; world.add(rec.group);
     rec.kind='idle'; ANIM.push(rec);
     tagObject(base,{ name:{en:'Reception & front desk',es:'Recepción'},
-      desc:{en:'The walnut front desk with a brass kick-plate, a service bell and a "RECEPCIÓN" sign. A receptionist stands behind it to check guests in — the first human point of the hotel.',
+      desc:{en:'The walnut front desk with a brass kick-plate, a service bell and a "RECEPTION" sign. A receptionist stands behind it to check guests in — the first human point of the hotel.',
         es:'El mostrador de nogal con zócalo de latón, un timbre de servicio y el letrero "RECEPCIÓN". Una recepcionista atiende tras él para registrar a los huéspedes — el primer punto humano del hotel.'},
       note:{en:'The receptionist is a procedural character with idle motion.',es:'La recepcionista es un personaje procedural con movimiento de reposo.'} });
   })();
