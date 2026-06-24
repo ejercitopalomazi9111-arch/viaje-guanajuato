@@ -18,12 +18,12 @@
     en: { back:'Back to site', sub:'Virtual Hotel Tour · 3D', auto:'Auto tour', autoStop:'Stop tour',
       record:'Record', recording:'Stop rec', photo:'Photo', inspect:'Inspect', enter:'Click to enter',
       watch:'Watch auto tour', building:'Building the hotel…', move:'move', look:'look around',
-      doInspect:'inspect', run:'run', component:'COMPONENT',
+      doInspect:'inspect', run:'run', jump:'jump', component:'COMPONENT',
       lead:'An interactive two-storey 3D hotel you can walk through. Move with the keyboard, look with the mouse, climb the stairs and inspect every component — staff included. Or let the automatic tour drive, and record it as a video.' },
     es: { back:'Volver al sitio', sub:'Recorrido virtual del hotel · 3D', auto:'Tour automático', autoStop:'Detener tour',
       record:'Grabar', recording:'Detener', photo:'Foto', inspect:'Inspeccionar', enter:'Haz clic para entrar',
       watch:'Ver tour automático', building:'Construyendo el hotel…', move:'moverte', look:'mirar',
-      doInspect:'inspeccionar', run:'correr', component:'COMPONENTE',
+      doInspect:'inspeccionar', run:'correr', jump:'saltar', component:'COMPONENTE',
       lead:'Un hotel 3D de dos pisos por el que puedes caminar. Muévete con el teclado, mira con el mouse, sube las escaleras e inspecciona cada componente — incluido el personal. O deja que el recorrido automático conduzca, y grábalo en video.' }
   };
   function tr(k){ return (T[LANG] && T[LANG][k]) || T.en[k] || k; }
@@ -37,7 +37,7 @@
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   renderer.outputEncoding = THREE.sRGBEncoding;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.0;
+  renderer.toneMappingExposure = 1.14;
 
   var scene = new THREE.Scene();
   var skyTex;
@@ -55,14 +55,15 @@
   var camera = new THREE.PerspectiveCamera(72, window.innerWidth/window.innerHeight, 0.05, 500);
 
   /* ---------------- lights ---------------- */
-  scene.add(new THREE.HemisphereLight(0xdfe6ee, 0x6e5d4a, 0.5));
-  var sun = new THREE.DirectionalLight(0xffe6bf, 1.5);
+  scene.add(new THREE.HemisphereLight(0xeaf0f8, 0x5c4a36, 0.62));
+  var sun = new THREE.DirectionalLight(0xffe9c4, 1.85);            // warm golden-hour key
   sun.position.set(40, 56, 34); sun.castShadow = true;
-  sun.shadow.mapSize.set(2048, 2048);
+  sun.shadow.mapSize.set(4096, 4096);
   sun.shadow.camera.near=1; sun.shadow.camera.far=200;
   sun.shadow.camera.left=-70; sun.shadow.camera.right=70; sun.shadow.camera.top=70; sun.shadow.camera.bottom=-70;
-  sun.shadow.bias=-0.0004; scene.add(sun);
-  var fill=new THREE.DirectionalLight(0x9fb8d8,0.3); fill.position.set(-30,24,-30); scene.add(fill);
+  sun.shadow.bias=-0.0003; sun.shadow.normalBias=0.02; scene.add(sun);
+  var fill=new THREE.DirectionalLight(0xaecbe8,0.42); fill.position.set(-30,24,-30); scene.add(fill);   // cool sky fill
+  var rim=new THREE.DirectionalLight(0xffd9a8,0.35); rim.position.set(-12,18,-40); scene.add(rim);      // warm back-rim
 
   /* ---------------- helpers ---------------- */
   function mat(color, rough, metal){ return new THREE.MeshStandardMaterial({ color:color, roughness:rough==null?0.85:rough, metalness:metal==null?0:metal }); }
@@ -157,7 +158,7 @@
   // back-half carpet (rooms/corridor feel) on top is fine as marble; rooms get their own.
 
   // outer walls — front facade tall (to H2), entrance gap
-  wallX(0,-12,12,[-1.8,1.8],facadeMat,H2);              // front, double height
+  wallX(0,-12,12,[-2.3,2.3],facadeMat,H2);              // front, double height (wider entrance)
   wallZ(-12,-20,0,null,facadeMat,H2);                   // west outer
   wallZ( 12,-20,0,null,facadeMat,H2);                   // east outer
   wallX(-20,-12,12,null,facadeMat,H2);                  // back outer
@@ -190,7 +191,7 @@
 
   /* ---------------- GRAND STAIRCASE (walkable) ---------------- */
   (function(){
-    var steps=13, rise=FH/steps, run=0.34, width=3.0, zb=-5.0, cx=0;
+    var steps=13, rise=FH/steps, run=0.34, width=3.4, zb=-5.0, cx=0;  // wider staircase
     var g=new THREE.Group();
     for(var i=0;i<steps;i++){ var st=box(width,rise,run, marbleMat); st.position.set(cx, rise*(i+0.5), zb - run*(i+0.5)); g.add(st); FLOORS.push(st); }
     // side stringers (also block side, low colliders)
@@ -219,12 +220,12 @@
   /* ---------------- GROUND BACK: corridor + 2 rooms ---------------- */
   // partition at z=-8.5 (ground): solid segments leaving two archway openings
   // (west door x[-7,-5], east door x[5,7])
-  wallX(-8.5,-12,-7,null,creamMat,H1);
-  wallX(-8.5,-5, 5,null,creamMat,H1);
-  wallX(-8.5, 7,12,null,creamMat,H1);
-  floorSlab(0,-10.0,24,3.0, 0.06, carpetMat);
+  wallX(-8.5,-12,-7.5,null,creamMat,H1);
+  wallX(-8.5,-4.5,4.5,null,creamMat,H1);
+  wallX(-8.5, 7.5,12,null,creamMat,H1);
+  floorSlab(0,-9.75,24,3.5, 0.06, carpetMat);                 // wider corridor underfoot
   // room dividing wall x=0 between the two ground rooms (z[-20,-11])
-  wallZ(0,-20,-11,[-16,-14],creamMat,H1);
+  wallZ(0,-20,-11,[-16.5,-13.5],creamMat,H1);
   // ground room floors
   floorSlab(-6,-15.5,11,9, 0.06, roomMat);
   floorSlab( 6,-15.5,11,9, 0.06, roomMat);
@@ -232,11 +233,11 @@
   /* ---------------- UPPER FLOOR: corridor + 2 rooms ---------------- */
   // outer upper walls (z=-8.5 front has railing; back/sides are the outer facade up to H2 already)
   // upper partition at z=-11: two archway openings (west x[-7.4,-5.4], east x[5.4,7.4])
-  wallX(-11,-12,-7.4,null,creamMat,H1,FH);
-  wallX(-11,-5.4,5.4,null,creamMat,H1,FH);
-  wallX(-11,7.4,12,null,creamMat,H1,FH);
+  wallX(-11,-12,-7.6,null,creamMat,H1,FH);
+  wallX(-11,-4.6,4.6,null,creamMat,H1,FH);
+  wallX(-11,7.6,12,null,creamMat,H1,FH);
   // upper room divider x=0
-  wallZ(0,-20,-11,[-16,-14],creamMat,H1,FH);
+  wallZ(0,-20,-11,[-16.5,-13.5],creamMat,H1,FH);
   // upper room/corridor floors already covered by slab top; add carpet upper corridor
   floorSlab(0,-9.6,24,2.0, FH+0.06, carpetMat);
   floorSlab(-6,-15.5,11,8.5, FH+0.06, roomMat);
@@ -252,7 +253,7 @@
     var top2=box(1.6,0.12,3.2,mat(PAL.dark,.3,.1)); top2.position.set(-3.1,1.16,1.4); g.add(top2);
     var front=box(5,0.9,0.06,goldMat); front.position.set(0,0.6,0.66); g.add(front);
     var board=box(4.4,2.0,0.14,woodDarkMat); board.position.set(0,2.0,-1.0); g.add(board);
-    var logoT=labelTex('RECEPCIÓN',640,256,'#e2a93e');
+    var logoT=labelTex('RECEPTION',640,256,'#e2a93e');
     var logo=new THREE.Mesh(new THREE.PlaneGeometry(3.6,1.3), new THREE.MeshStandardMaterial({map:logoT,transparent:true,emissive:0xe2a93e,emissiveIntensity:.4,emissiveMap:logoT})); logo.position.set(0,2.1,-0.9); g.add(logo);
     var bell=new THREE.Mesh(new THREE.SphereGeometry(0.14,16,12,0,Math.PI*2,0,Math.PI/2),goldMat); bell.position.set(1.6,1.27,0.2); g.add(bell);
     g.position.set(-7.5,0,-6.5); g.traverse(function(o){o.castShadow=true;o.receiveShadow=true;}); world.add(g);
@@ -369,7 +370,17 @@
 
   // a couple of standing guests for life
   (function(){ var gu=person({skin:0xd9a679,cloth:0x3a5a78,cloth2:0x222,hair:0x3a2a18}); gu.group.position.set(-1.6,0,-1.2); gu.group.rotation.y=-0.6; world.add(gu.group); gu.kind='idle'; ANIM.push(gu);
-    var gu2=person({skin:0xc99a72,cloth:0x556b3a,cloth2:0x2a2418,hair:0x14100a}); gu2.group.position.set(2.0,0,-5.2); gu2.group.rotation.y=2.4; world.add(gu2.group); gu2.kind='idle'; ANIM.push(gu2); })();
+    var gu2=person({skin:0xc99a72,cloth:0x556b3a,cloth2:0x2a2418,hair:0x14100a}); gu2.group.position.set(2.4,0,-4.8); gu2.group.rotation.y=2.4; world.add(gu2.group); gu2.kind='idle'; ANIM.push(gu2); })();
+
+  // walking NPCs — a bellhop crossing the lobby and a guest strolling the west side
+  (function(){
+    var bell=person({skin:0xcf9f76,cloth:0x7a1f2c,cloth2:0x161616,hair:0x1a130c,vest:true});
+    world.add(bell.group); bell.kind='walker'; bell.speed=1.5; bell.off=0;
+    bell.path=makePath([[-8.5,-1.2],[8.5,-1.2]]); ANIM.push(bell);
+    var stroll=person({skin:0xe0b48d,cloth:0x2f5a52,cloth2:0x20201c,hair:0x2a1d12});
+    world.add(stroll.group); stroll.kind='walker'; stroll.speed=1.15; stroll.off=4.0;
+    stroll.path=makePath([[-9,-1.4],[-9,-4.6],[-4.5,-4.6],[-4.5,-1.4]]); ANIM.push(stroll);
+  })();
 
   /* ---------------- EXTERIOR: fountain, pool, palms ---------------- */
   (function(){
@@ -411,37 +422,84 @@
      ============================================================ */
   function person(o){ o=o||{};
     var g=new THREE.Group();
-    var skin=mat(o.skin||0xd9a679,.7), cloth=mat(o.cloth||0x33363c,.7), cloth2=mat(o.cloth2||0x222,.7), hair=mat(o.hair||0x241a12,.85);
-    var legL=box(0.16,0.85,0.18,cloth2); legL.position.set(-0.12,0.42,0); g.add(legL);
-    var legR=box(0.16,0.85,0.18,cloth2); legR.position.set(0.12,0.42,0); g.add(legR);
-    var torso=box(0.5,0.78,0.28,cloth); torso.position.set(0,1.22,0); g.add(torso);
-    if(o.vest){ var vest=box(0.52,0.5,0.3,mat(0x111316,.6)); vest.position.set(0,1.35,0); g.add(vest); }
-    var armLG=new THREE.Group(); armLG.position.set(-0.31,1.55,0); var armL=box(0.13,0.72,0.15,cloth); armL.position.y=-0.36; armLG.add(armL); g.add(armLG);
-    var armRG=new THREE.Group(); armRG.position.set(0.31,1.55,0); var armR=box(0.13,0.72,0.15,cloth); armR.position.y=-0.36; armRG.add(armR); g.add(armRG);
-    var headG=new THREE.Group(); headG.position.set(0,1.82,0);
-    var head=new THREE.Mesh(new THREE.SphereGeometry(0.17,16,16),skin); headG.add(head);
-    var hairM=new THREE.Mesh(new THREE.SphereGeometry(0.18,16,16,0,Math.PI*2,0,Math.PI*0.62),hair); hairM.position.y=0.02; headG.add(hairM); g.add(headG);
-    if(o.waiter || o.vest){ // tray in right hand
-      var tray=box(0.5,0.04,0.36,goldMat); tray.position.set(0,-0.74,0.14); armRG.add(tray);
-      for(var c=0;c<3;c++){ var cup=new THREE.Mesh(new THREE.CylinderGeometry(0.05,0.04,0.12,10),mat([0xc25a33,0xd8a23a,0x6fae6f][c],.3)); cup.position.set(-0.14+c*0.14,-0.66,0.14); armRG.add(cup); }
-      armRG.rotation.x=-1.2;  // forearm up holding tray
+    var skin=mat(o.skin||0xd9a679,.62), cloth=mat(o.cloth||0x33363c,.66,.02),
+        cloth2=mat(o.cloth2||0x222,.7), hair=mat(o.hair||0x241a12,.8), shoe=mat(0x140f0b,.5,.12);
+    function lm(r1,r2,len,m){ var me=new THREE.Mesh(new THREE.CylinderGeometry(r1,r2,len,14),m); me.castShadow=true; return me; }
+    // legs — pivot at the hip so they can swing while walking
+    function leg(side){ var grp=new THREE.Group(); grp.position.set(side*0.13,0.96,0);
+      var th=lm(0.10,0.085,0.5,cloth2); th.position.y=-0.25; grp.add(th);
+      var sh=lm(0.075,0.055,0.46,cloth2); sh.position.y=-0.71; grp.add(sh);
+      var ft=box(0.13,0.1,0.3,shoe); ft.position.set(0,-0.95,0.07); grp.add(ft);
+      g.add(grp); return grp; }
+    var legLG=leg(-1), legRG=leg(1);
+    // pelvis + tapered chest
+    var pelvis=lm(0.21,0.2,0.3,cloth); pelvis.position.y=1.1; g.add(pelvis);
+    var torso=lm(0.23,0.19,0.58,cloth); torso.position.y=1.5; g.add(torso);
+    if(o.vest){ var vest=lm(0.245,0.205,0.5,mat(0x111316,.55)); vest.position.y=1.5; g.add(vest);
+      var apron=box(0.34,0.46,0.04,mat(0xf2ead9,.85)); apron.position.set(0,1.24,0.205); apron.castShadow=true; g.add(apron); }
+    // shoulders
+    var sh2=lm(0.085,0.085,0.5,cloth); sh2.rotation.z=Math.PI/2; sh2.position.y=1.74; g.add(sh2);
+    // arms — pivot at shoulder
+    function arm(side){ var grp=new THREE.Group(); grp.position.set(side*0.27,1.72,0);
+      var up=lm(0.072,0.06,0.42,cloth); up.position.y=-0.21; grp.add(up);
+      var fore=lm(0.057,0.05,0.4,skin); fore.position.y=-0.6; grp.add(fore);
+      var hand=new THREE.Mesh(new THREE.SphereGeometry(0.058,10,10),skin); hand.position.y=-0.82; grp.add(hand);
+      g.add(grp); return grp; }
+    var armLG=arm(-1), armRG=arm(1);
+    // neck + head + face
+    var neck=lm(0.06,0.07,0.12,skin); neck.position.y=1.82; g.add(neck);
+    var headG=new THREE.Group(); headG.position.set(0,1.95,0);
+    var head=new THREE.Mesh(new THREE.SphereGeometry(0.15,20,20),skin); head.scale.set(0.96,1.1,1); headG.add(head);
+    var hairM=new THREE.Mesh(new THREE.SphereGeometry(0.158,20,18,0,Math.PI*2,0,Math.PI*0.68),hair); hairM.position.y=0.025; hairM.scale.set(1.02,1,1.02); headG.add(hairM);
+    var eyeM=mat(0x140f0a,.3);
+    [-0.055,0.055].forEach(function(ex){ var e=new THREE.Mesh(new THREE.SphereGeometry(0.02,8,8),eyeM); e.position.set(ex,0.0,0.138); e.scale.set(1,1.3,0.6); headG.add(e); });
+    g.add(headG);
+    if(o.waiter || o.vest){ // tray balanced in right hand
+      var tray=new THREE.Mesh(new THREE.CylinderGeometry(0.2,0.2,0.03,18),goldMat); tray.position.set(0,-0.8,0.16); armRG.add(tray);
+      for(var c=0;c<3;c++){ var cup=new THREE.Mesh(new THREE.CylinderGeometry(0.045,0.035,0.11,10),mat([0xc25a33,0xd8a23a,0x6fae6f][c],.3)); cup.position.set(-0.1+c*0.1,-0.73,0.16); armRG.add(cup); }
+      armRG.rotation.x=-1.25;  // forearm up holding tray
     }
-    g.traverse(function(ob){ob.castShadow=true;});
-    return { group:g, armL:armLG, armR:armRG, head:headG, torso:torso };
+    g.traverse(function(ob){ if(ob.isMesh) ob.castShadow=true; });
+    return { group:g, armL:armLG, armR:armRG, legL:legLG, legR:legRG, head:headG, torso:torso };
   }
+
+  // path helper for walking NPCs — total length + position/heading at a distance
+  function makePath(pts){ var seg=[], tot=0; for(var i=0;i<pts.length;i++){ var a=pts[i], b=pts[(i+1)%pts.length];
+      var dx=b[0]-a[0], dz=b[1]-a[1], L=Math.hypot(dx,dz); seg.push({a:a,b:b,L:L,h:Math.atan2(dx,dz)}); tot+=L; }
+    return {seg:seg,tot:tot}; }
+  function pathAt(path,d){ d=((d%path.tot)+path.tot)%path.tot; for(var i=0;i<path.seg.length;i++){ var s=path.seg[i];
+      if(d<=s.L){ var k=s.L?d/s.L:0; return {x:s.a[0]+(s.b[0]-s.a[0])*k, z:s.a[1]+(s.b[1]-s.a[1])*k, h:s.h}; } d-=s.L; }
+    var f=path.seg[0]; return {x:f.a[0],z:f.a[1],h:f.h}; }
+
   function animPeople(t){
     ANIM.forEach(function(p,i){
       var ph=i*1.3;
-      if(p.kind==='waiter'){
-        p.group.position.y = Math.sin(t*1.4+ph)*0.015;
-        p.armL.rotation.x = Math.sin(t*1.0+ph)*0.15 - 0.1;
-        p.head.rotation.y = Math.sin(t*0.5+ph)*0.4;
+      if(p.kind==='walker'){
+        var d=t*p.speed + p.off, pos=pathAt(p.path,d);
+        p.group.position.x=pos.x; p.group.position.z=pos.z;
+        // smooth turn toward heading
+        var cur=p.group.rotation.y, want=pos.h, diff=Math.atan2(Math.sin(want-cur),Math.cos(want-cur));
+        p.group.rotation.y=cur+diff*0.12;
+        var stride=t*p.speed*3.2;
+        p.legL.rotation.x=Math.sin(stride)*0.55; p.legR.rotation.x=-Math.sin(stride)*0.55;
+        p.armL.rotation.x=-Math.sin(stride)*0.45; p.armR.rotation.x=Math.sin(stride)*0.45;
+        p.group.position.y=Math.abs(Math.sin(stride))*0.04;            // gentle bob
+        p.torso.rotation.z=Math.sin(stride)*0.03;
+        if(p.head) p.head.rotation.y=Math.sin(t*0.4+ph)*0.25;
+      } else if(p.kind==='waiter'){
+        p.group.position.y = Math.sin(t*1.4+ph)*0.012;
+        p.armL.rotation.x = Math.sin(t*1.0+ph)*0.16 - 0.1;
+        p.head.rotation.y = Math.sin(t*0.5+ph)*0.45;
         p.torso.rotation.y = Math.sin(t*0.6+ph)*0.05;
-      } else {
-        p.torso.rotation.z = Math.sin(t*0.8+ph)*0.02;
-        p.armL.rotation.x = Math.sin(t*0.7+ph)*0.1;
-        p.armR.rotation.x = Math.sin(t*0.7+ph+1)*0.1;
+        p.legL.rotation.x = Math.sin(t*0.9+ph)*0.04; p.legR.rotation.x=-Math.sin(t*0.9+ph)*0.04;
+      } else { // idle — breathing, weight shift, occasional gesture & look
+        p.torso.rotation.z = Math.sin(t*0.8+ph)*0.025;
+        p.group.position.y = Math.sin(t*1.1+ph)*0.01;                  // breathing
+        p.armL.rotation.x = Math.sin(t*0.7+ph)*0.12;
+        p.armR.rotation.x = Math.sin(t*0.7+ph+1)*0.12;
+        p.legL.rotation.x = Math.sin(t*0.4+ph)*0.03; p.legR.rotation.x=-Math.sin(t*0.4+ph)*0.03;
         p.head.rotation.y = Math.sin(t*0.3+ph)*0.5;
+        p.head.rotation.x = Math.sin(t*0.5+ph)*0.08;
       }
     });
   }
@@ -449,10 +507,12 @@
   /* ============================================================
      PLAYER CONTROLS (with floor raycast for stairs / 2 floors)
      ============================================================ */
-  var R=0.40, EYE=1.6;
+  var R=0.30, EYE=1.6;                       // slimmer collider → roomier walking
   var player=new THREE.Vector3(0,EYE,16);
   var yaw=0, pitch=0;
   var keys={}; var locked=false, autoMode=false; var bobT=0;
+  var vy=0, grounded=true;                    // vertical velocity + ground flag (jump)
+  var GRAV=16.0, JUMP=5.6, STEP_UP=0.55;      // gravity, jump impulse, max auto-step height
   var downRay=new THREE.Raycaster(); var DOWN=new THREE.Vector3(0,-1,0);
 
   function collides(x,z){ for(var i=0;i<WALLS.length;i++){ var w=WALLS[i]; if(x>w.x1-R&&x<w.x2+R&&z>w.z1-R&&z<w.z2+R) return true; } return false; }
@@ -467,7 +527,8 @@
     yaw-=e.movementX*0.0022; pitch-=e.movementY*0.0022; pitch=Math.max(-1.4,Math.min(1.4,pitch)); });
   var MOVE={KeyW:1,KeyA:1,KeyS:1,KeyD:1,ArrowUp:1,ArrowDown:1,ArrowLeft:1,ArrowRight:1};
   window.addEventListener('keydown', function(e){ keys[e.code]=true;
-    if(autoMode && MOVE_INTERRUPT(e.code)){ stopAuto(); requestLock(); return; }
+    if(e.code==='Space'){ e.preventDefault(); }                 // don't scroll the page
+    if(autoMode && (MOVE_INTERRUPT(e.code)||e.code==='Space')){ stopAuto(); requestLock(); return; }
     if(e.code==='KeyE') tryInspect();
     if(e.code==='Escape') closeInspect();
   });
@@ -592,7 +653,7 @@
 
   /* ---------------- manual update ---------------- */
   function updateManual(dt){
-    var speed=(keys['ShiftLeft']||keys['ShiftRight'])?6.6:3.6;
+    var speed=(keys['ShiftLeft']||keys['ShiftRight'])?6.6:3.8;
     var fwd=0,str=0;
     if(keys['KeyW']||keys['ArrowUp'])fwd+=1; if(keys['KeyS']||keys['ArrowDown'])fwd-=1;
     if(keys['KeyD']||keys['ArrowRight'])str+=1; if(keys['KeyA']||keys['ArrowLeft'])str-=1;
@@ -602,10 +663,20 @@
     if(moving){ var step=speed*dt; var nx=player.x+dx*step, nz=player.z+dz*step;
       if(!collides(nx,player.z)) player.x=nx; if(!collides(player.x,nz)) player.z=nz; bobT+=dt*(speed*1.7); }
     player.x=Math.max(-60,Math.min(60,player.x)); player.z=Math.max(-60,Math.min(60,player.z));
-    // floor follow (stairs + two storeys)
-    var fy=floorYAt(player.x,player.z,player.y-EYE);
-    var targetY=fy+EYE; player.y += (targetY-player.y)*Math.min(1,dt*12);
-    var bob=moving?Math.sin(bobT)*0.04:0;
+
+    // --- vertical: gravity + jump + walk-up stairs ---
+    var groundY=floorYAt(player.x,player.z,player.y-EYE)+EYE;   // eye height standing on the floor here
+    // jump only when standing on the ground
+    if(keys['Space'] && grounded){ vy=JUMP; grounded=false; }
+    vy-=GRAV*dt; player.y+=vy*dt;
+    if(player.y<=groundY){
+      // landed — or auto-step up onto a higher step (stairs) when the rise is small
+      if(grounded || (groundY-player.y)<=STEP_UP || vy<=0){ player.y=groundY; vy=0; grounded=true; }
+    } else { grounded=false; }
+    // safety: never fall through the world
+    if(player.y<groundY-2){ player.y=groundY; vy=0; grounded=true; }
+
+    var bob=(moving&&grounded)?Math.sin(bobT)*0.045:0;
     camera.position.set(player.x,player.y+bob,player.z);
     camera.quaternion.setFromEuler(new THREE.Euler(pitch,yaw,0,'YXZ'));
   }
@@ -640,6 +711,7 @@
     document.getElementById('hintLook').textContent=tr('look');
     document.getElementById('hintInspect').textContent=tr('doInspect');
     document.getElementById('hintRun').textContent=tr('run');
+    document.getElementById('hintJump').textContent=tr('jump');
     if(!insEl.hidden && hovered && hovered.userData.info) openInspect(hovered.userData.info);
   }
   document.getElementById('langBtn').addEventListener('click', function(){ LANG=(LANG==='es')?'en':'es'; localStorage.setItem('viaje_lang',LANG); applyLang(); });
